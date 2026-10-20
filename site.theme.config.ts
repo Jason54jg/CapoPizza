@@ -9,7 +9,7 @@
  * Priorité au build : NEXT_PUBLIC_SEASONAL_THEME (GitHub Actions / .env)
  */
 export const SITE_THEME_CONFIG = {
-  seasonal: "none",
+  seasonal: "halloween",
 } as const satisfies {
   seasonal: "none" | "halloween" | "christmas";
 };
