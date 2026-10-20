@@ -14,7 +14,6 @@ export const BUSINESS = {
     facebook: "https://www.facebook.com/share/1Hv2XTBE5x/",
     instagram: "https://www.instagram.com/capopizza88",
     snapchat: "https://www.snapchat.com/add/Capopizza88",
-    handle: "@Capopizza88",
   },
   mapsQuery: "Capo+Pizza,+11+Rue+de+France,+88300+Neufchâteau",
   mapsEmbed:

@@ -44,7 +44,7 @@ export function SiteFooter() {
                   rel="noopener noreferrer"
                   className="text-[var(--text-secondary)] hover:text-brand"
                 >
-                  Instagram {BUSINESS.social.handle}
+                  Instagram
                 </a>
               </li>
               <li>
