@@ -40,6 +40,7 @@ export function HomePage() {
         />
         <MenuExplorer
           searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
           activeCategory={menuCategory}
           onCategoryChange={setMenuCategory}
         />

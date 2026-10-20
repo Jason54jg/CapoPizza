@@ -5,8 +5,7 @@ import Image from "next/image";
 import { Phone } from "lucide-react";
 import { BUSINESS } from "@/lib/business";
 
-const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1604384847932-cff2a0b4cb64?auto=format&fit=crop&w=1200&q=80";
+const HERO_IMAGE = "/images/capo-store-hero.jpeg";
 
 type HeroSectionProps = {
   onDiscoverPizzas: () => void;
@@ -14,7 +13,7 @@ type HeroSectionProps = {
 
 export function HeroSection({ onDiscoverPizzas }: HeroSectionProps) {
   return (
-    <section className="relative overflow-hidden pt-28 pb-16 md:pt-32 md:pb-24">
+    <section className="relative overflow-hidden pt-24 pb-16 md:pt-32 md:pb-24">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -left-32 top-20 h-72 w-72 rounded-full bg-[#e85d2c]/20 blur-3xl" />
         <div className="absolute -right-20 bottom-0 h-80 w-80 rounded-full bg-[#c41e1e]/15 blur-3xl" />

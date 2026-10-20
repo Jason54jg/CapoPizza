@@ -52,11 +52,11 @@ export function SiteHeader({
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled
           ? "border-b border-[var(--border-subtle)] bg-[var(--surface-glass)] shadow-lg shadow-black/5 backdrop-blur-xl"
-          : "bg-transparent"
+          : "bg-[var(--surface-glass)]/80 backdrop-blur-md lg:bg-transparent lg:backdrop-blur-none"
       }`}
     >
-      <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-3 md:gap-4 md:px-6">
-        <Link href="#" className="shrink-0" onClick={() => window.scrollTo({ top: 0 })}>
+      <div className="mx-auto flex max-w-6xl items-center gap-2 px-4 py-3 md:gap-4 md:px-6">
+        <Link href="#" className="min-w-0 shrink-0" onClick={() => window.scrollTo({ top: 0 })}>
           <Logo />
         </Link>
 
@@ -75,6 +75,10 @@ export function SiteHeader({
           <OpenStatusBadge compact />
         </div>
 
+        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2 lg:hidden">
+          <OpenStatusBadge mobile />
+        </div>
+
         <nav className="hidden items-center gap-1 xl:flex" aria-label="Navigation principale">
           {NAV.map((item) => (
             <a
@@ -88,7 +92,7 @@ export function SiteHeader({
           ))}
         </nav>
 
-        <div className="ml-auto flex items-center gap-2">
+        <div className="ml-auto flex shrink-0 items-center gap-1.5 sm:gap-2">
           <button
             type="button"
             onClick={toggleTheme}
@@ -119,22 +123,6 @@ export function SiteHeader({
           >
             {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
-        </div>
-      </div>
-
-      <div className="border-t border-[var(--border-subtle)] px-4 pb-3 lg:hidden">
-        <div className="relative">
-          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-muted)]" />
-          <input
-            type="search"
-            value={searchQuery}
-            onChange={(e) => onSearchChange(e.target.value)}
-            placeholder="Rechercher : reine, chèvre, barbecue…"
-            className="w-full rounded-full border border-[var(--border-subtle)] bg-[var(--surface-elevated)] py-2.5 pl-10 pr-4 text-sm outline-none focus:border-[#e85d2c]/50 focus:ring-2 focus:ring-[#e85d2c]/25"
-          />
-        </div>
-        <div className="mt-2 flex justify-center">
-          <OpenStatusBadge />
         </div>
       </div>
 

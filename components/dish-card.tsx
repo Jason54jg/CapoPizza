@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Heart, Plus } from "lucide-react";
+import { PriceTag } from "@/lib/format-price-display";
 import type { MenuItem } from "@/lib/menu-types";
 import { DIET_FILTERS } from "@/lib/menu-types";
 
@@ -49,9 +50,12 @@ export function DishCard({
           )}
         </div>
         <div className="flex flex-1 flex-col p-4">
-          <h3 className="font-display text-lg font-semibold text-[var(--text-primary)]">
-            {item.name}
-          </h3>
+          <div className="flex items-start justify-between gap-2">
+            <h3 className="font-display text-lg font-semibold text-[var(--text-primary)]">
+              {item.name}
+            </h3>
+            <PriceTag item={item} size="sm" />
+          </div>
           <p className="mt-1 line-clamp-2 text-sm leading-relaxed text-[var(--text-secondary)]">
             {item.description}
           </p>

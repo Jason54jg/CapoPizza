@@ -11,8 +11,8 @@ export const BUSINESS = {
   activity:
     "Sur place, à emporter et livraison à domicile — pizzas artisanales, burgers, tacos, pâtes et spécialités.",
   social: {
-    facebook: "https://www.facebook.com/Capopizza88",
-    instagram: "https://www.instagram.com/capopizza88/",
+    facebook: "https://www.facebook.com/share/1Hv2XTBE5x/",
+    instagram: "https://www.instagram.com/capopizza88",
     snapchat: "https://www.snapchat.com/add/Capopizza88",
     handle: "@Capopizza88",
   },

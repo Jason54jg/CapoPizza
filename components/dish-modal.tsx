@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { Heart, Phone, X } from "lucide-react";
 import { BUSINESS } from "@/lib/business";
+import { PriceTag } from "@/lib/format-price-display";
 import type { MenuItem } from "@/lib/menu-types";
 import { DIET_FILTERS, MENU_CATEGORIES } from "@/lib/menu-types";
 
@@ -72,12 +73,15 @@ export function DishModal({
                   {categoryLabel}
                 </p>
               )}
-              <h2
-                id="dish-modal-title"
-                className="font-display mt-1 text-2xl font-bold text-[var(--text-primary)]"
-              >
-                {item.name}
-              </h2>
+              <div className="mt-1 flex flex-wrap items-center gap-3">
+                <h2
+                  id="dish-modal-title"
+                  className="font-display text-2xl font-bold text-[var(--text-primary)]"
+                >
+                  {item.name}
+                </h2>
+                <PriceTag item={item} size="lg" />
+              </div>
               <p className="mt-3 text-base leading-relaxed text-[var(--text-secondary)]">
                 {item.description}
               </p>

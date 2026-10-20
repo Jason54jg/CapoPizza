@@ -1,9 +1,8 @@
 import type { MenuItem } from "./menu-types";
 
-const pizzaTomato =
-  "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80";
-const pizzaCream =
-  "https://images.unsplash.com/photo-1574071318508-1cdbab80b002?auto=format&fit=crop&w=800&q=80";
+const capoPhoto = "/images/capo-store-hero.jpeg";
+const pizzaTomato = capoPhoto;
+const pizzaCream = capoPhoto;
 const burgerImg =
   "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80";
 const tacoImg =

@@ -1,7 +1,8 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ListChecks } from "lucide-react";
+import { Camera, ListChecks, Search } from "lucide-react";
+import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSelection } from "@/hooks/use-selection";
 import { MENU_ITEMS, searchMenuItems } from "@/lib/menu";
@@ -12,6 +13,8 @@ import {
   type MenuCategoryId,
   type MenuItem,
 } from "@/lib/menu-types";
+import { BUSINESS } from "@/lib/business";
+import { PRICE_DISCLAIMER } from "@/lib/menu-prices";
 import { isInSelection } from "@/lib/selection-storage";
 import { DishCard } from "./dish-card";
 import { DishModal } from "./dish-modal";
@@ -19,12 +22,14 @@ import { SelectionPanel } from "./selection-panel";
 
 type MenuExplorerProps = {
   searchQuery: string;
+  onSearchChange: (value: string) => void;
   activeCategory: MenuCategoryId;
   onCategoryChange: (id: MenuCategoryId) => void;
 };
 
 export function MenuExplorer({
   searchQuery,
+  onSearchChange,
   activeCategory,
   onCategoryChange,
 }: MenuExplorerProps) {
@@ -88,8 +93,46 @@ export function MenuExplorer({
     activeCategory === "pizzas-tomate" || activeCategory === "pizzas-creme";
 
   return (
-    <section id="menu" className="scroll-mt-28 py-12 md:py-16">
+    <section id="menu" className="scroll-mt-24 py-12 md:scroll-mt-28 md:py-16">
       <div className="mx-auto max-w-6xl px-4 md:px-6">
+        <div className="relative mb-6 lg:hidden">
+          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-muted)]" />
+          <input
+            type="search"
+            value={searchQuery}
+            onChange={(e) => onSearchChange(e.target.value)}
+            placeholder="Rechercher : reine, chèvre, barbecue…"
+            className="w-full rounded-full border border-[var(--border-subtle)] bg-[var(--surface-elevated)] py-3 pl-10 pr-4 text-sm outline-none focus:border-[#e85d2c]/50 focus:ring-2 focus:ring-[#e85d2c]/25"
+            aria-label="Recherche dans la carte"
+          />
+        </div>
+
+        <a
+          href={BUSINESS.social.instagram}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mb-8 flex items-center gap-4 overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)] p-3 transition hover:border-[#e85d2c]/40"
+        >
+          <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl">
+            <Image
+              src="/images/capo-store-hero.jpeg"
+              alt=""
+              fill
+              className="object-cover"
+              sizes="64px"
+            />
+          </div>
+          <div className="min-w-0 flex-1 text-left">
+            <p className="flex items-center gap-1.5 text-sm font-semibold text-[var(--text-primary)]">
+              <Camera className="h-4 w-4 text-[#e85d2c]" />
+              Photos & carte sur Instagram
+            </p>
+            <p className="text-xs text-[var(--text-muted)]">
+              {BUSINESS.social.handle} — visuels des plats et actualités du restaurant
+            </p>
+          </div>
+        </a>
+
         <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="text-sm font-semibold uppercase tracking-wider text-[#e85d2c]">
@@ -106,6 +149,7 @@ export function MenuExplorer({
               Filtrez par catégorie, ingrédient ou envie. Commandez par téléphone
               — pas de paiement en ligne, simplicité et rapidité.
             </p>
+            <p className="mt-2 text-xs text-[var(--text-muted)]">{PRICE_DISCLAIMER}</p>
           </div>
           <button
             type="button"
