@@ -1,6 +1,8 @@
 import { BUSINESS, OPENING_LABEL } from "@/lib/business";
+import { getGoogleReviews } from "@/lib/google-reviews";
 
 export function RestaurantJsonLd() {
+  const google = getGoogleReviews();
   const schema = {
     "@context": "https://schema.org",
     "@type": ["Restaurant", "FoodEstablishment"],
@@ -53,6 +55,13 @@ export function RestaurantJsonLd() {
     ],
     servesCuisine: ["Pizza", "Italian", "FastFood"],
     priceRange: "€",
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: google.rating,
+      reviewCount: google.reviewCount,
+      bestRating: 5,
+      worstRating: 1,
+    },
     sameAs: [
       BUSINESS.social.facebook,
       BUSINESS.social.instagram,

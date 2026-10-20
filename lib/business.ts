@@ -18,6 +18,13 @@ export const BUSINESS = {
   mapsQuery: "Capo+Pizza,+11+Rue+de+France,+88300+Neufchâteau",
   mapsEmbed:
     "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2645.8!2d5.605!3d48.355!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTFrIFJ1ZSBkZSBGcmFuY2UsIDg4MzAwIE5ldWZjaMOidGVhdQ!5e0!3m2!1sfr!2sfr!4v1",
+  /** Fallback note Google si data/google-reviews.json n’est pas rafraîchi */
+  googleRating: 4.4,
+  googleReviewCount: 152,
+  googleMapsUrl:
+    "https://www.google.com/maps/search/?api=1&query=Capo+Pizza,+11+Rue+de+France,+88300+Neufch%C3%A2teau",
+  googleReviewsUrl:
+    "https://www.google.com/maps/search/?api=1&query=Capo+Pizza,+11+Rue+de+France,+88300+Neufch%C3%A2teau",
 } as const;
 
 export const OPENING_SLOTS = [

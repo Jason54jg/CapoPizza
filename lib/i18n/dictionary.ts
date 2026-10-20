@@ -10,6 +10,7 @@ export type Dictionary = {
   nav: {
     offers: string;
     menu: string;
+    reviews: string;
     hours: string;
     contact: string;
     order: string;
@@ -22,6 +23,21 @@ export type Dictionary = {
     lightMode: string;
     darkMode: string;
     menuButton: string;
+  };
+  reviews: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    basedOn: string;
+    latestTitle: string;
+    highlightTaste: string;
+    highlightService: string;
+    highlightValue: string;
+    ctaTitle: string;
+    ctaLead: string;
+    seeAll: string;
+    leaveReview: string;
+    disclaimer: string;
   };
   hero: {
     eyebrow: string;
@@ -141,6 +157,7 @@ const fr: Dictionary = {
   nav: {
     offers: "Offres",
     menu: "La carte",
+    reviews: "Avis",
     hours: "Horaires",
     contact: "Contact",
     order: "Commander",
@@ -153,6 +170,22 @@ const fr: Dictionary = {
     lightMode: "Activer le mode clair",
     darkMode: "Activer le mode sombre",
     menuButton: "Menu",
+  },
+  reviews: {
+    eyebrow: "Google",
+    title: "Avis clients",
+    lead: "Ce que disent les clients sur Google — merci pour votre confiance.",
+    basedOn: "Basé sur {count} avis Google",
+    latestTitle: "Derniers avis",
+    highlightTaste: "Pizzas appréciées pour le goût et la cuisson au feu de bois",
+    highlightService: "Service rapide, idéal à emporter ou en livraison",
+    highlightValue: "Bon rapport qualité-prix selon les retours clients",
+    ctaTitle: "Partagez votre expérience",
+    ctaLead:
+      "Votre avis aide les habitants de Neufchâteau à nous découvrir. Merci !",
+    seeAll: "Voir les avis Google",
+    leaveReview: "Laisser un avis",
+    disclaimer: "Note et nombre d’avis Google, actualisés automatiquement depuis la fiche publique.",
   },
   hero: {
     eyebrow: "Pizzeria · Neufchâteau · 7j/7",
@@ -298,6 +331,7 @@ const en: Dictionary = {
   nav: {
     offers: "Offers",
     menu: "Menu",
+    reviews: "Reviews",
     hours: "Hours",
     contact: "Contact",
     order: "Order",
@@ -310,6 +344,22 @@ const en: Dictionary = {
     lightMode: "Switch to light mode",
     darkMode: "Switch to dark mode",
     menuButton: "Menu",
+  },
+  reviews: {
+    eyebrow: "Google",
+    title: "Customer reviews",
+    lead: "What customers say on Google — thank you for your trust.",
+    basedOn: "Based on {count} Google reviews",
+    latestTitle: "Latest reviews",
+    highlightTaste: "Pizzas praised for flavour and wood-fired cooking",
+    highlightService: "Fast service, great for takeaway or delivery",
+    highlightValue: "Good value for money according to customers",
+    ctaTitle: "Share your experience",
+    ctaLead:
+      "Your review helps people in Neufchâteau discover us. Thank you!",
+    seeAll: "See Google reviews",
+    leaveReview: "Leave a review",
+    disclaimer: "Google rating and review count, refreshed automatically from the public listing.",
   },
   hero: {
     eyebrow: "Pizzeria · Neufchâteau · Open 7 days",

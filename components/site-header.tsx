@@ -36,6 +36,7 @@ export function SiteHeader({
       href: "#menu",
       category: "pizzas-tomate" as MenuCategoryId,
     },
+    { label: dict.nav.reviews, href: "#avis" },
     { label: dict.nav.hours, href: "#infos" },
     { label: dict.nav.contact, href: "#contact" },
   ];

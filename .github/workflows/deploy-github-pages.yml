@@ -8,6 +8,9 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Rafraîchit note / nombre d’avis Google (page Rankeat, sans clé API) puis redéploie
+  schedule:
+    - cron: "0 6 * * *"
 
 permissions:
   contents: read
@@ -36,6 +39,16 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Install Playwright Chromium
+        run: npx playwright install chromium --with-deps
+
+      - name: Refresh Google reviews
+        run: npm run fetch:reviews
+
+      # L’export statique n’accepte pas les Route Handlers
+      - name: Strip API routes for static export
+        run: rm -rf app/api
 
       - name: Build with Next.js
         run: npm run build
