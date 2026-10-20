@@ -52,15 +52,16 @@ export function OpenStatusBadge({ compact = false, mobile = false }: OpenStatusB
 
   return (
     <div
-      className="inline-flex max-w-full items-center gap-2 rounded-md border border-[var(--border-subtle)] bg-[var(--surface-elevated)] px-2.5 py-1 text-xs font-medium text-[var(--text-secondary)]"
+      className="inline-flex shrink-0 items-center gap-2 rounded-md border border-[var(--border-subtle)] bg-[var(--surface-elevated)] px-2.5 py-1 text-xs font-medium text-[var(--text-secondary)]"
       aria-live="polite"
+      title={fullLabel}
     >
       <StatusDot open={status.isOpen} />
-      <span className="truncate">
+      <span className="whitespace-nowrap">
         {status.isOpen ? status.label : `Fermé – ${status.nextChangeLabel}`}
       </span>
       {!compact && (
-        <span className="hidden text-[11px] text-[var(--text-muted)] md:inline">
+        <span className="hidden whitespace-nowrap text-[11px] text-[var(--text-muted)] md:inline">
           · {status.nextChangeLabel}
         </span>
       )}

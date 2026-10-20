@@ -60,8 +60,8 @@ export function SiteHeader({
           <Logo />
         </Link>
 
-        <div className="hidden min-w-0 flex-1 items-center gap-3 lg:flex">
-          <div className="relative min-w-0 flex-1 max-w-md">
+        <div className="hidden min-w-0 flex-1 lg:block">
+          <div className="relative min-w-0 max-w-md overflow-hidden">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-muted)]" />
             <input
               type="search"
@@ -72,7 +72,6 @@ export function SiteHeader({
               aria-label="Recherche instantanée dans la carte"
             />
           </div>
-          <OpenStatusBadge compact />
         </div>
 
         <div className="flex shrink-0 items-center gap-1.5 lg:hidden">
@@ -93,6 +92,9 @@ export function SiteHeader({
         </nav>
 
         <div className="ml-auto flex shrink-0 items-center gap-1.5 sm:gap-2">
+          <div className="hidden lg:block">
+            <OpenStatusBadge compact />
+          </div>
           <button
             type="button"
             onClick={toggleTheme}
