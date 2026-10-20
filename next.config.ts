@@ -7,8 +7,7 @@ const basePath = GITHUB_PAGES ? `/${REPO_NAME}` : "";
 
 const nextConfig: NextConfig = {
   output: "export",
-  basePath,
-  assetPrefix: GITHUB_PAGES ? `${basePath}/` : undefined,
+  ...(basePath ? { basePath } : {}),
   trailingSlash: true,
   images: {
     unoptimized: true,
