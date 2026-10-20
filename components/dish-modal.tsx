@@ -69,9 +69,7 @@ export function DishModal({
 
             <div className="p-6">
               {categoryLabel && (
-                <p className="text-xs font-semibold uppercase tracking-wider text-[#e85d2c]">
-                  {categoryLabel}
-                </p>
+                <p className="eyebrow">{categoryLabel}</p>
               )}
               <div className="mt-1 flex flex-wrap items-center gap-3">
                 <h2
@@ -96,7 +94,7 @@ export function DishModal({
                         key={tag}
                         className="rounded-full border border-[var(--border-subtle)] px-3 py-1 text-xs font-medium"
                       >
-                        {meta.emoji} {meta.label}
+                        {meta.label}
                       </span>
                     );
                   })}
@@ -123,8 +121,8 @@ export function DishModal({
                   onClick={onToggleSelection}
                   className={`inline-flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-3 text-sm font-semibold transition ${
                     selected
-                      ? "bg-[#e85d2c] text-white"
-                      : "border border-[var(--border-subtle)]"
+                      ? "bg-[var(--brand-primary)] text-[var(--brand-on-primary)]"
+                      : "btn-secondary border border-[var(--border-subtle)]"
                   }`}
                 >
                   <Heart className={`h-4 w-4 ${selected ? "fill-current" : ""}`} />
@@ -132,7 +130,7 @@ export function DishModal({
                 </button>
                 <a
                   href={BUSINESS.phoneTel}
-                  className="brand-gradient inline-flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-3 text-sm font-semibold text-white"
+                  className="btn-primary flex-1 px-4 py-3 text-sm"
                 >
                   <Phone className="h-4 w-4" />
                   Appeler pour commander

@@ -19,14 +19,14 @@ export function PriceTag({
 
   const sizeClass =
     size === "lg"
-      ? "text-xl font-bold"
+      ? "text-lg font-semibold tabular-nums"
       : size === "sm"
-        ? "text-xs font-semibold"
-        : "text-sm font-bold";
+        ? "text-xs font-semibold tabular-nums"
+        : "text-sm font-semibold tabular-nums";
 
   return (
     <span
-      className={`inline-flex shrink-0 items-center rounded-full bg-[var(--brand-glow)] px-2.5 py-1 text-[var(--brand-from)] ${sizeClass} ${className}`}
+      className={`inline-flex shrink-0 items-center rounded-md bg-brand-muted px-2 py-0.5 text-brand ${sizeClass} ${className}`}
     >
       {label ?? formatPrice(amount!)}
     </span>

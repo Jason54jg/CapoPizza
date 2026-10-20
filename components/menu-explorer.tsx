@@ -102,7 +102,7 @@ export function MenuExplorer({
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder="Rechercher : reine, chèvre, barbecue…"
-            className="w-full rounded-full border border-[var(--border-subtle)] bg-[var(--surface-elevated)] py-3 pl-10 pr-4 text-sm outline-none focus:border-[#e85d2c]/50 focus:ring-2 focus:ring-[#e85d2c]/25"
+            className="input-field py-3 pl-10 pr-4 text-sm"
             aria-label="Recherche dans la carte"
           />
         </div>
@@ -111,7 +111,7 @@ export function MenuExplorer({
           href={BUSINESS.social.instagram}
           target="_blank"
           rel="noopener noreferrer"
-          className="mb-8 flex items-center gap-4 overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)] p-3 transition hover:border-[#e85d2c]/40"
+          className="card-surface mb-8 flex items-center gap-4 p-3 transition hover:border-brand-soft"
         >
           <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl">
             <Image
@@ -124,8 +124,8 @@ export function MenuExplorer({
           </div>
           <div className="min-w-0 flex-1 text-left">
             <p className="flex items-center gap-1.5 text-sm font-semibold text-[var(--text-primary)]">
-              <Camera className="h-4 w-4 text-[#e85d2c]" />
-              Photos & carte sur Instagram
+              <Camera className="h-4 w-4 text-brand" />
+              Instagram · photos des plats
             </p>
             <p className="text-xs text-[var(--text-muted)]">
               {BUSINESS.social.handle} — visuels des plats et actualités du restaurant
@@ -135,10 +135,10 @@ export function MenuExplorer({
 
         <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-wider text-[#e85d2c]">
-              {isPizzaSection ? "Notre spécialité" : "Carte complète"}
+            <p className="eyebrow mb-2">
+              {isPizzaSection ? "Spécialité" : "Carte"}
             </p>
-            <h2 className="font-display mt-1 text-3xl font-bold text-[var(--text-primary)] md:text-4xl">
+            <h2 className="font-display text-3xl text-[var(--text-primary)] md:text-4xl">
               {globalSearchActive
                 ? "Résultats de recherche"
                 : isPizzaSection
@@ -154,12 +154,12 @@ export function MenuExplorer({
           <button
             type="button"
             onClick={() => setSelectionOpen(true)}
-            className="inline-flex items-center justify-center gap-2 self-start rounded-full border border-[var(--border-subtle)] bg-[var(--surface-elevated)] px-4 py-2.5 text-sm font-semibold transition hover:border-[#e85d2c]/40"
+            className="btn-secondary self-start px-4 py-2.5 text-sm"
           >
             <ListChecks className="h-4 w-4" />
             Ma sélection
             {selection.length > 0 && (
-              <span className="rounded-full bg-[#e85d2c] px-2 py-0.5 text-xs text-white">
+              <span className="rounded-md bg-[var(--brand-primary)] px-2 py-0.5 text-xs text-[var(--brand-on-primary)]">
                 {selection.length}
               </span>
             )}
@@ -183,13 +183,12 @@ export function MenuExplorer({
                   data-category={cat.id}
                   aria-selected={active}
                   onClick={() => onCategoryChange(cat.id)}
-                  className={`shrink-0 rounded-full px-4 py-2.5 text-sm font-semibold transition ${
+                  className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium transition ${
                     active
-                      ? "brand-gradient text-white shadow-lg"
+                      ? "tab-active"
                       : "border border-[var(--border-subtle)] bg-[var(--surface-elevated)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                   }`}
                 >
-                  <span className="mr-1.5">{cat.emoji}</span>
                   {cat.label}
                 </button>
               );
@@ -211,7 +210,7 @@ export function MenuExplorer({
                     : "border border-[var(--border-subtle)] text-[var(--text-secondary)]"
                 }`}
               >
-                {filter.emoji} {filter.label}
+                {filter.label}
               </button>
             );
           })}

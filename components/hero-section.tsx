@@ -14,75 +14,53 @@ type HeroSectionProps = {
 
 export function HeroSection({ onDiscoverPizzas }: HeroSectionProps) {
   return (
-    <section className="relative overflow-hidden pt-24 pb-16 md:pt-32 md:pb-24">
-      <div className="pointer-events-none absolute inset-0">
-        <div
-          className="absolute -left-32 top-20 h-72 w-72 rounded-full blur-3xl"
-          style={{ background: "var(--brand-glow)" }}
-        />
-        <div
-          className="absolute -right-20 bottom-0 h-80 w-80 rounded-full blur-3xl opacity-80"
-          style={{ background: "var(--brand-glow)" }}
-        />
-      </div>
-
-      <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-4 md:grid-cols-2 md:px-6">
+    <section className="relative border-b border-[var(--border-subtle)] pt-24 pb-16 md:pt-28 md:pb-20">
+      <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 md:grid-cols-2 md:px-6">
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
         >
           <SeasonalHeroBadge />
-          <p className="mb-3 inline-flex rounded-full border border-[var(--brand-from)]/30 bg-[var(--brand-glow)] px-3 py-1 text-xs font-semibold uppercase tracking-wider text-[var(--brand-from)]">
-            Pizzas artisanales · 7j/7
-          </p>
-          <h1 className="font-display text-4xl font-bold leading-tight tracking-tight text-[var(--text-primary)] md:text-5xl lg:text-[3.25rem]">
-            Pizzeria Capo Pizza à Neufchâteau
+          <p className="eyebrow mb-4">Pizzeria · Neufchâteau · 7j/7</p>
+          <h1 className="font-display text-[2.35rem] leading-[1.12] text-[var(--text-primary)] md:text-5xl lg:text-[3.125rem]">
+            Capo Pizza
           </h1>
-          <p className="mt-4 max-w-xl text-lg leading-relaxed text-[var(--text-secondary)]">
-            Pizzas artisanales, burgers, tacos, pâtes et spécialités à emporter ou
-            en livraison à domicile.
+          <p className="mt-3 text-lg text-[var(--text-secondary)] md:text-xl">
+            Pizzas artisanales, burgers, tacos et pâtes — sur place, à emporter
+            ou en livraison.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <button
-              type="button"
-              onClick={onDiscoverPizzas}
-              className="brand-gradient inline-flex items-center justify-center rounded-full px-6 py-3.5 text-base font-semibold text-white shadow-xl transition hover:scale-[1.02] hover:brightness-110"
-              style={{ boxShadow: "0 20px 40px var(--brand-glow)" }}
-            >
-              Découvrir nos Pizzas
+            <button type="button" onClick={onDiscoverPizzas} className="btn-primary px-6 py-3.5 text-base">
+              Voir la carte
             </button>
-            <a
-              href={BUSINESS.phoneTel}
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-[var(--border-subtle)] bg-[var(--surface-elevated)] px-6 py-3.5 text-base font-semibold transition hover:border-[var(--brand-from)]/40"
-            >
-              <Phone className="h-5 w-5 text-[var(--brand-from)]" />
+            <a href={BUSINESS.phoneTel} className="btn-secondary px-6 py-3.5 text-base">
+              <Phone className="h-5 w-5 text-brand" />
               {BUSINESS.phone}
             </a>
           </div>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.08 }}
           className="relative mx-auto w-full max-w-lg md:max-w-none"
         >
-          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-[var(--border-subtle)] shadow-2xl shadow-black/20">
+          <div className="card-surface relative aspect-[4/3] overflow-hidden p-0">
             <Image
               src={HERO_IMAGE}
-              alt="Pizza artisanale Capo Pizza"
+              alt="Devanture Capo Pizza, Neufchâteau"
               fill
               className="object-cover"
               priority
               sizes="(max-width: 768px) 100vw, 50vw"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-            <div className="absolute bottom-4 left-4 right-4 rounded-2xl bg-black/45 p-4 backdrop-blur-md">
-              <p className="text-sm font-medium text-white/90">
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 to-transparent px-5 pb-5 pt-16">
+              <p className="text-sm font-medium text-white/95">
                 Sur place · À emporter · Livraison
               </p>
-              <p className="text-xs text-white/70">{BUSINESS.address}</p>
+              <p className="mt-0.5 text-xs text-white/75">{BUSINESS.address}</p>
             </div>
           </div>
         </motion.div>

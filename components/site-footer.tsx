@@ -2,27 +2,22 @@ import { BUSINESS } from "@/lib/business";
 
 export function SiteFooter() {
   return (
-    <footer id="contact" className="scroll-mt-28 border-t border-[var(--border-subtle)] bg-[var(--surface-muted)] py-12">
+    <footer id="contact" className="scroll-mt-28 border-t border-[var(--border-subtle)] py-12">
       <div className="mx-auto max-w-6xl px-4 md:px-6">
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-10 md:grid-cols-3">
           <div>
-            <p className="font-display text-xl font-bold text-[var(--text-primary)]">
-              Capo Pizza
-            </p>
-            <p className="mt-2 text-sm text-[var(--text-secondary)]">
-              Pizzeria & restauration rapide à Neufchâteau (88300). Pizzas en
-              priorité, burgers, tacos, pâtes et plus encore.
+            <p className="font-display text-2xl text-[var(--text-primary)]">Capo Pizza</p>
+            <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
+              Pizzeria & restauration rapide à Neufchâteau (88300).
             </p>
           </div>
 
           <div>
-            <p className="text-sm font-semibold uppercase tracking-wider text-[var(--text-muted)]">
-              Contact
-            </p>
-            <ul className="mt-3 space-y-2 text-sm text-[var(--text-secondary)]">
+            <p className="eyebrow mb-3">Contact</p>
+            <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
               <li>{BUSINESS.address}</li>
               <li>
-                <a href={BUSINESS.phoneTel} className="font-semibold hover:text-[#e85d2c]">
+                <a href={BUSINESS.phoneTel} className="font-semibold text-[var(--text-primary)] hover:text-brand">
                   {BUSINESS.phone}
                 </a>
               </li>
@@ -30,16 +25,14 @@ export function SiteFooter() {
           </div>
 
           <div>
-            <p className="text-sm font-semibold uppercase tracking-wider text-[var(--text-muted)]">
-              Réseaux sociaux
-            </p>
-            <ul className="mt-3 flex flex-wrap gap-3 text-sm font-medium">
+            <p className="eyebrow mb-3">Réseaux</p>
+            <ul className="flex flex-col gap-2 text-sm font-medium">
               <li>
                 <a
                   href={BUSINESS.social.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-full border border-[var(--border-subtle)] px-3 py-1.5 transition hover:border-[#e85d2c]/50"
+                  className="text-[var(--text-secondary)] hover:text-brand"
                 >
                   Facebook
                 </a>
@@ -49,9 +42,9 @@ export function SiteFooter() {
                   href={BUSINESS.social.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-full border border-[var(--border-subtle)] px-3 py-1.5 transition hover:border-[#e85d2c]/50"
+                  className="text-[var(--text-secondary)] hover:text-brand"
                 >
-                  Instagram
+                  Instagram {BUSINESS.social.handle}
                 </a>
               </li>
               <li>
@@ -59,9 +52,9 @@ export function SiteFooter() {
                   href={BUSINESS.social.snapchat}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-full border border-[var(--border-subtle)] px-3 py-1.5 transition hover:border-[#e85d2c]/50"
+                  className="text-[var(--text-secondary)] hover:text-brand"
                 >
-                  Snapchat {BUSINESS.social.handle}
+                  Snapchat
                 </a>
               </li>
             </ul>
@@ -69,7 +62,7 @@ export function SiteFooter() {
         </div>
 
         <p className="mt-10 border-t border-[var(--border-subtle)] pt-6 text-center text-xs text-[var(--text-muted)]">
-          © Capo Pizza — Pizzeria Neufchâteau · Pizza Neufchâteau 88300
+          Capo Pizza — Neufchâteau (88300)
         </p>
       </div>
     </footer>

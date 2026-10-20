@@ -23,40 +23,35 @@ export function DishCard({
   return (
     <motion.article
       layout
-      initial={{ opacity: 0, y: 12 }}
+      initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.98 }}
-      whileHover={{ y: -4 }}
-      className={`group relative flex flex-col overflow-hidden rounded-2xl border bg-[var(--surface-elevated)] transition-shadow hover:shadow-xl hover:shadow-[#e85d2c]/10 ${
-        item.highlight
-          ? "border-[#e85d2c]/40 ring-1 ring-[#e85d2c]/20"
-          : "border-[var(--border-subtle)]"
+      exit={{ opacity: 0 }}
+      className={`group card-surface flex flex-col overflow-hidden transition-shadow hover:shadow-[var(--shadow-lift)] ${
+        item.highlight ? "card-surface--featured" : ""
       }`}
     >
       <button type="button" onClick={onOpen} className="text-left">
-        <div className="relative aspect-[4/3] overflow-hidden">
+        <div className="relative aspect-[4/3] overflow-hidden bg-[var(--surface-muted)]">
           <Image
             src={item.image}
             alt={item.name}
             fill
-            className="object-cover transition duration-500 group-hover:scale-105"
+            className="object-cover transition duration-300 group-hover:opacity-95"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             loading="lazy"
           />
           {item.highlight && (
-            <span className="absolute left-3 top-3 rounded-full bg-[#e85d2c] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
-              Signature
-            </span>
+            <span className="badge-signature absolute left-3 top-3">Signature</span>
           )}
         </div>
         <div className="flex flex-1 flex-col p-4">
           <div className="flex items-start justify-between gap-2">
-            <h3 className="font-display text-lg font-semibold text-[var(--text-primary)]">
+            <h3 className="font-display text-xl font-semibold text-[var(--text-primary)]">
               {item.name}
             </h3>
             <PriceTag item={item} size="sm" />
           </div>
-          <p className="mt-1 line-clamp-2 text-sm leading-relaxed text-[var(--text-secondary)]">
+          <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-[var(--text-secondary)]">
             {item.description}
           </p>
           {item.tags.length > 0 && (
@@ -67,9 +62,9 @@ export function DishCard({
                 return (
                   <span
                     key={tag}
-                    className="rounded-full bg-[var(--surface-muted)] px-2 py-0.5 text-[10px] font-medium text-[var(--text-muted)]"
+                    className="rounded-md border border-[var(--border-subtle)] px-2 py-0.5 text-[10px] font-medium text-[var(--text-muted)]"
                   >
-                    {meta.emoji} {meta.label}
+                    {meta.label}
                   </span>
                 );
               })}
@@ -82,9 +77,9 @@ export function DishCard({
         <button
           type="button"
           onClick={onOpen}
-          className="text-xs font-semibold uppercase tracking-wide text-[#e85d2c] transition hover:underline"
+          className="text-xs font-semibold uppercase tracking-wide text-brand transition hover:underline"
         >
-          Voir détails
+          Détails
         </button>
         <button
           type="button"
@@ -94,8 +89,8 @@ export function DishCard({
           }}
           className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition ${
             selected
-              ? "bg-[#e85d2c] text-white"
-              : "border border-[var(--border-subtle)] text-[var(--text-secondary)] hover:border-[#e85d2c]/50"
+              ? "bg-[var(--brand-primary)] text-[var(--brand-on-primary)]"
+              : "border border-[var(--border-subtle)] text-[var(--text-secondary)] hover:border-brand-soft"
           }`}
           aria-pressed={selected}
         >

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Sans, Outfit } from "next/font/google";
+import { Cormorant_Garamond, Source_Sans_3 } from "next/font/google";
 import { RestaurantJsonLd } from "@/components/json-ld";
 import { SeasonalAmbience } from "@/components/seasonal-ambience";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -7,15 +7,16 @@ import { BUSINESS } from "@/lib/business";
 import { getActiveSeasonalTheme } from "@/lib/site-theme";
 import "./globals.css";
 
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
+const sourceSans = Source_Sans_3({
+  variable: "--font-source",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const outfit = Outfit({
-  variable: "--font-outfit",
+const displaySerif = Cormorant_Garamond({
+  variable: "--font-display-serif",
   subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
+  weight: ["500", "600", "700"],
 });
 
 const siteDescription =
@@ -48,10 +49,10 @@ export const metadata: Metadata = {
     description: siteDescription,
     images: [
       {
-        url: "https://images.unsplash.com/photo-1604384847932-cff2a0b4cb64?auto=format&fit=crop&w=1200&q=80",
-        width: 1200,
-        height: 800,
-        alt: "Pizza artisanale Capo Pizza Neufchâteau",
+        url: "/images/capo-store-hero.jpeg",
+        width: 2880,
+        height: 2304,
+        alt: "Capo Pizza Neufchâteau",
       },
     ],
   },
@@ -65,8 +66,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#faf8f6" },
-    { media: "(prefers-color-scheme: dark)", color: "#0f0d0c" },
+    { media: "(prefers-color-scheme: light)", color: "#f7f5f2" },
+    { media: "(prefers-color-scheme: dark)", color: "#141312" },
   ],
 };
 
@@ -80,7 +81,7 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className={`${dmSans.variable} ${outfit.variable} dark h-full`}
+      className={`${sourceSans.variable} ${displaySerif.variable} dark h-full`}
       data-seasonal-theme={seasonal}
       suppressHydrationWarning
     >

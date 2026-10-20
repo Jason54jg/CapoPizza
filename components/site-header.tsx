@@ -34,7 +34,7 @@ export function SiteHeader({
   const { theme, toggleTheme, mounted } = useTheme();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -49,10 +49,10 @@ export function SiteHeader({
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+      className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-200 ${
         scrolled
-          ? "border-b border-[var(--border-subtle)] bg-[var(--surface-glass)] shadow-lg shadow-black/5 backdrop-blur-xl"
-          : "bg-[var(--surface-glass)]/80 backdrop-blur-md lg:bg-transparent lg:backdrop-blur-none"
+          ? "border-[var(--border-subtle)] bg-[var(--surface-glass)] backdrop-blur-md"
+          : "border-transparent bg-[var(--surface-glass)]/90 backdrop-blur-sm lg:bg-transparent lg:backdrop-blur-none"
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center gap-2 px-4 py-3 md:gap-4 md:px-6">
@@ -68,24 +68,24 @@ export function SiteHeader({
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder="Rechercher une pizza, un ingrédient…"
-              className="w-full rounded-full border border-[var(--border-subtle)] bg-[var(--surface-elevated)] py-2 pl-10 pr-4 text-sm outline-none ring-[#e85d2c]/0 transition focus:border-[#e85d2c]/50 focus:ring-2 focus:ring-[#e85d2c]/25"
+              className="input-field py-2 pl-10 pr-4 text-sm"
               aria-label="Recherche instantanée dans la carte"
             />
           </div>
           <OpenStatusBadge compact />
         </div>
 
-        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2 lg:hidden">
+        <div className="flex shrink-0 items-center gap-1.5 lg:hidden">
           <OpenStatusBadge mobile />
         </div>
 
-        <nav className="hidden items-center gap-1 xl:flex" aria-label="Navigation principale">
+        <nav className="hidden items-center gap-0.5 xl:flex" aria-label="Navigation principale">
           {NAV.map((item) => (
             <a
               key={item.label}
               href={item.href}
               onClick={() => handleNav(item.category)}
-              className="rounded-full px-3 py-1.5 text-sm font-medium text-[var(--text-secondary)] transition hover:bg-[var(--surface-elevated)] hover:text-[var(--text-primary)]"
+              className="rounded-md px-3 py-2 text-sm font-medium text-[var(--text-secondary)] transition hover:bg-[var(--surface-muted)] hover:text-[var(--text-primary)]"
             >
               {item.label}
             </a>
@@ -96,7 +96,7 @@ export function SiteHeader({
           <button
             type="button"
             onClick={toggleTheme}
-            className="rounded-full border border-[var(--border-subtle)] p-2 text-[var(--text-secondary)] transition hover:bg-[var(--surface-elevated)]"
+            className="rounded-lg border border-[var(--border-subtle)] p-2 text-[var(--text-secondary)] transition hover:bg-[var(--surface-muted)]"
             aria-label={theme === "dark" ? "Activer le mode clair" : "Activer le mode sombre"}
           >
             {mounted && theme === "dark" ? (
@@ -106,17 +106,14 @@ export function SiteHeader({
             )}
           </button>
 
-          <a
-            href={BUSINESS.phoneTel}
-            className="brand-gradient hidden items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white shadow-lg transition hover:brightness-110 sm:inline-flex"
-          >
+          <a href={BUSINESS.phoneTel} className="btn-primary hidden px-4 py-2 text-sm sm:inline-flex">
             <Phone className="h-4 w-4" />
             Commander
           </a>
 
           <button
             type="button"
-            className="rounded-full border border-[var(--border-subtle)] p-2 lg:hidden"
+            className="rounded-lg border border-[var(--border-subtle)] p-2 lg:hidden"
             onClick={() => setMobileOpen((o) => !o)}
             aria-expanded={mobileOpen}
             aria-label="Menu"
@@ -128,15 +125,15 @@ export function SiteHeader({
 
       {mobileOpen && (
         <nav
-          className="border-t border-[var(--border-subtle)] bg-[var(--surface-glass)] px-4 py-3 backdrop-blur-xl lg:hidden"
+          className="border-t border-[var(--border-subtle)] bg-[var(--surface-elevated)] px-4 py-3 lg:hidden"
           aria-label="Navigation mobile"
         >
-          <ul className="flex flex-col gap-1">
+          <ul className="flex flex-col gap-0.5">
             {NAV.map((item) => (
               <li key={item.label}>
                 <a
                   href={item.href}
-                  className="block rounded-xl px-3 py-2.5 text-sm font-medium"
+                  className="block rounded-lg px-3 py-2.5 text-sm font-medium text-[var(--text-primary)]"
                   onClick={() => handleNav(item.category)}
                 >
                   {item.label}
@@ -146,10 +143,10 @@ export function SiteHeader({
             <li>
               <a
                 href={BUSINESS.phoneTel}
-                className="brand-gradient mt-2 flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-white"
+                className="btn-primary mt-2 w-full py-3 text-sm"
               >
                 <Phone className="h-4 w-4" />
-                📞 Commander au {BUSINESS.phone}
+                Commander · {BUSINESS.phone}
               </a>
             </li>
           </ul>
