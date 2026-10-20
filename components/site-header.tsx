@@ -108,7 +108,7 @@ export function SiteHeader({
 
           <a
             href={BUSINESS.phoneTel}
-            className="hidden items-center gap-2 rounded-full bg-gradient-to-r from-[#e85d2c] to-[#c41e1e] px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-orange-900/25 transition hover:brightness-110 sm:inline-flex"
+            className="brand-gradient hidden items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white shadow-lg transition hover:brightness-110 sm:inline-flex"
           >
             <Phone className="h-4 w-4" />
             Commander
@@ -146,7 +146,7 @@ export function SiteHeader({
             <li>
               <a
                 href={BUSINESS.phoneTel}
-                className="mt-2 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#e85d2c] to-[#c41e1e] px-4 py-3 text-sm font-semibold text-white"
+                className="brand-gradient mt-2 flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-white"
               >
                 <Phone className="h-4 w-4" />
                 📞 Commander au {BUSINESS.phone}

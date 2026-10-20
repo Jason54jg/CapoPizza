@@ -185,7 +185,7 @@ export function MenuExplorer({
                   onClick={() => onCategoryChange(cat.id)}
                   className={`shrink-0 rounded-full px-4 py-2.5 text-sm font-semibold transition ${
                     active
-                      ? "bg-gradient-to-r from-[#e85d2c] to-[#c41e1e] text-white shadow-lg shadow-orange-900/20"
+                      ? "brand-gradient text-white shadow-lg"
                       : "border border-[var(--border-subtle)] bg-[var(--surface-elevated)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                   }`}
                 >

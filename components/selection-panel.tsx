@@ -107,7 +107,7 @@ export function SelectionPanel({
               </button>
               <a
                 href={BUSINESS.phoneTel}
-                className="flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#e85d2c] to-[#c41e1e] py-3 text-sm font-semibold text-white disabled:opacity-40"
+                className="brand-gradient flex w-full items-center justify-center gap-2 rounded-full py-3 text-sm font-semibold text-white disabled:opacity-40"
                 aria-disabled={!selection.length}
               >
                 <Phone className="h-4 w-4" />

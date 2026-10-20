@@ -132,7 +132,7 @@ export function DishModal({
                 </button>
                 <a
                   href={BUSINESS.phoneTel}
-                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#e85d2c] to-[#c41e1e] px-4 py-3 text-sm font-semibold text-white"
+                  className="brand-gradient inline-flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-3 text-sm font-semibold text-white"
                 >
                   <Phone className="h-4 w-4" />
                   Appeler pour commander

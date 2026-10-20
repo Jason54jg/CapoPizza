@@ -1,8 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Sans, Outfit } from "next/font/google";
 import { RestaurantJsonLd } from "@/components/json-ld";
+import { SeasonalAmbience } from "@/components/seasonal-ambience";
 import { ThemeProvider } from "@/components/theme-provider";
 import { BUSINESS } from "@/lib/business";
+import { getActiveSeasonalTheme } from "@/lib/site-theme";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -73,12 +75,20 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const seasonal = getActiveSeasonalTheme();
+
   return (
-    <html lang="fr" className={`${dmSans.variable} ${outfit.variable} dark h-full`} suppressHydrationWarning>
-      <body className="min-h-full antialiased">
-        <ThemeProvider>
+    <html
+      lang="fr"
+      className={`${dmSans.variable} ${outfit.variable} dark h-full`}
+      data-seasonal-theme={seasonal}
+      suppressHydrationWarning
+    >
+      <body className="relative min-h-full antialiased">
+        <ThemeProvider seasonal={seasonal}>
+          <SeasonalAmbience seasonal={seasonal} />
           <RestaurantJsonLd />
-          {children}
+          <div className="relative z-[2]">{children}</div>
         </ThemeProvider>
       </body>
     </html>

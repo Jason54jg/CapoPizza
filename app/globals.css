@@ -15,6 +15,10 @@
   --border-subtle: rgba(26, 20, 18, 0.1);
   --background: var(--surface-base);
   --foreground: var(--text-primary);
+  --brand-from: #e85d2c;
+  --brand-to: #c41e1e;
+  --brand-glow: rgba(232, 93, 44, 0.25);
+  --season-accent: var(--brand-from);
 }
 
 .dark {
@@ -28,6 +32,70 @@
   --border-subtle: rgba(245, 240, 235, 0.1);
   --background: var(--surface-base);
   --foreground: var(--text-primary);
+  --brand-from: #e85d2c;
+  --brand-to: #c41e1e;
+  --brand-glow: rgba(232, 93, 44, 0.3);
+  --season-accent: var(--brand-from);
+}
+
+/* ——— Halloween (build : site.theme.config.ts ou NEXT_PUBLIC_SEASONAL_THEME=halloween) ——— */
+.season-halloween.light {
+  --surface-base: #f5f0e8;
+  --surface-elevated: #fffaf5;
+  --surface-muted: #ebe3d6;
+  --brand-from: #ea580c;
+  --brand-to: #7c3aed;
+  --brand-glow: rgba(124, 58, 237, 0.2);
+  --season-accent: #ea580c;
+}
+
+.season-halloween.dark {
+  --surface-base: #120a0f;
+  --surface-elevated: #1f1218;
+  --surface-muted: #180e14;
+  --surface-glass: rgba(18, 10, 15, 0.85);
+  --brand-from: #f97316;
+  --brand-to: #a855f7;
+  --brand-glow: rgba(168, 85, 247, 0.35);
+  --season-accent: #fb923c;
+}
+
+.season-halloween body {
+  background-image: radial-gradient(
+    ellipse 80% 50% at 50% -20%,
+    rgba(124, 58, 237, 0.15),
+    transparent
+  );
+}
+
+/* ——— Noël ——— */
+.season-christmas.light {
+  --surface-base: #f4faf6;
+  --surface-elevated: #ffffff;
+  --surface-muted: #e8f2ec;
+  --brand-from: #b91c1c;
+  --brand-to: #15803d;
+  --brand-glow: rgba(21, 128, 61, 0.2);
+  --season-accent: #b91c1c;
+}
+
+.season-christmas.dark {
+  --surface-base: #0a1210;
+  --surface-elevated: #122019;
+  --surface-muted: #0d1814;
+  --surface-glass: rgba(10, 18, 16, 0.85);
+  --brand-from: #dc2626;
+  --brand-to: #16a34a;
+  --brand-glow: rgba(220, 38, 38, 0.25);
+  --season-accent: #f87171;
+}
+
+.season-christmas body {
+  background-image: radial-gradient(
+    ellipse 70% 45% at 50% -15%,
+    rgba(22, 163, 74, 0.12),
+    transparent
+  );
 }
 
 @theme inline {
@@ -42,7 +110,7 @@ html {
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-dm-sans), system-ui, sans-serif;
 }
@@ -52,5 +120,78 @@ body {
 }
 
 ::selection {
-  background: rgba(232, 93, 44, 0.35);
+  background: color-mix(in srgb, var(--brand-from) 35%, transparent);
+}
+
+.brand-gradient {
+  background-image: linear-gradient(to right, var(--brand-from), var(--brand-to));
+}
+
+.brand-gradient-text {
+  background-image: linear-gradient(to right, var(--brand-from), var(--brand-to));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@keyframes season-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-6deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(6deg);
+  }
+}
+
+@keyframes season-snow-fall {
+  0% {
+    transform: translateY(-10vh) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) translateX(24px);
+    opacity: 0.3;
+  }
+}
+
+.season-float {
+  animation: season-float 5s ease-in-out infinite;
+}
+
+.season-float-delay-1 {
+  animation-delay: 0.8s;
+}
+.season-float-delay-2 {
+  animation-delay: 1.6s;
+}
+.season-float-delay-3 {
+  animation-delay: 2.4s;
+}
+
+.season-snow {
+  animation: season-snow-fall 14s linear infinite;
+}
+
+.season-snow-delay-1 {
+  animation-delay: 2s;
+}
+.season-snow-delay-2 {
+  animation-delay: 5s;
+}
+.season-snow-delay-3 {
+  animation-delay: 8s;
+}
+.season-snow-delay-4 {
+  animation-delay: 11s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .season-float,
+  .season-snow {
+    animation: none;
+  }
 }

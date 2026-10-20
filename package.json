@@ -6,6 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "build:pages": "GITHUB_PAGES=true next build",
+    "build:pages:halloween": "GITHUB_PAGES=true NEXT_PUBLIC_SEASONAL_THEME=halloween next build",
+    "build:pages:christmas": "GITHUB_PAGES=true NEXT_PUBLIC_SEASONAL_THEME=christmas next build",
     "start": "next start",
     "lint": "eslint"
   },

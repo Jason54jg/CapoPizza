@@ -26,7 +26,7 @@ export function PriceTag({
 
   return (
     <span
-      className={`inline-flex shrink-0 items-center rounded-full bg-[#e85d2c]/15 px-2.5 py-1 text-[#e85d2c] ${sizeClass} ${className}`}
+      className={`inline-flex shrink-0 items-center rounded-full bg-[var(--brand-glow)] px-2.5 py-1 text-[var(--brand-from)] ${sizeClass} ${className}`}
     >
       {label ?? formatPrice(amount!)}
     </span>

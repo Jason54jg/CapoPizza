@@ -8,7 +8,8 @@ export function FloatingCallButton() {
   return (
     <motion.a
       href={BUSINESS.phoneTel}
-      className="fixed bottom-4 left-4 right-4 z-[60] flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#e85d2c] to-[#c41e1e] py-4 text-base font-bold text-white shadow-2xl shadow-orange-900/40 md:hidden"
+      className="brand-gradient fixed bottom-4 left-4 right-4 z-[60] flex items-center justify-center gap-2 rounded-full py-4 text-base font-bold text-white shadow-2xl md:hidden"
+      style={{ boxShadow: "0 16px 48px var(--brand-glow)" }}
       initial={{ y: 80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ delay: 0.5, type: "spring", stiffness: 260, damping: 22 }}
