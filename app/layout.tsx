@@ -19,7 +19,13 @@ const outfit = Outfit({
 const siteDescription =
   "Capo Pizza, pizzeria à Neufchâteau (88300) : pizzas artisanales, burgers, tacos et pâtes. Commander pizza Neufchâteau — à emporter et livraison. Appelez le 03 55 01 67 39.";
 
+const githubPagesUrl =
+  process.env.GITHUB_PAGES === "true"
+    ? "https://jason54jg.github.io/CapoPizza"
+    : undefined;
+
 export const metadata: Metadata = {
+  ...(githubPagesUrl ? { metadataBase: new URL(githubPagesUrl) } : {}),
   title: {
     default: "Capo Pizza | Pizzeria Neufchâteau (88300)",
     template: "%s | Capo Pizza Neufchâteau",

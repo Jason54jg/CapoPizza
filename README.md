@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Capo Pizza — Site web (Neufchâteau)
 
-## Getting Started
+Site vitrine Next.js pour **Capo Pizza** : menu interactif, commande par téléphone, SEO local.
 
-First, run the development server:
+## Développement local
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ouvrir [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Déploiement GitHub Pages
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Le site est publié en **export statique** sur :
 
-## Learn More
+**https://jason54jg.github.io/CapoPizza/**
 
-To learn more about Next.js, take a look at the following resources:
+### Première mise en place (une fois)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Sur GitHub : repo **CapoPizza** → **Settings** → **Pages**
+2. **Build and deployment** → Source : **GitHub Actions** (pas « Deploy from a branch »)
+3. Pousser sur `main` ou lancer le workflow **Deploy GitHub Pages** manuellement (**Actions** → **Run workflow**)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+À chaque push sur `main`, le workflow build et déploie automatiquement.
 
-## Deploy on Vercel
+### Tester le build Pages en local
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run build:pages
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Les fichiers statiques sont dans le dossier `out/` (avec le préfixe `/CapoPizza`).
+
+## Scripts
+
+| Commande | Description |
+|----------|-------------|
+| `npm run dev` | Serveur de développement |
+| `npm run build` | Build statique (racine `/`, pour dev) |
+| `npm run build:pages` | Build identique à la CI GitHub Pages |
+| `npm run lint` | ESLint |
