@@ -38,12 +38,12 @@ export function OpenStatusBadge({ className = "" }: OpenStatusBadgeProps) {
   return (
     <a
       href="#infos"
-      className={`inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-[var(--border-subtle)] bg-[var(--surface-elevated)] px-2 py-1 text-[11px] font-semibold text-[var(--text-secondary)] transition hover:border-[var(--border-strong)] hover:text-[var(--text-primary)] md:gap-2 md:px-2.5 md:py-1.5 md:text-xs ${className}`}
+      className={`inline-flex max-w-[5.5rem] shrink items-center gap-1 truncate rounded-lg border border-[var(--border-subtle)] bg-[var(--surface-elevated)] px-1.5 py-1 text-[11px] font-semibold text-[var(--text-secondary)] transition hover:border-[var(--border-strong)] hover:text-[var(--text-primary)] sm:max-w-none sm:gap-1.5 sm:px-2 md:gap-2 md:px-2.5 md:py-1.5 md:text-xs ${className}`}
       aria-live="polite"
       title={fullLabel}
     >
       <StatusDot open={status.isOpen} />
-      <span className="whitespace-nowrap">
+      <span className="truncate">
         {status.isOpen ? dict.status.open : dict.status.closed}
       </span>
       <span className="hidden whitespace-nowrap text-[11px] font-medium text-[var(--text-muted)] lg:inline">

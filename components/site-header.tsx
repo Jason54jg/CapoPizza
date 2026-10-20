@@ -64,13 +64,13 @@ export function SiteHeader({
           : "border-[var(--border-subtle)]/60 bg-[var(--surface-glass)]/95 backdrop-blur-md"
       }`}
     >
-      <div className="mx-auto flex h-[4.25rem] max-w-6xl items-center gap-4 px-4 md:px-6">
+      <div className="mx-auto flex h-[4.25rem] max-w-6xl items-center gap-2 px-3 sm:gap-3 sm:px-4 md:gap-4 md:px-6">
         <Link
           href={`/${locale}/`}
-          className="shrink-0"
+          className="min-w-0 shrink"
           onClick={() => window.scrollTo({ top: 0 })}
         >
-          <Logo size="md" />
+          <Logo size="md" hideWordmarkOnMobile />
         </Link>
 
         <nav
@@ -89,7 +89,7 @@ export function SiteHeader({
           ))}
         </nav>
 
-        <div className="ml-auto flex shrink-0 items-center gap-2">
+        <div className="ml-auto flex min-w-0 shrink-0 items-center gap-1.5 sm:gap-2">
           <div className="hidden items-center lg:flex">
             {searchOpen ? (
               <div className="relative w-52 xl:w-60">
@@ -119,14 +119,14 @@ export function SiteHeader({
             )}
           </div>
 
-          <LanguageSwitcher className="hidden sm:inline-flex" />
+          <LanguageSwitcher className="hidden md:inline-flex" />
 
           <OpenStatusBadge />
 
           <button
             type="button"
             onClick={toggleTheme}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-subtle)] text-[var(--text-secondary)] transition hover:bg-[var(--surface-muted)]"
+            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[var(--border-subtle)] text-[var(--text-secondary)] transition hover:bg-[var(--surface-muted)]"
             aria-label={
               theme === "dark" ? dict.nav.lightMode : dict.nav.darkMode
             }
@@ -140,7 +140,7 @@ export function SiteHeader({
 
           <a
             href={BUSINESS.phoneTel}
-            className="btn-primary hidden h-9 items-center gap-2 px-4 text-sm font-semibold sm:inline-flex"
+            className="btn-primary hidden h-9 items-center gap-2 px-4 text-sm font-semibold md:inline-flex"
           >
             <Phone className="h-4 w-4" />
             {dict.nav.order}
@@ -148,7 +148,7 @@ export function SiteHeader({
 
           <button
             type="button"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-subtle)] md:hidden"
+            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[var(--border-subtle)] md:hidden"
             onClick={() => setMobileOpen((o) => !o)}
             aria-expanded={mobileOpen}
             aria-label={dict.nav.menuButton}

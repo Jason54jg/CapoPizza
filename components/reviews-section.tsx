@@ -251,24 +251,24 @@ export function ReviewsSection() {
                 {dict.reviews.ctaLead}
               </p>
             </div>
-            <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
+            <div className="flex w-full flex-col gap-3">
               <a
                 href={mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary px-5 py-3 text-sm"
+                className="btn-primary w-full px-5 py-3 text-sm"
               >
                 {dict.reviews.seeAll}
-                <ExternalLink className="h-4 w-4" />
+                <ExternalLink className="h-4 w-4 shrink-0" />
               </a>
               <a
                 href={mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-secondary px-5 py-3 text-sm"
+                className="btn-secondary w-full px-5 py-3 text-sm"
               >
                 {dict.reviews.leaveReview}
-                <ExternalLink className="h-4 w-4" />
+                <ExternalLink className="h-4 w-4 shrink-0" />
               </a>
             </div>
             <p className="text-[11px] text-[var(--text-muted)]">
