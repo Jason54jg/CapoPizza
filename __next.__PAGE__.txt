@@ -1,0 +1,46 @@
+1:"$Sreact.fragment"
+2:"/CapoPizza/_next/static/chunks/3kc117xpy084g.js"
+3:I[89554,["$2"],"ThemeProvider"]
+5:I[39756,["$2"],"default"]
+6:I[37457,["$2"],"default"]
+a:"/CapoPizza/_next/static/chunks/18po54-81k1s8.js"
+b:I[46449,["$2","$a"],"HomePage"]
+c:I[97367,["$2"],"OutletBoundary"]
+d:"$Sreact.suspense"
+10:"ViewportBoundary"
+11:I[97367,["$2"],"$10"]
+12:"MetadataBoundary"
+13:I[97367,["$2"],"$12"]
+:HL["/CapoPizza/_next/static/chunks/3czx23nli2_xv.css","style"]
+4:T4dd,{"@context":"https://schema.org","@type":["Restaurant","FoodEstablishment"],"name":"Capo Pizza","description":"Pizzeria Capo Pizza à Neufchâteau : pizzas artisanales, burgers, tacos, pâtes. À emporter et livraison.","image":"https://images.unsplash.com/photo-1604384847932-cff2a0b4cb64?auto=format&fit=crop&w=1200&q=80","telephone":"+33355016739","address":{"@type":"PostalAddress","streetAddress":"11 Rue de France","addressLocality":"Neufchâteau","postalCode":"88300","addressCountry":"FR"},"geo":{"@type":"GeoCoordinates","latitude":48.355,"longitude":5.605},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"11:00","closes":"14:30"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"18:00","closes":"23:00"}],"servesCuisine":["Pizza","Italian","FastFood"],"priceRange":"€","sameAs":["https://www.facebook.com/Capopizza88","https://www.instagram.com/capopizza88/","https://www.snapchat.com/add/Capopizza88"],"amenityFeature":{"@type":"LocationFeatureSpecification","name":"Lundi au Dimanche : 11h00 – 14h30 et 18h00 – 23h00 (ouvert 7j/7)"}}8:X
+9:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$1","c",{"children":[["$","$Lb",null,{}],[["$","script","script-0",{"src":"/CapoPizza/_next/static/chunks/18po54-81k1s8.js","async":true}]],["$","$Lc",null,{"children":["$","$d",null,{"name":"Next.MetadataOutlet","children":"$@e"}]}]]}],"p":"$@f","v":null,"s":"$8"}}]]
+0:{"t":{"t":{"s":"","h":80,"d":{"r":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/CapoPizza/_next/static/chunks/3czx23nli2_xv.css","precedence":"next"}],["$","script","script-0",{"src":"/CapoPizza/_next/static/chunks/3kc117xpy084g.js","async":true}]],["$","html",null,{"lang":"fr","className":"B_rulq_variable ds61rG_variable dark h-full","suppressHydrationWarning":true,"children":["$","body",null,{"className":"min-h-full antialiased","children":["$","$L3",null,{"children":[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"$4"}}],["$","$L5",null,{"parallelRouterKey":"children","template":["$","$L6",null,{}],"notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]]}]]}]}]}]]}],"p":"$@7","v":null,"s":"$8"},"c":"$Q9"},"h":{"r":["$","$1","h",{"children":[null,["$","$L11",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}],["$","meta","2",{"name":"theme-color","content":"#faf8f6","media":"(prefers-color-scheme: light)"}],["$","meta","3",{"name":"theme-color","content":"#0f0d0c","media":"(prefers-color-scheme: dark)"}]]}],["$","$L13",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$d",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Capo Pizza | Pizzeria Neufchâteau (88300)"}],["$","meta","1",{"name":"description","content":"Capo Pizza, pizzeria à Neufchâteau (88300) : pizzas artisanales, burgers, tacos et pâtes. Commander pizza Neufchâteau — à emporter et livraison. Appelez le 03 55 01 67 39."}],["$","meta","2",{"name":"keywords","content":"Pizzeria Neufchâteau,Pizza Neufchâteau,Commander pizza Neufchâteau 88300,Capo Pizza,livraison pizza Neufchâteau"}],"$L14","$L15","$L16","$L17","$L18","$L19","$L1a","$L1b","$L1c","$L1d","$L1e","$L1f","$L20","$L21","$L22","$L23","$L24","$L25","$L26"]}]}],null]}],"$L27"]}],"p":"$@28","v":null,"s":"$8"}},"a":"$@29","u":"$@2a","b":"uLlrU2tDwerVciQs4_T-J"}
+2b:I[27201,["$2"],"IconMark"]
+e:null
+14:["$","meta","3",{"name":"robots","content":"index, follow"}]
+15:["$","meta","4",{"property":"og:title","content":"Capo Pizza — Pizzeria à Neufchâteau"}]
+16:["$","meta","5",{"property":"og:description","content":"Capo Pizza, pizzeria à Neufchâteau (88300) : pizzas artisanales, burgers, tacos et pâtes. Commander pizza Neufchâteau — à emporter et livraison. Appelez le 03 55 01 67 39."}]
+17:["$","meta","6",{"property":"og:site_name","content":"Capo Pizza"}]
+18:["$","meta","7",{"property":"og:locale","content":"fr_FR"}]
+19:["$","meta","8",{"property":"og:image","content":"https://images.unsplash.com/photo-1604384847932-cff2a0b4cb64?auto=format&fit=crop&w=1200&q=80"}]
+1a:["$","meta","9",{"property":"og:image:width","content":"1200"}]
+1b:["$","meta","10",{"property":"og:image:height","content":"800"}]
+1c:["$","meta","11",{"property":"og:image:alt","content":"Pizza artisanale Capo Pizza Neufchâteau"}]
+1d:["$","meta","12",{"property":"og:type","content":"website"}]
+1e:["$","meta","13",{"name":"twitter:card","content":"summary_large_image"}]
+1f:["$","meta","14",{"name":"twitter:title","content":"Capo Pizza | Pizzeria Neufchâteau"}]
+20:["$","meta","15",{"name":"twitter:description","content":"Capo Pizza, pizzeria à Neufchâteau (88300) : pizzas artisanales, burgers, tacos et pâtes. Commander pizza Neufchâteau — à emporter et livraison. Appelez le 03 55 01 67 39."}]
+21:["$","meta","16",{"name":"twitter:image","content":"https://images.unsplash.com/photo-1604384847932-cff2a0b4cb64?auto=format&fit=crop&w=1200&q=80"}]
+22:["$","meta","17",{"name":"twitter:image:alt","content":"Pizza artisanale Capo Pizza Neufchâteau"}]
+23:["$","meta","18",{"name":"twitter:image:width","content":"1200"}]
+24:["$","meta","19",{"name":"twitter:image:height","content":"800"}]
+25:["$","link","20",{"rel":"icon","href":"/CapoPizza/favicon.ico?favicon.117ezoe8m31dk.ico","sizes":"48x48","type":"image/x-icon"}]
+26:["$","$L2b","21",{}]
+27:["$","meta",null,{"name":"next-size-adjust","content":""}]
+8:300
+2a:true
+8:C
+29:0
+7:"$undefined"
+28:"$undefined"
+f:"$undefined"
