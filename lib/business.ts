@@ -26,4 +26,29 @@ export const OPENING_SLOTS = [
 ] as const;
 
 export const OPENING_LABEL =
-  "Lundi au Dimanche : 11h00 – 14h30 et 18h00 – 23h00 (ouvert 7j/7)";
+  "Ouvert 7j/7 — 11h00 – 14h30 et 18h00 – 23h00";
+
+export const OPENING_LINES = [
+  "11h00 – 14h30",
+  "18h00 – 23h00",
+] as const;
+
+/** Offres pizzas (conditions affichées telles quelles sur le support print) */
+export const PIZZA_OFFERS = [
+  {
+    id: "emporter",
+    mode: "À emporter",
+    title: "2 achetées, la 3ᵉ à −50 %",
+    detail:
+      "Sauf Margherita. La moins chère est à −50 %. Offre non cumulable.",
+  },
+  {
+    id: "livraison",
+    mode: "En livraison",
+    title: "3 achetées, la 4ᵉ offerte",
+    detail:
+      "Sauf Margherita. La moins chère est offerte. Offre non cumulable.",
+  },
+] as const;
+
+export const PAYMENT_NOTE = "CB acceptée en livraison";

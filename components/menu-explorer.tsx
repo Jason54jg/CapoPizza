@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { ListChecks, Search } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useSelection } from "@/hooks/use-selection";
 import { MENU_ITEMS, searchMenuItems } from "@/lib/menu";
 import {
@@ -13,7 +13,8 @@ import {
   type MenuItem,
 } from "@/lib/menu-types";
 import { PRICE_DISCLAIMER } from "@/lib/menu-prices";
-import { isInSelection } from "@/lib/selection-storage";
+import { estimateSelectionTotal } from "@/lib/selection-pricing";
+import { countInSelection } from "@/lib/selection-storage";
 import { DishCard } from "./dish-card";
 import { DishModal } from "./dish-modal";
 import { SelectionPanel } from "./selection-panel";
@@ -35,7 +36,11 @@ export function MenuExplorer({
   const [dietFilters, setDietFilters] = useState<DietTag[]>([]);
   const [modalItem, setModalItem] = useState<MenuItem | null>(null);
   const [selectionOpen, setSelectionOpen] = useState(false);
-  const { selection, toggle, clear } = useSelection();
+  const { selection, add, remove, clear } = useSelection();
+  const selectionTotal = useMemo(
+    () => estimateSelectionTotal(selection),
+    [selection],
+  );
 
   useEffect(() => {
     const tab = tabsRef.current?.querySelector<HTMLElement>(
@@ -79,13 +84,6 @@ export function MenuExplorer({
       prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
     );
   };
-
-  const handleToggleSelection = useCallback(
-    (item: MenuItem) => {
-      toggle(item);
-    },
-    [toggle],
-  );
 
   const isPizzaSection =
     activeCategory === "pizzas-tomate" || activeCategory === "pizzas-creme";
@@ -131,44 +129,52 @@ export function MenuExplorer({
             <ListChecks className="h-4 w-4" />
             Ma sélection
             {selection.length > 0 && (
-              <span className="rounded-md bg-[var(--brand-primary)] px-2 py-0.5 text-xs text-[var(--brand-on-primary)]">
-                {selection.length}
-              </span>
+              <>
+                <span className="rounded-md bg-[var(--brand-primary)] px-2 py-0.5 text-xs text-[var(--brand-on-primary)]">
+                  {selection.length}
+                </span>
+                <span className="text-xs font-semibold tabular-nums text-brand">
+                  {selectionTotal.totalLabel}
+                </span>
+              </>
             )}
           </button>
         </div>
 
         {!globalSearchActive && (
-          <div
-            ref={tabsRef}
-            className="mb-4 flex gap-2 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-            role="tablist"
-            aria-label="Catégories du menu"
-          >
-            {MENU_CATEGORIES.map((cat) => {
-              const active = cat.id === activeCategory;
-              return (
-                <button
-                  key={cat.id}
-                  type="button"
-                  role="tab"
-                  data-category={cat.id}
-                  aria-selected={active}
-                  onClick={() => onCategoryChange(cat.id)}
-                  className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium transition ${
-                    active
-                      ? "tab-active"
-                      : "border border-[var(--border-subtle)] bg-[var(--surface-elevated)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
-                  }`}
-                >
-                  {cat.label}
-                </button>
-              );
-            })}
+          <div className="relative mb-4">
+            <div
+              ref={tabsRef}
+              className="flex flex-wrap gap-1.5 sm:gap-2"
+              role="tablist"
+              aria-label="Catégories du menu"
+            >
+              {MENU_CATEGORIES.map((cat) => {
+                const active = cat.id === activeCategory;
+                return (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    role="tab"
+                    data-category={cat.id}
+                    aria-selected={active}
+                    onClick={() => onCategoryChange(cat.id)}
+                    className={`rounded-full px-2.5 py-1.5 text-xs font-medium transition sm:px-3 sm:text-sm ${
+                      active
+                        ? "tab-active"
+                        : "border border-[var(--border-subtle)] bg-[var(--surface-elevated)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                    }`}
+                  >
+                    <span className="md:hidden">{cat.shortLabel}</span>
+                    <span className="hidden md:inline">{cat.label}</span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         )}
 
-        <div className="mb-6 flex flex-wrap gap-2">
+        <div className="mb-6 flex flex-wrap gap-1.5">
           {DIET_FILTERS.map((filter) => {
             const active = dietFilters.includes(filter.id);
             return (
@@ -176,7 +182,7 @@ export function MenuExplorer({
                 key={filter.id}
                 type="button"
                 onClick={() => toggleDiet(filter.id)}
-                className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+                className={`rounded-full px-2.5 py-1 text-xs font-semibold transition ${
                   active
                     ? "bg-[var(--text-primary)] text-[var(--surface-base)]"
                     : "border border-[var(--border-subtle)] text-[var(--text-secondary)]"
@@ -205,19 +211,14 @@ export function MenuExplorer({
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className={`grid gap-4 ${
-                isPizzaSection && !globalSearchActive
-                  ? "sm:grid-cols-2 lg:grid-cols-3"
-                  : "sm:grid-cols-2 lg:grid-cols-3"
-              }`}
+              className="grid grid-cols-1 items-stretch gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3"
             >
               {displayItems.map((item) => (
                 <DishCard
                   key={item.id}
                   item={item}
-                  selected={isInSelection(item.id, selection)}
+                  selectedCount={countInSelection(item.id, selection)}
                   onOpen={() => setModalItem(item)}
-                  onToggleSelection={() => handleToggleSelection(item)}
                 />
               ))}
             </motion.div>
@@ -227,10 +228,12 @@ export function MenuExplorer({
 
       <DishModal
         item={modalItem}
-        selected={modalItem ? isInSelection(modalItem.id, selection) : false}
+        selectedCount={
+          modalItem ? countInSelection(modalItem.id, selection) : 0
+        }
         onClose={() => setModalItem(null)}
-        onToggleSelection={() => {
-          if (modalItem) handleToggleSelection(modalItem);
+        onAdd={(composition) => {
+          if (modalItem) add(modalItem, composition);
         }}
       />
 
@@ -239,6 +242,7 @@ export function MenuExplorer({
         onClose={() => setSelectionOpen(false)}
         selection={selection}
         onClear={clear}
+        onRemove={remove}
       />
     </section>
   );

@@ -1,5 +1,5 @@
-import { Clock, MapPin, Phone } from "lucide-react";
-import { BUSINESS, OPENING_LABEL } from "@/lib/business";
+import { Clock, CreditCard, MapPin, Phone } from "lucide-react";
+import { BUSINESS, OPENING_LINES, PAYMENT_NOTE } from "@/lib/business";
 
 export function InfoSection() {
   return (
@@ -18,10 +18,14 @@ export function InfoSection() {
               <div className="flex items-start gap-3">
                 <Clock className="mt-0.5 h-5 w-5 shrink-0 text-brand" />
                 <div>
-                  <h3 className="font-semibold text-[var(--text-primary)]">Horaires</h3>
-                  <p className="mt-1 text-sm leading-relaxed text-[var(--text-secondary)]">
-                    {OPENING_LABEL}
-                  </p>
+                  <h3 className="font-semibold text-[var(--text-primary)]">
+                    Ouvert 7j/7
+                  </h3>
+                  <ul className="mt-2 space-y-1 text-sm text-[var(--text-secondary)]">
+                    {OPENING_LINES.map((line) => (
+                      <li key={line}>{line}</li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </div>
@@ -59,6 +63,18 @@ export function InfoSection() {
                   </a>
                   <p className="mt-1 text-xs text-[var(--text-muted)]">
                     Sur place, à emporter et livraison
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="card-surface p-5">
+              <div className="flex items-start gap-3">
+                <CreditCard className="mt-0.5 h-5 w-5 shrink-0 text-brand" />
+                <div>
+                  <h3 className="font-semibold text-[var(--text-primary)]">Paiement</h3>
+                  <p className="mt-1 text-sm text-[var(--text-secondary)]">
+                    {PAYMENT_NOTE}
                   </p>
                 </div>
               </div>

@@ -6,6 +6,7 @@ import { FloatingCallButton } from "./floating-call-button";
 import { HeroSection } from "./hero-section";
 import { InfoSection } from "./info-section";
 import { MenuExplorer } from "./menu-explorer";
+import { OffersSection } from "./offers-section";
 import { SiteFooter } from "./site-footer";
 import { SiteHeader } from "./site-header";
 
@@ -38,6 +39,7 @@ export function HomePage() {
             scrollToMenu();
           }}
         />
+        <OffersSection />
         <MenuExplorer
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}

@@ -1,4 +1,5 @@
 import { BUSINESS } from "@/lib/business";
+import { Logo } from "./logo";
 
 export function SiteFooter() {
   return (
@@ -6,9 +7,9 @@ export function SiteFooter() {
       <div className="mx-auto max-w-6xl px-4 md:px-6">
         <div className="grid gap-10 md:grid-cols-3">
           <div>
-            <p className="font-display text-2xl text-[var(--text-primary)]">Capo Pizza</p>
-            <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
-              Pizzeria & restauration rapide à Neufchâteau (88300).
+            <Logo size="lg" />
+            <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)]">
+              Pizza au feu de bois — Neufchâteau (88300). Ouvert 7j/7.
             </p>
           </div>
 

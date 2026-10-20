@@ -1,42 +1,41 @@
 import type { MenuItem } from "./menu-types";
 
-const capoPhoto = "/images/capo-store-hero.jpeg";
-const pizzaTomato = capoPhoto;
-const pizzaCream = capoPhoto;
-const burgerImg =
-  "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80";
-const tacoImg =
-  "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=800&q=80";
-const pastaImg =
-  "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=800&q=80";
-const saladImg =
-  "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80";
-const plateImg =
-  "https://images.unsplash.com/photo-1630384060420-cbbad5fabc04?auto=format&fit=crop&w=800&q=80";
-
 type ItemInput = {
   id: string;
   name: string;
   description: string;
   tags?: MenuItem["tags"];
   highlight?: boolean;
+  isNew?: boolean;
+  includes?: string;
 };
+
+const INCLUDES = {
+  burgerMenu: "Frites + boisson 33 cl incluses",
+  sandwichMenu: "Frites + boisson 33 cl incluses",
+  tacos: "Frites + sauce fromagère maison incluses",
+  panini: "Frites incluses",
+  bowl: "Frites, cheddar, oignons frits et sauce fromagère inclus",
+  enfant: "Frites + Capri-Sun inclus",
+  pates: "Penne ou tagliatelle · pain offert sur demande",
+  pizza: "Tailles Senior ou Méga",
+} as const;
 
 function item(
   partial: ItemInput,
   category: MenuItem["category"],
-  image: string,
 ): MenuItem {
+  const isPizza = category === "pizzas-tomate" || category === "pizzas-creme";
   return {
     ...partial,
     category,
-    image,
     tags: partial.tags ?? [],
+    includes: partial.includes ?? (isPizza ? INCLUDES.pizza : undefined),
   };
 }
 
 export const MENU_ITEMS: MenuItem[] = [
-  // Base Sauce Tomate
+  // ——— Pizzas sauce tomate ———
   item(
     {
       id: "margherita",
@@ -46,7 +45,14 @@ export const MENU_ITEMS: MenuItem[] = [
       highlight: true,
     },
     "pizzas-tomate",
-    pizzaTomato,
+  ),
+  item(
+    {
+      id: "napolitaine",
+      name: "Napolitaine",
+      description: "Tomate, mozzarella, anchois, olives, câpres.",
+    },
+    "pizzas-tomate",
   ),
   item(
     {
@@ -57,16 +63,6 @@ export const MENU_ITEMS: MenuItem[] = [
       highlight: true,
     },
     "pizzas-tomate",
-    pizzaTomato,
-  ),
-  item(
-    {
-      id: "napolitaine",
-      name: "Napolitaine",
-      description: "Tomate, mozzarella, anchois, olives, câpres.",
-    },
-    "pizzas-tomate",
-    pizzaTomato,
   ),
   item(
     {
@@ -76,47 +72,15 @@ export const MENU_ITEMS: MenuItem[] = [
       tags: ["vegetarian"],
     },
     "pizzas-tomate",
-    pizzaTomato,
   ),
   item(
     {
       id: "orientale",
       name: "Orientale",
-      description: "Tomate, mozzarella, merguez, poivrons, oignons.",
+      description: "Tomate, mozzarella, merguez, poivrons, oignons, œuf.",
       tags: ["spicy", "gourmet"],
     },
     "pizzas-tomate",
-    pizzaTomato,
-  ),
-  item(
-    {
-      id: "3-jambons",
-      name: "3 Jambons",
-      description: "Tomate, mozzarella, jambon de dinde, lardons, chorizo.",
-      tags: ["spicy", "gourmet"],
-    },
-    "pizzas-tomate",
-    pizzaTomato,
-  ),
-  item(
-    {
-      id: "kebab-pizza",
-      name: "Kebab",
-      description: "Tomate, mozzarella, viande de kebab, oignons.",
-      tags: ["gourmet"],
-    },
-    "pizzas-tomate",
-    pizzaTomato,
-  ),
-  item(
-    {
-      id: "paysanne",
-      name: "Paysanne",
-      description: "Tomate, mozzarella, lardons, œuf.",
-      tags: ["gourmet"],
-    },
-    "pizzas-tomate",
-    pizzaTomato,
   ),
   item(
     {
@@ -126,7 +90,6 @@ export const MENU_ITEMS: MenuItem[] = [
       tags: ["vegetarian", "gourmet"],
     },
     "pizzas-tomate",
-    pizzaTomato,
   ),
   item(
     {
@@ -136,17 +99,15 @@ export const MENU_ITEMS: MenuItem[] = [
       tags: ["gourmet"],
     },
     "pizzas-tomate",
-    pizzaTomato,
   ),
   item(
     {
       id: "bellissima",
       name: "Bellissima",
-      description: "Tomate, mozzarella, chorizo, viande hachée, poivrons.",
+      description: "Tomate, mozzarella, viande hachée, chorizo, poivrons.",
       tags: ["spicy", "gourmet"],
     },
     "pizzas-tomate",
-    pizzaTomato,
   ),
   item(
     {
@@ -155,28 +116,51 @@ export const MENU_ITEMS: MenuItem[] = [
       description: "Tomate, mozzarella, fruits de mer, citron.",
     },
     "pizzas-tomate",
-    pizzaTomato,
+  ),
+  item(
+    {
+      id: "san-pietro",
+      name: "San Pietro",
+      description: "Tomate, mozzarella, merguez, chorizo, champignons.",
+      tags: ["spicy"],
+    },
+    "pizzas-tomate",
+  ),
+  item(
+    {
+      id: "bolognaise-pizza",
+      name: "Bolognaise",
+      description: "Tomate, mozzarella, viande hachée, pommes de terre, oignons.",
+    },
+    "pizzas-tomate",
   ),
   item(
     {
       id: "calzone",
       name: "Calzone (chausson)",
       description:
-        "Tomate, mozzarella, champignons, œuf, jambon de dinde, viande hachée.",
+        "Tomate, mozzarella, champignons, jaune d'œuf, jambon de dinde ou viande hachée.",
       tags: ["gourmet"],
     },
     "pizzas-tomate",
-    pizzaTomato,
   ),
   item(
     {
       id: "4-saisons",
       name: "4 Saisons",
-      description: "Tomate, mozzarella, jambon, champignons, poivrons, olives.",
+      description: "Tomate, mozzarella, jambon de dinde, champignons, poivrons, olives.",
       tags: ["gourmet"],
     },
     "pizzas-tomate",
-    pizzaTomato,
+  ),
+  item(
+    {
+      id: "3-jambons",
+      name: "3 Jambons",
+      description: "Tomate, mozzarella, jambon de dinde, lardons, chorizo.",
+      tags: ["spicy", "gourmet"],
+    },
+    "pizzas-tomate",
   ),
   item(
     {
@@ -186,18 +170,24 @@ export const MENU_ITEMS: MenuItem[] = [
       tags: ["spicy"],
     },
     "pizzas-tomate",
-    pizzaTomato,
+  ),
+  item(
+    {
+      id: "neptune",
+      name: "Neptune",
+      description: "Tomate, mozzarella, thon, poivrons, oignons, olives.",
+    },
+    "pizzas-tomate",
   ),
   item(
     {
       id: "mexicaine",
       name: "Mexicaine",
       description:
-        "Tomate, mozzarella, viandes hachées, merguez, poivrons, oignons.",
+        "Tomate, mozzarella, viande hachée, merguez, poivrons, oignons.",
       tags: ["spicy", "gourmet"],
     },
     "pizzas-tomate",
-    pizzaTomato,
   ),
   item(
     {
@@ -207,19 +197,27 @@ export const MENU_ITEMS: MenuItem[] = [
       tags: ["gourmet"],
     },
     "pizzas-tomate",
-    pizzaTomato,
   ),
-
-  // Base Crème Fraîche
   item(
     {
-      id: "fermiere",
-      name: "Fermière",
-      description: "Crème, mozzarella, pommes de terre, poulet.",
+      id: "kebab-pizza",
+      name: "Kebab",
+      description: "Tomate, mozzarella, viande de kebab, oignons.",
+      tags: ["gourmet"],
     },
-    "pizzas-creme",
-    pizzaCream,
+    "pizzas-tomate",
   ),
+  item(
+    {
+      id: "paysanne",
+      name: "Paysanne",
+      description: "Tomate, mozzarella, lardons, œuf.",
+      tags: ["gourmet"],
+    },
+    "pizzas-tomate",
+  ),
+
+  // ——— Pizzas crème ———
   item(
     {
       id: "rimini",
@@ -228,7 +226,6 @@ export const MENU_ITEMS: MenuItem[] = [
       tags: ["gourmet"],
     },
     "pizzas-creme",
-    pizzaCream,
   ),
   item(
     {
@@ -239,7 +236,25 @@ export const MENU_ITEMS: MenuItem[] = [
       highlight: true,
     },
     "pizzas-creme",
-    pizzaCream,
+  ),
+  item(
+    {
+      id: "capo",
+      name: "Capo",
+      description:
+        "Crème, mozzarella, jambon de dinde, roquette, parmesan, balsamique.",
+      tags: ["gourmet"],
+      highlight: true,
+    },
+    "pizzas-creme",
+  ),
+  item(
+    {
+      id: "fermiere",
+      name: "Fermière",
+      description: "Crème, mozzarella, poulet, pommes de terre.",
+    },
+    "pizzas-creme",
   ),
   item(
     {
@@ -249,17 +264,15 @@ export const MENU_ITEMS: MenuItem[] = [
       tags: ["gourmet"],
     },
     "pizzas-creme",
-    pizzaCream,
   ),
   item(
     {
       id: "savoyarde-pizza",
       name: "Savoyarde",
-      description: "Crème, mozzarella, jambon, viande hachée, pommes de terre.",
+      description: "Crème, mozzarella, jambon de dinde, viande hachée, pommes de terre.",
       tags: ["gourmet"],
     },
     "pizzas-creme",
-    pizzaCream,
   ),
   item(
     {
@@ -270,7 +283,6 @@ export const MENU_ITEMS: MenuItem[] = [
       tags: ["gourmet"],
     },
     "pizzas-creme",
-    pizzaCream,
   ),
   item(
     {
@@ -280,7 +292,6 @@ export const MENU_ITEMS: MenuItem[] = [
       tags: ["gourmet"],
     },
     "pizzas-creme",
-    pizzaCream,
   ),
   item(
     {
@@ -290,18 +301,25 @@ export const MENU_ITEMS: MenuItem[] = [
       tags: ["spicy", "gourmet"],
     },
     "pizzas-creme",
-    pizzaCream,
+  ),
+  item(
+    {
+      id: "vosgienne",
+      name: "Vosgienne",
+      description: "Crème, mozzarella, lardons, bacon, pommes de terre.",
+      tags: ["gourmet"],
+    },
+    "pizzas-creme",
   ),
   item(
     {
       id: "tartiflette",
       name: "Tartiflette",
       description:
-        "Crème, mozzarella, lardons, pommes de terre, reblochon, oignons.",
+        "Crème, mozzarella, reblochon, lardons, pommes de terre, oignons.",
       tags: ["gourmet"],
     },
     "pizzas-creme",
-    pizzaCream,
   ),
   item(
     {
@@ -310,261 +328,267 @@ export const MENU_ITEMS: MenuItem[] = [
       description: "Crème, mozzarella, saumon fumé, citron.",
     },
     "pizzas-creme",
-    pizzaCream,
   ),
   item(
     {
       id: "cannibale",
       name: "Cannibale",
-      description: "Sauce barbecue, mozzarella, viande hachée, merguez, poulet.",
+      description: "Sauce barbecue, mozzarella, viande hachée, poulet, merguez.",
       tags: ["spicy", "gourmet"],
     },
     "pizzas-creme",
-    pizzaCream,
   ),
   item(
     {
-      id: "bollywood",
-      name: "Bollywood",
+      id: "pizza-tacos",
+      name: "Pizza Tacos",
       description:
-        "Sauce barbecue, mozzarella, poulet tikka, champignons, poivrons, oignons, olives.",
+        "Crème, poulet tikka, pommes de terre, mozzarella, cheddar, viande hachée, sauce fromagère, frites.",
       tags: ["spicy", "gourmet"],
+      highlight: true,
+      isNew: true,
     },
     "pizzas-creme",
-    pizzaCream,
   ),
   item(
     {
       id: "havane",
       name: "Havane",
       description:
-        "Crème, mozzarella, jambon de dinde, chorizo, gorgonzola, poivrons.",
+        "Crème, mozzarella, jambon, chorizo, gorgonzola, poivrons.",
       tags: ["spicy", "gourmet"],
+      isNew: true,
     },
     "pizzas-creme",
-    pizzaCream,
   ),
 
-  // Burgers
+  // ——— Burgers ———
   item(
     {
       id: "cheese",
       name: "Cheese",
-      description: "1 steak 90g, cheddar, crudités. Servi avec frites et boisson au choix.",
+      description: "1 steak 90g, cheddar, crudités.",
+      includes: INCLUDES.burgerMenu,
     },
     "burgers",
-    burgerImg,
   ),
   item(
     {
       id: "double-cheese",
       name: "Double Cheese",
-      description: "2 steaks 90g, cheddar, crudités. Servi avec frites et boisson au choix.",
+      description: "2 steaks 90g, cheddar, crudités.",
       tags: ["gourmet"],
+      includes: INCLUDES.burgerMenu,
     },
     "burgers",
-    burgerImg,
-  ),
-  item(
-    {
-      id: "black-burger",
-      name: "Black Burger",
-      description:
-        "Double steak, bacon, oignons frits, cheddar, crudités. Servi avec frites et boisson au choix.",
-      tags: ["gourmet"],
-    },
-    "burgers",
-    burgerImg,
-  ),
-  item(
-    {
-      id: "capo-chicken",
-      name: "Capo Chicken",
-      description:
-        "1 steak 90g, beignets de poulet, cheddar, crudités. Servi avec frites et boisson au choix.",
-      tags: ["gourmet"],
-    },
-    "burgers",
-    burgerImg,
-  ),
-  item(
-    {
-      id: "mega-burger",
-      name: "Mega Burger",
-      description: "1 steak 180g, bacon, cheddar, crudités. Servi avec frites et boisson au choix.",
-      tags: ["gourmet"],
-    },
-    "burgers",
-    burgerImg,
   ),
   item(
     {
       id: "burger-m",
       name: "M",
       description:
-        "1 steak 150g, fromage raclette, bacon, galette de pommes de terre, crudités. Servi avec frites et boisson au choix.",
+        "Steak 150g, fromage raclette, bacon, galette de pommes de terre, crudités.",
       tags: ["gourmet"],
+      includes: INCLUDES.burgerMenu,
     },
     "burgers",
-    burgerImg,
   ),
   item(
     {
       id: "viking",
       name: "Viking",
-      description: "2 poulets panés, cheddar, crudités. Servi avec frites et boisson au choix.",
+      description: "2 poulets panés, cheddar, crudités.",
       tags: ["gourmet"],
+      includes: INCLUDES.burgerMenu,
     },
     "burgers",
-    burgerImg,
+  ),
+  item(
+    {
+      id: "mega-burger",
+      name: "Mega Burger",
+      description: "Steak 180g, bacon, cheddar, crudités.",
+      tags: ["gourmet"],
+      includes: INCLUDES.burgerMenu,
+    },
+    "burgers",
+  ),
+  item(
+    {
+      id: "black-burger",
+      name: "Black Burger",
+      description:
+        "Double steak, bacon, oignons frits, cheddar, crudités. Pain noir.",
+      tags: ["gourmet"],
+      includes: INCLUDES.burgerMenu,
+    },
+    "burgers",
+  ),
+  item(
+    {
+      id: "capo-chicken",
+      name: "Capo Chicken",
+      description: "Steak 90g, beignets de poulet, cheddar, crudités.",
+      tags: ["gourmet"],
+      includes: INCLUDES.burgerMenu,
+    },
+    "burgers",
   ),
   item(
     {
       id: "le-nectar",
       name: "Le Nectar",
-      description: "Steak 90g, chèvre miel, cheddar, crudités. Servi avec frites et boisson au choix.",
+      description: "Steak 90g, chèvre miel, cheddar, crudités.",
       tags: ["gourmet"],
+      includes: INCLUDES.burgerMenu,
     },
     "burgers",
-    burgerImg,
   ),
 
-  // Sandwichs & Tacos
+  // ——— Sandwichs & Tacos ———
   item(
-    { id: "kebab-sandwich", name: "Kebab", description: "Émincé de kebab, crudités." },
+    {
+      id: "tacos-l-xxl",
+      name: "Tacos (compose ton tacos)",
+      description:
+        "Compose ta taille (M à XXL), tes viandes et ta sauce. Tous les tacos sont garnis.",
+      highlight: true,
+      includes: INCLUDES.tacos,
+    },
     "sandwichs-tacos",
-    tacoImg,
   ),
   item(
     {
-      id: "duo",
-      name: "Duo",
-      description: "Deux steaks 90g, cheddar, crudités.",
-      tags: ["gourmet"],
+      id: "kebab-sandwich",
+      name: "Kebab",
+      description: "Émincé de kebab, crudités. Pain au choix (maison, tortilla…).",
+      includes: INCLUDES.sandwichMenu,
     },
     "sandwichs-tacos",
-    tacoImg,
-  ),
-  item(
-    {
-      id: "suissard",
-      name: "Suissard",
-      description: "Poulet mariné, sauce fromagère, jambon de dinde, raclette, crudités.",
-      tags: ["gourmet"],
-    },
-    "sandwichs-tacos",
-    tacoImg,
   ),
   item(
     {
       id: "curry",
       name: "Curry",
-      description: "Poulet curry, crudités, cheddar.",
+      description: "Poulet curry, crudités, cheddar. Pain au choix.",
       tags: ["spicy"],
+      includes: INCLUDES.sandwichMenu,
     },
     "sandwichs-tacos",
-    tacoImg,
   ),
   item(
     {
-      id: "phenomene",
-      name: "Phénomène",
-      description: "1 steak 90g, cordon bleu, cheddar, crudités.",
+      id: "suissard",
+      name: "Suissard",
+      description:
+        "Poulet mariné, sauce fromagère, jambon de dinde, raclette, crudités. Pain au choix.",
       tags: ["gourmet"],
+      includes: INCLUDES.sandwichMenu,
     },
     "sandwichs-tacos",
-    tacoImg,
-  ),
-  item(
-    {
-      id: "farmer",
-      name: "Farmer",
-      description: "1 steak 90g, galette de pommes de terre, cheddar, crudités.",
-    },
-    "sandwichs-tacos",
-    tacoImg,
-  ),
-  item(
-    {
-      id: "full-steak",
-      name: "Full Steak",
-      description: "1 steak 90g, œuf, bacon, cheddar, crudités.",
-      tags: ["gourmet"],
-    },
-    "sandwichs-tacos",
-    tacoImg,
   ),
   item(
     {
       id: "le-frenchy",
       name: "Le Frenchy",
-      description: "2 steaks 90g, chèvre miel, cheddar, crudités.",
+      description: "2 steaks 90g, chèvre miel, cheddar, crudités. Pain au choix.",
       tags: ["gourmet"],
+      includes: INCLUDES.sandwichMenu,
     },
     "sandwichs-tacos",
-    tacoImg,
   ),
   item(
     {
-      id: "tacos-l-xxl",
-      name: "Tacos L / XXL",
-      description: "Tailles L et XXL disponibles.",
+      id: "americain",
+      name: "Américain",
+      description: "2 steaks 90g, cheddar, crudités. Pain au choix.",
+      tags: ["gourmet"],
+      includes: INCLUDES.sandwichMenu,
     },
     "sandwichs-tacos",
-    tacoImg,
+  ),
+  item(
+    {
+      id: "phenomene",
+      name: "Phénomène",
+      description: "1 steak 90g, cordon bleu, cheddar, crudités. Pain au choix.",
+      tags: ["gourmet"],
+      includes: INCLUDES.sandwichMenu,
+    },
+    "sandwichs-tacos",
+  ),
+  item(
+    {
+      id: "full-steak",
+      name: "Full Steak",
+      description: "1 steak 90g, œuf, bacon, cheddar, crudités. Pain au choix.",
+      tags: ["gourmet"],
+      includes: INCLUDES.sandwichMenu,
+    },
+    "sandwichs-tacos",
+  ),
+  item(
+    {
+      id: "farmer",
+      name: "Farmer",
+      description:
+        "1 steak 90g, galette de pommes de terre, cheddar, crudités. Pain au choix.",
+      includes: INCLUDES.sandwichMenu,
+    },
+    "sandwichs-tacos",
   ),
 
-  // Pâtes
-  item(
-    {
-      id: "carbonara",
-      name: "Carbonara",
-      description: "Crème, lardons grillés, jaune d'œuf, parmesan.",
-      tags: ["gourmet"],
-    },
-    "pates",
-    pastaImg,
-  ),
+  // ——— Pâtes ———
   item(
     {
       id: "4-fromages-pates",
       name: "4 Fromages",
       description: "Crème fraîche, gorgonzola, brie, chèvre, parmesan.",
       tags: ["vegetarian", "gourmet"],
+      includes: INCLUDES.pates,
     },
     "pates",
-    pastaImg,
   ),
   item(
     {
       id: "bolognaise",
       name: "Bolognaise",
       description: "Sauce tomate, viande hachée, parmesan.",
+      includes: INCLUDES.pates,
     },
     "pates",
-    pastaImg,
+  ),
+  item(
+    {
+      id: "carbonara",
+      name: "Carbonara",
+      description: "Crème, lardons grillés, jaune d'œuf, parmesan.",
+      tags: ["gourmet"],
+      includes: INCLUDES.pates,
+    },
+    "pates",
   ),
   item(
     {
       id: "saumon-pates",
       name: "Saumon",
       description: "Crème, saumon, citron, parmesan.",
+      includes: INCLUDES.pates,
     },
     "pates",
-    pastaImg,
   ),
   item(
     {
-      id: "poulet-tikka-pates",
-      name: "Poulet Tikka",
-      description: "Crème, poulet, champignons, oignons, parmesan.",
+      id: "pates-alfred",
+      name: "Pâtes Alfred",
+      description: "Crème, champignons, poulet, oignons caramélisés, parmesan.",
       tags: ["spicy"],
+      includes: INCLUDES.pates,
     },
     "pates",
-    pastaImg,
   ),
 
-  // Salades
+  // ——— Salades ———
   item(
     {
       id: "classic",
@@ -573,17 +597,18 @@ export const MENU_ITEMS: MenuItem[] = [
       tags: ["vegetarian"],
     },
     "salades",
-    saladImg,
   ),
   item(
     { id: "nicoise", name: "Niçoise", description: "Salade, tomate, thon, olives, œuf." },
     "salades",
-    saladImg,
   ),
   item(
-    { id: "iska", name: "Iska", description: "Salade, tomate, saumon, avocat, olives." },
+    {
+      id: "alaska",
+      name: "Alaska",
+      description: "Salade, tomate, saumon, avocat, olives.",
+    },
     "salades",
-    saladImg,
   ),
   item(
     {
@@ -592,17 +617,15 @@ export const MENU_ITEMS: MenuItem[] = [
       description: "Salade, tomate, crevettes, avocat, maïs, olives.",
     },
     "salades",
-    saladImg,
   ),
   item(
     {
       id: "chevre-salade",
       name: "Chèvre",
-      description: "Salade, tomate, chèvre sur toast, olives.",
-      tags: ["vegetarian", "gourmet"],
+      description: "Salade, tomate, lardons, chèvre sur toast, olives.",
+      tags: ["gourmet"],
     },
     "salades",
-    saladImg,
   ),
   item(
     {
@@ -611,7 +634,6 @@ export const MENU_ITEMS: MenuItem[] = [
       description: "Salade, tomate, poulet, avocat, croûtons, pommes de terre, olives.",
     },
     "salades",
-    saladImg,
   ),
   item(
     {
@@ -621,57 +643,210 @@ export const MENU_ITEMS: MenuItem[] = [
       tags: ["gourmet"],
     },
     "salades",
-    saladImg,
   ),
 
-  // Assiettes & Tex-Mex
+  // ——— Assiettes & Tex-Mex ———
   item(
     {
       id: "assiette-kebab",
       name: "Assiette Kebab",
-      description: "Viande de kebab, crudités, frites.",
+      description: "Viande de kebab, crudités.",
+      includes: "Frites incluses",
     },
     "assiettes",
-    plateImg,
   ),
   item(
     {
       id: "assiette-chicken",
       name: "Assiette Chicken",
-      description: "Tenders ou nuggets, poulet curry, crudités, frites.",
+      description: "Poulet curry, crudités.",
       tags: ["spicy"],
+      includes: "Frites incluses",
     },
     "assiettes",
-    plateImg,
   ),
   item(
     {
       id: "assiette-steak",
       name: "Assiette Steak",
-      description: "2 steaks 90g, cheddar, crudités, frites.",
+      description: "2 steaks 90g, crudités.",
       tags: ["gourmet"],
+      includes: "Frites incluses",
     },
     "assiettes",
-    plateImg,
   ),
   item(
     {
       id: "assiette-mixte",
       name: "Assiette Mixte",
-      description: "2 viandes au choix, crudités, frites.",
+      description: "2 viandes au choix, crudités.",
+      includes: "Frites incluses",
     },
     "assiettes",
-    plateImg,
   ),
   item(
     {
       id: "tex-mex",
       name: "Tex-Mex",
-      description: "Crousty tenders, wings, nuggets, mozzas sticks.",
+      description:
+        "Au choix : tenders, wings, nuggets ou mozza sticks — format 8 ou 12 pièces.",
       tags: ["gourmet"],
     },
     "assiettes",
-    plateImg,
+  ),
+
+  // ——— Spécialités & menu enfant ———
+  item(
+    {
+      id: "menu-enfant",
+      name: "Menu Enfant",
+      description:
+        "Au choix : burger, 6 nuggets ou 4 tenders.",
+      highlight: true,
+      includes: INCLUDES.enfant,
+    },
+    "specialites",
+  ),
+  item(
+    {
+      id: "cheese-naan",
+      name: "Cheese Naan",
+      description: "1 viande au choix, crudités, sauce au choix.",
+      tags: ["gourmet"],
+      highlight: true,
+      isNew: true,
+    },
+    "specialites",
+  ),
+  item(
+    {
+      id: "baguette-farcie",
+      name: "Baguette Farcie",
+      description: "1 viande au choix, mozzarella, crudités, sauce au choix.",
+      tags: ["gourmet"],
+    },
+    "specialites",
+  ),
+  item(
+    {
+      id: "panini",
+      name: "Panini",
+      description:
+        "Au choix : 4 fromages, viande hachée, merguez, saumon, jambon, poulet, lardons ou kebab.",
+      includes: INCLUDES.panini,
+    },
+    "specialites",
+  ),
+  item(
+    {
+      id: "bowl",
+      name: "Bowl",
+      description: "M (1 viande) ou L (2 viandes) au choix.",
+      tags: ["gourmet"],
+      includes: INCLUDES.bowl,
+    },
+    "specialites",
+  ),
+  item(
+    {
+      id: "crousty-tenders",
+      name: "Crousty Tenders",
+      description:
+        "Riz blanc, sauce secrète maison, tenders, oignons crispy, persil — sauce au choix.",
+      highlight: true,
+      isNew: true,
+    },
+    "specialites",
+  ),
+  item(
+    {
+      id: "crousty-curry",
+      name: "Crousty Curry",
+      description:
+        "Riz blanc, sauce secrète maison, poulet curry, oignons crispy, persil — sauce au choix.",
+      tags: ["spicy"],
+      highlight: true,
+      isNew: true,
+    },
+    "specialites",
+  ),
+  item(
+    {
+      id: "frites-campagnardes",
+      name: "Frites Campagnardes",
+      description: "Frites, sauce campagnarde, cheddar, lardons, oignons frits.",
+      tags: ["gourmet"],
+    },
+    "specialites",
+  ),
+  item(
+    {
+      id: "barquette-frites",
+      name: "Barquette Frites / Potatoes",
+      description: "Frites ou potatoes — moyenne ou grande.",
+    },
+    "specialites",
+  ),
+
+  // ——— Desserts & boissons ———
+  item(
+    {
+      id: "milkshake",
+      name: "Milk-shake",
+      description:
+        "Vanille, fraise, pistache ou chocolat. Suppléments Oreo, Kinder, KitKat, M&M's ; nappages caramel, Nutella, miel.",
+      highlight: true,
+      isNew: true,
+    },
+    "desserts",
+  ),
+  item(
+    {
+      id: "tarte-pommes",
+      name: "Tarte aux pommes",
+      description: "Dessert maison.",
+    },
+    "desserts",
+  ),
+  item(
+    {
+      id: "tarte-daims",
+      name: "Tarte aux daims",
+      description: "Dessert maison.",
+    },
+    "desserts",
+  ),
+  item(
+    {
+      id: "tiramisu",
+      name: "Tiramisu",
+      description: "Dessert maison.",
+    },
+    "desserts",
+  ),
+  item(
+    {
+      id: "brownie",
+      name: "Brownie",
+      description: "Dessert maison.",
+    },
+    "desserts",
+  ),
+  item(
+    {
+      id: "glace-haagen",
+      name: "Glace Häagen-Dazs",
+      description: "Pot 100 ml ou 500 ml.",
+    },
+    "desserts",
+  ),
+  item(
+    {
+      id: "boissons",
+      name: "Boissons",
+      description: "33 cl, maxi 1,5 L, eau minérale, Oasis / Tropico.",
+    },
+    "desserts",
   ),
 ];
 

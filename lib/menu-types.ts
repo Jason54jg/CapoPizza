@@ -7,7 +7,9 @@ export type MenuCategoryId =
   | "sandwichs-tacos"
   | "pates"
   | "salades"
-  | "assiettes";
+  | "assiettes"
+  | "specialites"
+  | "desserts";
 
 export type MenuItem = {
   id: string;
@@ -15,8 +17,13 @@ export type MenuItem = {
   description: string;
   category: MenuCategoryId;
   tags: DietTag[];
-  image: string;
+  /** Photo produit — absente en attendant des visuels HD */
+  image?: string;
   highlight?: boolean;
+  /** Badge « Nouveau » comme sur la carte papier */
+  isNew?: boolean;
+  /** Ce qui est compris dans le prix (ex. frites + boisson) */
+  includes?: string;
 };
 
 export type MenuCategory = {
@@ -43,6 +50,18 @@ export const MENU_CATEGORIES: MenuCategory[] = [
     label: "Assiettes & Tex-Mex",
     shortLabel: "Assiettes",
     emoji: "🍟",
+  },
+  {
+    id: "specialites",
+    label: "Spécialités",
+    shortLabel: "Spécialités",
+    emoji: "⭐",
+  },
+  {
+    id: "desserts",
+    label: "Desserts",
+    shortLabel: "Desserts",
+    emoji: "🍦",
   },
 ];
 

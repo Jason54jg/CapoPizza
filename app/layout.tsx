@@ -23,13 +23,14 @@ const displaySerif = Cormorant_Garamond({
 const siteDescription =
   "Capo Pizza, pizzeria à Neufchâteau (88300) : pizzas artisanales, burgers, tacos et pâtes. Commander pizza Neufchâteau — à emporter et livraison. Appelez le 03 55 01 67 39.";
 
-const githubPagesUrl =
-  process.env.GITHUB_PAGES === "true"
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.GITHUB_PAGES === "true"
     ? "https://jason54jg.github.io/CapoPizza"
-    : undefined;
+    : "http://localhost:3000");
 
 export const metadata: Metadata = {
-  ...(githubPagesUrl ? { metadataBase: new URL(githubPagesUrl) } : {}),
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Capo Pizza | Pizzeria Neufchâteau (88300)",
     template: "%s | Capo Pizza Neufchâteau",
@@ -42,6 +43,10 @@ export const metadata: Metadata = {
     "Capo Pizza",
     "livraison pizza Neufchâteau",
   ],
+  icons: {
+    icon: [{ url: "/images/capo-logo.png", type: "image/png" }],
+    apple: [{ url: "/images/capo-logo-192.png", type: "image/png" }],
+  },
   openGraph: {
     type: "website",
     locale: "fr_FR",
@@ -50,15 +55,15 @@ export const metadata: Metadata = {
     description: siteDescription,
     images: [
       {
-        url: "/images/capo-store-hero.jpeg",
-        width: 2880,
-        height: 2304,
+        url: "/images/capo-logo.png",
+        width: 512,
+        height: 512,
         alt: "Capo Pizza Neufchâteau",
       },
     ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "Capo Pizza | Pizzeria Neufchâteau",
     description: siteDescription,
   },
@@ -67,8 +72,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f7f5f2" },
-    { media: "(prefers-color-scheme: dark)", color: "#141312" },
+    { media: "(prefers-color-scheme: light)", color: "#f3f1ef" },
+    { media: "(prefers-color-scheme: dark)", color: "#121110" },
   ],
 };
 

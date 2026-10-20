@@ -2,9 +2,18 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { ClipboardCopy, Phone, Trash2, X } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { BUSINESS } from "@/lib/business";
-import { formatSelectionForCall, type SelectionEntry } from "@/lib/selection-storage";
+import { formatComposition } from "@/lib/composition";
+import { PRICE_DISCLAIMER } from "@/lib/menu-prices";
+import {
+  estimateEntryPrice,
+  estimateSelectionTotal,
+} from "@/lib/selection-pricing";
+import {
+  formatSelectionForCall,
+  type SelectionEntry,
+} from "@/lib/selection-storage";
 import { MENU_CATEGORIES } from "@/lib/menu-types";
 
 type SelectionPanelProps = {
@@ -12,6 +21,7 @@ type SelectionPanelProps = {
   onClose: () => void;
   selection: SelectionEntry[];
   onClear: () => void;
+  onRemove: (uid: string) => void;
 };
 
 export function SelectionPanel({
@@ -19,8 +29,13 @@ export function SelectionPanel({
   onClose,
   selection,
   onClear,
+  onRemove,
 }: SelectionPanelProps) {
   const [copied, setCopied] = useState(false);
+  const totals = useMemo(
+    () => estimateSelectionTotal(selection),
+    [selection],
+  );
 
   const copyRecap = async () => {
     const text = formatSelectionForCall(selection);
@@ -59,7 +74,9 @@ export function SelectionPanel({
               <div>
                 <h2 className="font-display text-lg font-bold">Ma sélection</h2>
                 <p className="text-sm text-[var(--text-muted)]">
-                  Composez votre commande avant d&apos;appeler
+                  {selection.length === 0
+                    ? "Composez votre commande avant d’appeler"
+                    : `${selection.length} article${selection.length > 1 ? "s" : ""}`}
                 </p>
               </div>
               <button type="button" onClick={onClose} className="rounded-full p-2">
@@ -70,24 +87,55 @@ export function SelectionPanel({
             <div className="flex-1 overflow-y-auto p-4">
               {selection.length === 0 ? (
                 <p className="rounded-xl border border-dashed border-[var(--border-subtle)] p-6 text-center text-sm text-[var(--text-muted)]">
-                  Ajoutez des plats avec le bouton « Ajouter » pour préparer votre
-                  commande.
+                  Composez un plat (taille, viandes, sauces…) puis ajoutez-le à
+                  votre sélection.
                 </p>
               ) : (
                 <ul className="space-y-3">
                   {selection.map((entry) => {
-                    const cat = MENU_CATEGORIES.find((c) => c.id === entry.category);
+                    const cat = MENU_CATEGORIES.find(
+                      (c) => c.id === entry.category,
+                    );
+                    const detail = formatComposition(entry.composition);
+                    const price = estimateEntryPrice(entry);
                     return (
                       <li
-                        key={entry.id}
+                        key={entry.uid}
                         className="rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)] p-3"
                       >
-                        <p className="font-medium text-[var(--text-primary)]">
-                          {entry.name}
-                        </p>
-                        <p className="text-xs text-[var(--text-muted)]">
-                          {cat?.emoji} {cat?.label}
-                        </p>
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-start justify-between gap-2">
+                              <p className="font-medium text-[var(--text-primary)]">
+                                {entry.name}
+                              </p>
+                              <p className="shrink-0 text-sm font-semibold tabular-nums text-brand">
+                                {price.label}
+                              </p>
+                            </div>
+                            <p className="text-xs text-[var(--text-muted)]">
+                              {cat?.emoji} {cat?.label}
+                            </p>
+                            {detail ? (
+                              <p className="mt-1.5 text-xs leading-relaxed text-[var(--text-secondary)]">
+                                {detail}
+                              </p>
+                            ) : null}
+                            {price.extrasLabel ? (
+                              <p className="mt-1 text-[11px] font-medium text-brand">
+                                {price.extrasLabel}
+                              </p>
+                            ) : null}
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => onRemove(entry.uid)}
+                            className="shrink-0 rounded-full p-1.5 text-[var(--text-muted)] transition hover:bg-red-500/10 hover:text-red-500"
+                            aria-label={`Retirer ${entry.name}`}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </button>
+                        </div>
                       </li>
                     );
                   })}
@@ -95,7 +143,30 @@ export function SelectionPanel({
               )}
             </div>
 
-            <div className="space-y-2 border-t border-[var(--border-subtle)] p-4">
+            <div className="space-y-3 border-t border-[var(--border-subtle)] p-4">
+              {selection.length > 0 && (
+                <div className="rounded-xl bg-brand-muted px-4 py-3">
+                  <div className="flex items-end justify-between gap-3">
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-wide text-brand">
+                        Total estimé
+                      </p>
+                      {totals.hasUnknown ? (
+                        <p className="mt-0.5 text-[11px] text-[var(--text-muted)]">
+                          Certains tarifs se confirment au téléphone
+                        </p>
+                      ) : null}
+                    </div>
+                    <p className="font-display text-2xl font-bold tabular-nums text-[var(--text-primary)]">
+                      {totals.totalLabel}
+                    </p>
+                  </div>
+                  <p className="mt-2 text-[10px] leading-snug text-[var(--text-muted)]">
+                    {PRICE_DISCLAIMER}
+                  </p>
+                </div>
+              )}
+
               <button
                 type="button"
                 disabled={!selection.length}

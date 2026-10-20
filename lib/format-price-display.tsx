@@ -9,26 +9,31 @@ export function PriceTag({
   item,
   className = "",
   size = "md",
+  detailed = false,
 }: {
   item: MenuItem;
   className?: string;
   size?: "sm" | "md" | "lg";
+  /** Affiche le détail complet (modal) plutôt que le libellé court */
+  detailed?: boolean;
 }) {
-  const { amount, label } = getPriceDisplay(item);
-  if (amount === undefined && !label) return null;
+  const { amount, label, detail } = getPriceDisplay(item);
+  const text = detailed && detail ? detail : label ?? (amount !== undefined ? formatPrice(amount) : null);
+  if (!text) return null;
 
   const sizeClass =
     size === "lg"
-      ? "text-lg font-semibold tabular-nums"
+      ? "text-sm font-semibold"
       : size === "sm"
-        ? "text-xs font-semibold tabular-nums"
-        : "text-sm font-semibold tabular-nums";
+        ? "text-[11px] font-semibold leading-snug"
+        : "text-xs font-semibold leading-snug";
 
   return (
     <span
-      className={`inline-flex shrink-0 items-center rounded-md bg-brand-muted px-2 py-0.5 text-brand ${sizeClass} ${className}`}
+      className={`inline-flex max-w-full items-center rounded-md bg-brand-muted px-2 py-0.5 text-brand tabular-nums ${sizeClass} ${className}`}
+      title={detail}
     >
-      {label ?? formatPrice(amount!)}
+      <span className="min-w-0 break-words text-right">{text}</span>
     </span>
   );
 }

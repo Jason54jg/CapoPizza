@@ -18,6 +18,6 @@ export function isSeasonalThemeActive(theme: SeasonalTheme): theme is "halloween
 
 export const SEASONAL_THEME_LABEL: Record<SeasonalTheme, string | null> = {
   none: null,
-  halloween: "Saison — automne",
+  halloween: "Halloween",
   christmas: "Fêtes de fin d’année",
 };

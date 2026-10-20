@@ -12,6 +12,7 @@ const PLACEHOLDER: ReturnType<typeof getOpeningStatus> = {
 type OpenStatusBadgeProps = {
   compact?: boolean;
   mobile?: boolean;
+  className?: string;
 };
 
 function StatusDot({ open }: { open: boolean }) {
@@ -23,7 +24,11 @@ function StatusDot({ open }: { open: boolean }) {
   );
 }
 
-export function OpenStatusBadge({ compact = false, mobile = false }: OpenStatusBadgeProps) {
+export function OpenStatusBadge({
+  compact = false,
+  mobile = false,
+  className = "",
+}: OpenStatusBadgeProps) {
   const [status, setStatus] = useState(PLACEHOLDER);
 
   useEffect(() => {
@@ -40,31 +45,32 @@ export function OpenStatusBadge({ compact = false, mobile = false }: OpenStatusB
   if (mobile) {
     return (
       <div
-        className="inline-flex max-w-[5.25rem] items-center gap-1.5 rounded-md border border-[var(--border-subtle)] bg-[var(--surface-elevated)] px-2 py-1 text-[10px] font-medium text-[var(--text-secondary)]"
+        className={`inline-flex items-center gap-1.5 rounded-lg border border-[var(--border-subtle)] bg-[var(--surface-elevated)] px-2 py-1 text-[11px] font-semibold text-[var(--text-secondary)] ${className}`}
         aria-live="polite"
         title={fullLabel}
       >
         <StatusDot open={status.isOpen} />
-        <span className="truncate">{status.isOpen ? "Ouvert" : "Fermé"}</span>
+        <span>{status.isOpen ? "Ouvert" : "Fermé"}</span>
       </div>
     );
   }
 
   return (
-    <div
-      className="inline-flex shrink-0 items-center gap-2 rounded-md border border-[var(--border-subtle)] bg-[var(--surface-elevated)] px-2.5 py-1 text-xs font-medium text-[var(--text-secondary)]"
+    <a
+      href="#infos"
+      className={`inline-flex shrink-0 items-center gap-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--surface-elevated)] px-2.5 py-1.5 text-xs font-semibold text-[var(--text-secondary)] transition hover:border-[var(--border-strong)] hover:text-[var(--text-primary)] ${className}`}
       aria-live="polite"
       title={fullLabel}
     >
       <StatusDot open={status.isOpen} />
       <span className="whitespace-nowrap">
-        {status.isOpen ? status.label : `Fermé – ${status.nextChangeLabel}`}
+        {status.isOpen ? "Ouvert" : "Fermé"}
       </span>
       {!compact && (
-        <span className="hidden whitespace-nowrap text-[11px] text-[var(--text-muted)] md:inline">
+        <span className="hidden whitespace-nowrap text-[11px] font-medium text-[var(--text-muted)] lg:inline">
           · {status.nextChangeLabel}
         </span>
       )}
-    </div>
+    </a>
   );
 }
