@@ -72,7 +72,7 @@ const TACOS_MEAT_COUNT: Record<string, number> = {
   M: 1,
   L: 2,
   XL: 3,
-  XXL: 3,
+  XXL: 4,
 };
 
 const TACOS_EXTRAS = [
@@ -116,7 +116,7 @@ export function getCompositionSchema(item: MenuItem): CompositionSchema {
 
   if (item.id === "tacos-l-xxl") {
     return {
-      hint: "Compose ton tacos : taille, viandes, sauces. Extras +1 €, gratiné +2 €.",
+      hint: "M 1 viande · L 2 · XL 3 · XXL 4. Extras +1 €, gratiné +2 €.",
       fields: [
         {
           id: "size",
@@ -443,7 +443,11 @@ export function isCompositionValid(
   return true;
 }
 
-export function formatComposition(choices: CompositionChoices): string {
+export function formatComposition(
+  choices: CompositionChoices,
+  fieldLabels?: Record<string, string>,
+  translateValue?: (value: string) => string,
+): string {
   const parts: string[] = [];
   const labels: Record<string, string> = {
     size: "Taille",
@@ -458,7 +462,9 @@ export function formatComposition(choices: CompositionChoices): string {
     main: "Plat",
     filling: "Garniture",
     note: "Note",
+    ...fieldLabels,
   };
+  const t = translateValue ?? ((v: string) => v);
 
   for (const [key, value] of Object.entries(choices)) {
     if (value === false || value === "" || value == null) continue;
@@ -467,9 +473,9 @@ export function formatComposition(choices: CompositionChoices): string {
     if (typeof value === "boolean") {
       if (value) parts.push(label);
     } else if (Array.isArray(value)) {
-      parts.push(`${label} : ${value.join(", ")}`);
+      parts.push(`${label} : ${value.map(t).join(", ")}`);
     } else {
-      parts.push(`${label} : ${value}`);
+      parts.push(`${label} : ${t(String(value))}`);
     }
   }
   return parts.join(" · ");

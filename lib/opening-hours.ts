@@ -1,4 +1,6 @@
 import { OPENING_SLOTS } from "./business";
+import type { Locale } from "./i18n/config";
+import { getDictionary } from "./i18n/dictionary";
 
 export type OpeningStatus = {
   isOpen: boolean;
@@ -10,12 +12,19 @@ function toMinutes(h: number, m: number) {
   return h * 60 + m;
 }
 
-function formatTime(h: number, m: number) {
+function formatTime(h: number, m: number, locale: Locale) {
+  if (locale === "en") {
+    return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+  }
   return `${String(h).padStart(2, "0")}h${String(m).padStart(2, "0")}`;
 }
 
-/** Statut d'ouverture basé sur l'heure locale du navigateur (Neufchâteau, fuseau Europe/Paris). */
-export function getOpeningStatus(now = new Date()): OpeningStatus {
+/** Opening status (Europe/Paris). */
+export function getOpeningStatus(
+  now = new Date(),
+  locale: Locale = "fr",
+): OpeningStatus {
+  const dict = getDictionary(locale);
   const parts = new Intl.DateTimeFormat("fr-FR", {
     timeZone: "Europe/Paris",
     hour: "numeric",
@@ -30,16 +39,16 @@ export function getOpeningStatus(now = new Date()): OpeningStatus {
   const slots = OPENING_SLOTS.map((slot) => ({
     start: toMinutes(slot.start.h, slot.start.m),
     end: toMinutes(slot.end.h, slot.end.m),
-    startLabel: formatTime(slot.start.h, slot.start.m),
-    endLabel: formatTime(slot.end.h, slot.end.m),
+    startLabel: formatTime(slot.start.h, slot.start.m, locale),
+    endLabel: formatTime(slot.end.h, slot.end.m, locale),
   }));
 
   for (const slot of slots) {
     if (current >= slot.start && current < slot.end) {
       return {
         isOpen: true,
-        label: "Ouvert actuellement",
-        nextChangeLabel: `Ferme à ${slot.endLabel}`,
+        label: dict.status.openNow,
+        nextChangeLabel: `${dict.status.closesAt} ${slot.endLabel}`,
       };
     }
   }
@@ -48,14 +57,14 @@ export function getOpeningStatus(now = new Date()): OpeningStatus {
   if (upcoming) {
     return {
       isOpen: false,
-      label: "Fermé",
-      nextChangeLabel: `Ouvre à ${upcoming.startLabel}`,
+      label: dict.status.closed,
+      nextChangeLabel: `${dict.status.opensAt} ${upcoming.startLabel}`,
     };
   }
 
   return {
     isOpen: false,
-    label: "Fermé",
-    nextChangeLabel: "Ouvre demain à 11h00",
+    label: dict.status.closed,
+    nextChangeLabel: dict.status.opensTomorrow,
   };
 }

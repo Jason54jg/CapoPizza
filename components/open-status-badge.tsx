@@ -2,12 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getOpeningStatus } from "@/lib/opening-hours";
-
-const PLACEHOLDER: ReturnType<typeof getOpeningStatus> = {
-  isOpen: false,
-  label: "Horaires",
-  nextChangeLabel: "11h00 – 23h00",
-};
+import { useDict, useLocale } from "./locale-provider";
 
 type OpenStatusBadgeProps = {
   compact?: boolean;
@@ -29,18 +24,22 @@ export function OpenStatusBadge({
   mobile = false,
   className = "",
 }: OpenStatusBadgeProps) {
-  const [status, setStatus] = useState(PLACEHOLDER);
+  const dict = useDict();
+  const locale = useLocale();
+  const [status, setStatus] = useState(() =>
+    getOpeningStatus(new Date(), locale),
+  );
 
   useEffect(() => {
-    const tick = () => setStatus(getOpeningStatus());
+    const tick = () => setStatus(getOpeningStatus(new Date(), locale));
     tick();
     const id = window.setInterval(tick, 60_000);
     return () => window.clearInterval(id);
-  }, []);
+  }, [locale]);
 
   const fullLabel = status.isOpen
     ? `${status.label} · ${status.nextChangeLabel}`
-    : `Fermé · ${status.nextChangeLabel}`;
+    : `${dict.status.closed} · ${status.nextChangeLabel}`;
 
   if (mobile) {
     return (
@@ -50,7 +49,7 @@ export function OpenStatusBadge({
         title={fullLabel}
       >
         <StatusDot open={status.isOpen} />
-        <span>{status.isOpen ? "Ouvert" : "Fermé"}</span>
+        <span>{status.isOpen ? dict.status.open : dict.status.closed}</span>
       </div>
     );
   }
@@ -64,7 +63,7 @@ export function OpenStatusBadge({
     >
       <StatusDot open={status.isOpen} />
       <span className="whitespace-nowrap">
-        {status.isOpen ? "Ouvert" : "Fermé"}
+        {status.isOpen ? dict.status.open : dict.status.closed}
       </span>
       {!compact && (
         <span className="hidden whitespace-nowrap text-[11px] font-medium text-[var(--text-muted)] lg:inline">

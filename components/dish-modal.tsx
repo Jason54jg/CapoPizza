@@ -7,9 +7,13 @@ import { useEffect, useState } from "react";
 import { BUSINESS } from "@/lib/business";
 import type { CompositionChoices } from "@/lib/composition";
 import { PriceTag } from "@/lib/format-price-display";
+import {
+  localizeCategories,
+  localizeDietFilters,
+} from "@/lib/i18n/localize";
 import type { MenuItem } from "@/lib/menu-types";
-import { DIET_FILTERS, MENU_CATEGORIES } from "@/lib/menu-types";
 import { DishComposer } from "./dish-composer";
+import { useDict, useLocale } from "./locale-provider";
 
 type DishModalProps = {
   item: MenuItem | null;
@@ -24,6 +28,8 @@ export function DishModal({
   onClose,
   onAdd,
 }: DishModalProps) {
+  const dict = useDict();
+  const locale = useLocale();
   const [choices, setChoices] = useState<CompositionChoices>({});
   const [valid, setValid] = useState(false);
 
@@ -33,8 +39,9 @@ export function DishModal({
   }, [item?.id]);
 
   const categoryLabel = item
-    ? MENU_CATEGORIES.find((c) => c.id === item.category)?.label
+    ? localizeCategories(locale).find((c) => c.id === item.category)?.label
     : null;
+  const dietFilters = localizeDietFilters(locale);
 
   return (
     <AnimatePresence>
@@ -52,7 +59,7 @@ export function DishModal({
             type="button"
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={onClose}
-            aria-label="Fermer"
+            aria-label={dict.composer.close}
           />
           <motion.div
             initial={{ y: 40, opacity: 0 }}
@@ -84,7 +91,7 @@ export function DishModal({
                   type="button"
                   onClick={onClose}
                   className="rounded-full border border-[var(--border-subtle)] p-2 text-[var(--text-secondary)]"
-                  aria-label="Fermer"
+                  aria-label={dict.composer.close}
                 >
                   <X className="h-5 w-5" />
                 </button>
@@ -93,8 +100,12 @@ export function DishModal({
 
             <div className="p-6">
               <div className="flex flex-wrap items-center gap-2">
-                {categoryLabel ? <p className="eyebrow">{categoryLabel}</p> : null}
-                {item.isNew ? <span className="badge-new">Nouveau</span> : null}
+                {categoryLabel ? (
+                  <p className="eyebrow">{categoryLabel}</p>
+                ) : null}
+                {item.isNew ? (
+                  <span className="badge-new">{dict.menu.new}</span>
+                ) : null}
               </div>
               <div className="mt-1 flex flex-wrap items-center gap-3">
                 <h2
@@ -111,14 +122,14 @@ export function DishModal({
 
               {item.includes ? (
                 <p className="mt-4 rounded-xl border border-[var(--brand-primary)]/25 bg-brand-muted px-3 py-2.5 text-sm font-semibold text-brand">
-                  Inclus : {item.includes}
+                  {dict.menu.includes} : {item.includes}
                 </p>
               ) : null}
 
               {item.tags.length > 0 && (
                 <div className="mt-4 flex flex-wrap gap-2">
                   {item.tags.map((tag) => {
-                    const meta = DIET_FILTERS.find((f) => f.id === tag);
+                    const meta = dietFilters.find((f) => f.id === tag);
                     if (!meta) return null;
                     return (
                       <span
@@ -135,8 +146,8 @@ export function DishModal({
               {selectedCount > 0 && (
                 <p className="mt-4 flex items-center gap-1.5 text-xs font-medium text-brand">
                   <Heart className="h-3.5 w-3.5 fill-current" />
-                  Déjà {selectedCount}× dans votre sélection — vous pouvez en
-                  ajouter un autre.
+                  {dict.composer.alreadyIn} {selectedCount}
+                  {dict.composer.alreadyInSuffix}
                 </p>
               )}
 
@@ -160,14 +171,14 @@ export function DishModal({
                   className="btn-primary flex-1 px-4 py-3 text-sm disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   <Plus className="h-4 w-4" />
-                  Ajouter à ma sélection
+                  {dict.composer.addToSelection}
                 </button>
                 <a
                   href={BUSINESS.phoneTel}
                   className="btn-secondary flex-1 px-4 py-3 text-sm"
                 >
                   <Phone className="h-4 w-4" />
-                  Appeler
+                  {dict.composer.call}
                 </a>
               </div>
             </div>

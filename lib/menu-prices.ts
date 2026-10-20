@@ -91,8 +91,8 @@ export function resolveMenuPrice(
   return {};
 }
 
-export function formatPrice(amount: number) {
-  return new Intl.NumberFormat("fr-FR", {
+export function formatPrice(amount: number, locale: "fr" | "en" = "fr") {
+  return new Intl.NumberFormat(locale === "en" ? "en-GB" : "fr-FR", {
     style: "currency",
     currency: "EUR",
   }).format(amount);

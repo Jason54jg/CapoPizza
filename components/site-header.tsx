@@ -5,17 +5,11 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BUSINESS } from "@/lib/business";
 import type { MenuCategoryId } from "@/lib/menu-types";
+import { LanguageSwitcher } from "./language-switcher";
+import { useDict, useLocale } from "./locale-provider";
 import { Logo } from "./logo";
 import { OpenStatusBadge } from "./open-status-badge";
 import { useTheme } from "./theme-provider";
-
-/** Navigation de page — les catégories du menu restent dans la section Carte */
-const NAV: { label: string; href: string; category?: MenuCategoryId }[] = [
-  { label: "Offres", href: "#offres" },
-  { label: "La carte", href: "#menu", category: "pizzas-tomate" },
-  { label: "Horaires", href: "#infos" },
-  { label: "Contact", href: "#contact" },
-];
 
 type SiteHeaderProps = {
   searchQuery: string;
@@ -28,10 +22,23 @@ export function SiteHeader({
   onSearchChange,
   onNavigateCategory,
 }: SiteHeaderProps) {
+  const dict = useDict();
+  const locale = useLocale();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const { theme, toggleTheme, mounted } = useTheme();
+
+  const nav = [
+    { label: dict.nav.offers, href: "#offres" },
+    {
+      label: dict.nav.menu,
+      href: "#menu",
+      category: "pizzas-tomate" as MenuCategoryId,
+    },
+    { label: dict.nav.hours, href: "#infos" },
+    { label: dict.nav.contact, href: "#contact" },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -58,7 +65,7 @@ export function SiteHeader({
     >
       <div className="mx-auto flex h-[4.25rem] max-w-6xl items-center gap-4 px-4 md:px-6">
         <Link
-          href="#"
+          href={`/${locale}/`}
           className="shrink-0"
           onClick={() => window.scrollTo({ top: 0 })}
         >
@@ -67,11 +74,11 @@ export function SiteHeader({
 
         <nav
           className="ml-2 hidden items-center gap-1 md:flex"
-          aria-label="Navigation principale"
+          aria-label={dict.nav.mainNav}
         >
-          {NAV.map((item) => (
+          {nav.map((item) => (
             <a
-              key={item.label}
+              key={item.href}
               href={item.href}
               onClick={() => handleNav(item.category)}
               className="rounded-lg px-3 py-2 text-sm font-semibold text-[var(--text-primary)] transition hover:bg-[var(--surface-muted)]"
@@ -82,7 +89,6 @@ export function SiteHeader({
         </nav>
 
         <div className="ml-auto flex shrink-0 items-center gap-2">
-          {/* Recherche : icône → champ (évite d’encombrer la barre) */}
           <div className="hidden items-center lg:flex">
             {searchOpen ? (
               <div className="relative w-52 xl:w-60">
@@ -95,9 +101,9 @@ export function SiteHeader({
                   onBlur={() => {
                     if (!searchQuery) setSearchOpen(false);
                   }}
-                  placeholder="Pizza, burger…"
+                  placeholder={dict.nav.searchPlaceholderShort}
                   className="input-field h-9 w-full py-0 pl-9 pr-3 text-sm"
-                  aria-label="Recherche dans la carte"
+                  aria-label={dict.nav.search}
                 />
               </div>
             ) : (
@@ -105,12 +111,14 @@ export function SiteHeader({
                 type="button"
                 onClick={() => setSearchOpen(true)}
                 className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-subtle)] text-[var(--text-secondary)] transition hover:bg-[var(--surface-muted)] hover:text-[var(--text-primary)]"
-                aria-label="Ouvrir la recherche"
+                aria-label={dict.nav.openSearch}
               >
                 <Search className="h-4 w-4" />
               </button>
             )}
           </div>
+
+          <LanguageSwitcher className="hidden sm:inline-flex" />
 
           <OpenStatusBadge mobile className="md:hidden" />
           <OpenStatusBadge compact className="hidden md:inline-flex" />
@@ -119,7 +127,9 @@ export function SiteHeader({
             type="button"
             onClick={toggleTheme}
             className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-subtle)] text-[var(--text-secondary)] transition hover:bg-[var(--surface-muted)]"
-            aria-label={theme === "dark" ? "Activer le mode clair" : "Activer le mode sombre"}
+            aria-label={
+              theme === "dark" ? dict.nav.lightMode : dict.nav.darkMode
+            }
           >
             {mounted && theme === "dark" ? (
               <Sun className="h-4 w-4" />
@@ -133,7 +143,7 @@ export function SiteHeader({
             className="btn-primary hidden h-9 items-center gap-2 px-4 text-sm font-semibold sm:inline-flex"
           >
             <Phone className="h-4 w-4" />
-            Commander
+            {dict.nav.order}
           </a>
 
           <button
@@ -141,7 +151,7 @@ export function SiteHeader({
             className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-subtle)] md:hidden"
             onClick={() => setMobileOpen((o) => !o)}
             aria-expanded={mobileOpen}
-            aria-label="Menu"
+            aria-label={dict.nav.menuButton}
           >
             {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -151,22 +161,25 @@ export function SiteHeader({
       {mobileOpen && (
         <nav
           className="border-t border-[var(--border-subtle)] bg-[var(--surface-elevated)] px-4 py-4 md:hidden"
-          aria-label="Navigation mobile"
+          aria-label={dict.nav.mobileNav}
         >
+          <div className="mb-3 flex justify-end">
+            <LanguageSwitcher />
+          </div>
           <div className="relative mb-4">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-muted)]" />
             <input
               type="search"
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
-              placeholder="Rechercher une pizza, un burger…"
+              placeholder={dict.nav.searchPlaceholder}
               className="input-field py-2.5 pl-10 pr-4 text-sm"
-              aria-label="Recherche dans la carte"
+              aria-label={dict.nav.search}
             />
           </div>
           <ul className="flex flex-col gap-1">
-            {NAV.map((item) => (
-              <li key={item.label}>
+            {nav.map((item) => (
+              <li key={item.href}>
                 <a
                   href={item.href}
                   className="block rounded-xl px-3 py-3 text-base font-semibold text-[var(--text-primary)] hover:bg-[var(--surface-muted)]"
@@ -182,7 +195,7 @@ export function SiteHeader({
                 className="btn-primary w-full py-3 text-sm font-semibold"
               >
                 <Phone className="h-4 w-4" />
-                Commander · {BUSINESS.phone}
+                {dict.nav.order} · {BUSINESS.phone}
               </a>
             </li>
           </ul>

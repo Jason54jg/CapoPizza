@@ -5,7 +5,8 @@ import Image from "next/image";
 import { Heart, Plus } from "lucide-react";
 import { PriceTag } from "@/lib/format-price-display";
 import type { MenuItem } from "@/lib/menu-types";
-import { DIET_FILTERS } from "@/lib/menu-types";
+import { localizeDietFilters } from "@/lib/i18n/localize";
+import { useDict, useLocale } from "./locale-provider";
 
 type DishCardProps = {
   item: MenuItem;
@@ -14,7 +15,10 @@ type DishCardProps = {
 };
 
 export function DishCard({ item, selectedCount, onOpen }: DishCardProps) {
+  const dict = useDict();
+  const locale = useLocale();
   const selected = selectedCount > 0;
+  const dietFilters = localizeDietFilters(locale);
 
   return (
     <motion.article
@@ -42,9 +46,11 @@ export function DishCard({ item, selectedCount, onOpen }: DishCardProps) {
               loading="lazy"
             />
             <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
-              {item.isNew ? <span className="badge-new">Nouveau</span> : null}
+              {item.isNew ? (
+                <span className="badge-new">{dict.menu.new}</span>
+              ) : null}
               {item.highlight ? (
-                <span className="badge-signature">Signature</span>
+                <span className="badge-signature">{dict.menu.signature}</span>
               ) : null}
             </div>
           </div>
@@ -60,9 +66,13 @@ export function DishCard({ item, selectedCount, onOpen }: DishCardProps) {
 
           {!item.image && (item.isNew || item.highlight) ? (
             <div className="flex flex-wrap gap-1.5">
-              {item.isNew ? <span className="badge-new w-fit">Nouveau</span> : null}
+              {item.isNew ? (
+                <span className="badge-new w-fit">{dict.menu.new}</span>
+              ) : null}
               {item.highlight ? (
-                <span className="badge-signature w-fit">Signature</span>
+                <span className="badge-signature w-fit">
+                  {dict.menu.signature}
+                </span>
               ) : null}
             </div>
           ) : null}
@@ -73,14 +83,14 @@ export function DishCard({ item, selectedCount, onOpen }: DishCardProps) {
 
           {item.includes ? (
             <p className="text-xs font-semibold text-brand">
-              Inclus : {item.includes}
+              {dict.menu.includes} : {item.includes}
             </p>
           ) : null}
 
           {item.tags.length > 0 && (
             <div className="flex flex-wrap gap-1.5">
               {item.tags.map((tag) => {
-                const meta = DIET_FILTERS.find((f) => f.id === tag);
+                const meta = dietFilters.find((f) => f.id === tag);
                 if (!meta) return null;
                 return (
                   <span
@@ -102,7 +112,7 @@ export function DishCard({ item, selectedCount, onOpen }: DishCardProps) {
           onClick={onOpen}
           className="text-xs font-semibold uppercase tracking-wide text-brand transition hover:underline"
         >
-          Composer
+          {dict.menu.compose}
         </button>
         <button
           type="button"
@@ -117,11 +127,11 @@ export function DishCard({ item, selectedCount, onOpen }: DishCardProps) {
           {selected ? (
             <>
               <Heart className="h-3.5 w-3.5 fill-current" />
-              {selectedCount > 1 ? `${selectedCount}×` : "Sélectionné"}
+              {selectedCount > 1 ? `${selectedCount}×` : dict.menu.selected}
             </>
           ) : (
             <>
-              <Plus className="h-3.5 w-3.5" /> Ajouter
+              <Plus className="h-3.5 w-3.5" /> {dict.menu.add}
             </>
           )}
         </button>

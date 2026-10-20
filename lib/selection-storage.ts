@@ -1,4 +1,7 @@
 import { formatComposition, type CompositionChoices } from "./composition";
+import type { Locale } from "./i18n/config";
+import { getDictionary } from "./i18n/dictionary";
+import { translateOption } from "./i18n/localize";
 import {
   estimateEntryPrice,
   estimateSelectionTotal,
@@ -94,16 +97,27 @@ export function countInSelection(id: string, entries: SelectionEntry[]) {
   return entries.filter((e) => e.id === id).length;
 }
 
-export function formatSelectionForCall(entries: SelectionEntry[]) {
+export function formatSelectionForCall(
+  entries: SelectionEntry[],
+  locale: Locale = "fr",
+) {
   if (!entries.length) return "";
+  const dict = getDictionary(locale);
   const lines = entries.map((e, i) => {
-    const comp = formatComposition(e.composition);
-    const price = estimateEntryPrice(e);
+    const comp = formatComposition(
+      e.composition,
+      dict.fields,
+      (v) => translateOption(v, locale),
+    );
+    const price = estimateEntryPrice(e, locale);
     const bits = [comp, price.label].filter(Boolean);
     return bits.length
       ? `${i + 1}. ${e.name} (${bits.join(" · ")})`
       : `${i + 1}. ${e.name}`;
   });
-  const { totalLabel } = estimateSelectionTotal(entries);
+  const { totalLabel } = estimateSelectionTotal(entries, locale);
+  if (locale === "en") {
+    return `Hello, I would like to order: ${lines.join(" ; ")}. Estimated total: ${totalLabel}.`;
+  }
   return `Bonjour, je souhaite commander : ${lines.join(" ; ")}. Total estimé : ${totalLabel}.`;
 }

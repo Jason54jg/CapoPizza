@@ -1,24 +1,35 @@
+"use client";
+
 import { BUSINESS } from "@/lib/business";
+import { useDict } from "./locale-provider";
 import { Logo } from "./logo";
 
 export function SiteFooter() {
+  const dict = useDict();
+
   return (
-    <footer id="contact" className="scroll-mt-28 border-t border-[var(--border-subtle)] py-12">
+    <footer
+      id="contact"
+      className="scroll-mt-28 border-t border-[var(--border-subtle)] py-12"
+    >
       <div className="mx-auto max-w-6xl px-4 md:px-6">
         <div className="grid gap-10 md:grid-cols-3">
           <div>
             <Logo size="lg" />
             <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)]">
-              Pizza au feu de bois — Neufchâteau (88300). Ouvert 7j/7.
+              {dict.footer.blurb}
             </p>
           </div>
 
           <div>
-            <p className="eyebrow mb-3">Contact</p>
+            <p className="eyebrow mb-3">{dict.footer.contact}</p>
             <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
               <li>{BUSINESS.address}</li>
               <li>
-                <a href={BUSINESS.phoneTel} className="font-semibold text-[var(--text-primary)] hover:text-brand">
+                <a
+                  href={BUSINESS.phoneTel}
+                  className="font-semibold text-[var(--text-primary)] hover:text-brand"
+                >
                   {BUSINESS.phone}
                 </a>
               </li>
@@ -26,7 +37,7 @@ export function SiteFooter() {
           </div>
 
           <div>
-            <p className="eyebrow mb-3">Réseaux</p>
+            <p className="eyebrow mb-3">{dict.footer.networks}</p>
             <ul className="flex flex-col gap-2 text-sm font-medium">
               <li>
                 <a

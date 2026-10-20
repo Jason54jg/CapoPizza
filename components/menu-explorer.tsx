@@ -5,18 +5,18 @@ import { ListChecks, Search } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useSelection } from "@/hooks/use-selection";
 import { MENU_ITEMS, searchMenuItems } from "@/lib/menu";
+import type { DietTag, MenuCategoryId, MenuItem } from "@/lib/menu-types";
 import {
-  DIET_FILTERS,
-  MENU_CATEGORIES,
-  type DietTag,
-  type MenuCategoryId,
-  type MenuItem,
-} from "@/lib/menu-types";
-import { PRICE_DISCLAIMER } from "@/lib/menu-prices";
+  localizeCategories,
+  localizeDietFilters,
+  localizeMenuItem,
+  localizeMenuItems,
+} from "@/lib/i18n/localize";
 import { estimateSelectionTotal } from "@/lib/selection-pricing";
 import { countInSelection } from "@/lib/selection-storage";
 import { DishCard } from "./dish-card";
 import { DishModal } from "./dish-modal";
+import { useDict, useLocale } from "./locale-provider";
 import { SelectionPanel } from "./selection-panel";
 
 type MenuExplorerProps = {
@@ -32,32 +32,53 @@ export function MenuExplorer({
   activeCategory,
   onCategoryChange,
 }: MenuExplorerProps) {
+  const dict = useDict();
+  const locale = useLocale();
   const tabsRef = useRef<HTMLDivElement>(null);
   const [dietFilters, setDietFilters] = useState<DietTag[]>([]);
   const [modalItem, setModalItem] = useState<MenuItem | null>(null);
   const [selectionOpen, setSelectionOpen] = useState(false);
   const { selection, add, remove, clear } = useSelection();
+
+  const categories = useMemo(() => localizeCategories(locale), [locale]);
+  const dietOptions = useMemo(() => localizeDietFilters(locale), [locale]);
+  const localizedMenu = useMemo(
+    () => localizeMenuItems(MENU_ITEMS, locale),
+    [locale],
+  );
+
   const selectionTotal = useMemo(
-    () => estimateSelectionTotal(selection),
-    [selection],
+    () => estimateSelectionTotal(selection, locale),
+    [selection, locale],
   );
 
   useEffect(() => {
     const tab = tabsRef.current?.querySelector<HTMLElement>(
       `[data-category="${activeCategory}"]`,
     );
-    tab?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    tab?.scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+      block: "nearest",
+    });
   }, [activeCategory]);
 
-  const filteredItems = useMemo(() => {
-    let items = MENU_ITEMS.filter((i) => i.category === activeCategory);
+  const displayItems = useMemo(() => {
+    let items: MenuItem[];
     if (searchQuery.trim()) {
-      items = searchMenuItems(searchQuery, MENU_ITEMS).filter(
-        (i) => i.category === activeCategory,
-      );
-      if (!items.length) {
-        items = searchMenuItems(searchQuery, MENU_ITEMS);
+      items = searchMenuItems(searchQuery, localizedMenu);
+      if (
+        items.length &&
+        items.every((i) => i.category === activeCategory) === false
+      ) {
+        // keep global search results
+      } else if (!items.length) {
+        items = searchMenuItems(searchQuery, MENU_ITEMS).map((i) =>
+          localizeMenuItem(i, locale),
+        );
       }
+    } else {
+      items = localizedMenu.filter((i) => i.category === activeCategory);
     }
     if (dietFilters.length) {
       items = items.filter((i) =>
@@ -65,19 +86,15 @@ export function MenuExplorer({
       );
     }
     return items;
-  }, [activeCategory, searchQuery, dietFilters]);
+  }, [
+    activeCategory,
+    searchQuery,
+    dietFilters,
+    localizedMenu,
+    locale,
+  ]);
 
   const globalSearchActive = searchQuery.trim().length > 0;
-  const displayItems = useMemo(() => {
-    if (!globalSearchActive) return filteredItems;
-    const fromSearch = searchMenuItems(searchQuery, MENU_ITEMS);
-    if (dietFilters.length) {
-      return fromSearch.filter((i) =>
-        dietFilters.every((tag) => i.tags.includes(tag)),
-      );
-    }
-    return fromSearch;
-  }, [filteredItems, globalSearchActive, searchQuery, dietFilters]);
 
   const toggleDiet = (tag: DietTag) => {
     setDietFilters((prev) =>
@@ -97,29 +114,30 @@ export function MenuExplorer({
             type="search"
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            placeholder="Rechercher : reine, chèvre, barbecue…"
+            placeholder={dict.nav.searchPlaceholder}
             className="input-field py-3 pl-10 pr-4 text-sm"
-            aria-label="Recherche dans la carte"
+            aria-label={dict.nav.search}
           />
         </div>
 
         <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="eyebrow mb-2">
-              {isPizzaSection ? "Spécialité" : "Carte"}
+              {isPizzaSection ? dict.menu.specialty : dict.menu.card}
             </p>
             <h2 className="font-display text-3xl text-[var(--text-primary)] md:text-4xl">
               {globalSearchActive
-                ? "Résultats de recherche"
+                ? dict.menu.searchResults
                 : isPizzaSection
-                  ? "Nos Pizzas Artisanales"
-                  : "Menu Capo Pizza"}
+                  ? dict.menu.artisanPizzas
+                  : dict.menu.menuTitle}
             </h2>
             <p className="mt-2 max-w-2xl text-[var(--text-secondary)]">
-              Filtrez par catégorie, ingrédient ou envie. Commandez par téléphone
-              — pas de paiement en ligne, simplicité et rapidité.
+              {dict.menu.intro}
             </p>
-            <p className="mt-2 text-xs text-[var(--text-muted)]">{PRICE_DISCLAIMER}</p>
+            <p className="mt-2 text-xs text-[var(--text-muted)]">
+              {dict.priceDisclaimer}
+            </p>
           </div>
           <button
             type="button"
@@ -127,7 +145,7 @@ export function MenuExplorer({
             className="btn-secondary self-start px-4 py-2.5 text-sm"
           >
             <ListChecks className="h-4 w-4" />
-            Ma sélection
+            {dict.menu.mySelection}
             {selection.length > 0 && (
               <>
                 <span className="rounded-md bg-[var(--brand-primary)] px-2 py-0.5 text-xs text-[var(--brand-on-primary)]">
@@ -147,9 +165,9 @@ export function MenuExplorer({
               ref={tabsRef}
               className="flex flex-wrap gap-1.5 sm:gap-2"
               role="tablist"
-              aria-label="Catégories du menu"
+              aria-label={dict.menu.categoriesAria}
             >
-              {MENU_CATEGORIES.map((cat) => {
+              {categories.map((cat) => {
                 const active = cat.id === activeCategory;
                 return (
                   <button
@@ -175,7 +193,7 @@ export function MenuExplorer({
         )}
 
         <div className="mb-6 flex flex-wrap gap-1.5">
-          {DIET_FILTERS.map((filter) => {
+          {dietOptions.map((filter) => {
             const active = dietFilters.includes(filter.id);
             return (
               <button
@@ -202,12 +220,11 @@ export function MenuExplorer({
               animate={{ opacity: 1 }}
               className="rounded-2xl border border-dashed border-[var(--border-subtle)] p-10 text-center text-[var(--text-muted)]"
             >
-              Aucun plat ne correspond à votre recherche. Essayez un autre mot-clé
-              ou retirez les filtres.
+              {dict.menu.empty}
             </motion.p>
           ) : (
             <motion.div
-              key={`${activeCategory}-${searchQuery}-${dietFilters.join(",")}`}
+              key={`${activeCategory}-${searchQuery}-${dietFilters.join(",")}-${locale}`}
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
@@ -233,7 +250,11 @@ export function MenuExplorer({
         }
         onClose={() => setModalItem(null)}
         onAdd={(composition) => {
-          if (modalItem) add(modalItem, composition);
+          if (modalItem) {
+            const source =
+              MENU_ITEMS.find((i) => i.id === modalItem.id) ?? modalItem;
+            add(source, composition);
+          }
         }}
       />
 

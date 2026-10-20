@@ -451,7 +451,7 @@ export const MENU_ITEMS: MenuItem[] = [
       id: "tacos-l-xxl",
       name: "Tacos (compose ton tacos)",
       description:
-        "Compose ta taille (M à XXL), tes viandes et ta sauce. Tous les tacos sont garnis.",
+        "Compose ta taille (M 1 viande · L 2 · XL 3 · XXL 4), tes viandes et ta sauce. Tous les tacos sont garnis.",
       highlight: true,
       includes: INCLUDES.tacos,
     },

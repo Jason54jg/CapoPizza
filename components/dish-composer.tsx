@@ -8,7 +8,13 @@ import {
   isCompositionValid,
   type CompositionChoices,
 } from "@/lib/composition";
+import {
+  COMPOSITION_HINT_EN,
+  COMPOSITION_NOTE_PLACEHOLDER_EN,
+} from "@/lib/i18n/menu-en";
+import { translateOption } from "@/lib/i18n/localize";
 import type { MenuItem } from "@/lib/menu-types";
+import { useDict, useLocale } from "./locale-provider";
 
 type DishComposerProps = {
   item: MenuItem;
@@ -16,7 +22,19 @@ type DishComposerProps = {
 };
 
 export function DishComposer({ item, onChange }: DishComposerProps) {
+  const dict = useDict();
+  const locale = useLocale();
   const schema = useMemo(() => getCompositionSchema(item), [item]);
+
+  const localizedHint = useMemo(() => {
+    if (locale === "fr") return schema.hint;
+    const isPizza =
+      item.category === "pizzas-tomate" || item.category === "pizzas-creme";
+    if (isPizza) return COMPOSITION_HINT_EN.pizza;
+    if (item.id === "tacos-l-xxl") return COMPOSITION_HINT_EN.tacos;
+    if (item.id === "bowl") return COMPOSITION_HINT_EN.bowl;
+    return schema.hint;
+  }, [locale, schema.hint, item]);
   const [choices, setChoices] = useState<CompositionChoices>(() =>
     emptyChoices(schema),
   );
@@ -59,28 +77,47 @@ export function DishComposer({ item, onChange }: DishComposerProps) {
     update({ ...choices, [id]: current });
   };
 
+  const fieldLabel = (id: string, fallback: string) =>
+    dict.fields[id] ?? fallback;
+
+  const notePlaceholder = () => {
+    if (locale === "fr") {
+      return (
+        schema.fields.find((f) => f.kind === "note")?.placeholder ??
+        "Précisions…"
+      );
+    }
+    const isPizza =
+      item.category === "pizzas-tomate" || item.category === "pizzas-creme";
+    if (isPizza) return COMPOSITION_NOTE_PLACEHOLDER_EN.pizza;
+    if (item.category === "burgers") return COMPOSITION_NOTE_PLACEHOLDER_EN.burger;
+    return COMPOSITION_NOTE_PLACEHOLDER_EN.default;
+  };
+
   return (
     <div className="mt-5 space-y-5 border-t border-[var(--border-subtle)] pt-5">
       <div>
         <p className="text-sm font-semibold text-[var(--text-primary)]">
-          Composer votre commande
+          {dict.composer.title}
         </p>
-        {schema.hint ? (
-          <p className="mt-1 text-xs text-[var(--text-muted)]">{schema.hint}</p>
+        {localizedHint ? (
+          <p className="mt-1 text-xs text-[var(--text-muted)]">{localizedHint}</p>
         ) : null}
       </div>
 
       {schema.fields.map((field) => {
+        const label = fieldLabel(field.id, field.label);
+
         if (field.kind === "note") {
           return (
             <label key={field.id} className="block">
               <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
-                {field.label}
+                {label}
               </span>
               <textarea
                 value={String(choices[field.id] ?? "")}
                 onChange={(e) => setSingle(field.id, e.target.value)}
-                placeholder={field.placeholder}
+                placeholder={notePlaceholder()}
                 rows={3}
                 className="input-field input-field--area w-full resize-none text-sm"
               />
@@ -101,7 +138,7 @@ export function DishComposer({ item, onChange }: DishComposerProps) {
                   : "border-[var(--border-subtle)] text-[var(--text-secondary)]"
               }`}
             >
-              <span>{field.label}</span>
+              <span>{label}</span>
               <span
                 className={`rounded-full px-2 py-0.5 text-xs ${
                   on
@@ -109,7 +146,7 @@ export function DishComposer({ item, onChange }: DishComposerProps) {
                     : "bg-[var(--surface-muted)]"
                 }`}
               >
-                {on ? "Oui" : "Non"}
+                {on ? (locale === "en" ? "Yes" : "Oui") : locale === "en" ? "No" : "Non"}
               </span>
             </button>
           );
@@ -119,7 +156,7 @@ export function DishComposer({ item, onChange }: DishComposerProps) {
           return (
             <fieldset key={field.id}>
               <legend className="mb-2 text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
-                {field.label}
+                {label}
                 {field.required ? " *" : ""}
               </legend>
               <div className="flex flex-wrap gap-1.5">
@@ -136,7 +173,7 @@ export function DishComposer({ item, onChange }: DishComposerProps) {
                           : "border border-[var(--border-subtle)] text-[var(--text-secondary)] hover:border-brand-soft"
                       }`}
                     >
-                      {opt}
+                      {translateOption(opt, locale)}
                     </button>
                   );
                 })}
@@ -155,7 +192,7 @@ export function DishComposer({ item, onChange }: DishComposerProps) {
         return (
           <fieldset key={field.id} disabled={needsSize}>
             <legend className="mb-2 text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
-              {field.label}
+              {label}
               {field.required ? " *" : ""}
               {Number.isFinite(max) ? (
                 <span className="ml-1 font-normal normal-case tracking-normal">
@@ -165,7 +202,7 @@ export function DishComposer({ item, onChange }: DishComposerProps) {
             </legend>
             {needsSize ? (
               <p className="text-xs text-[var(--text-muted)]">
-                Choisissez d&apos;abord la taille.
+                {dict.composer.chooseSizeFirst}
               </p>
             ) : (
               <div className="flex flex-wrap gap-1.5">
@@ -182,7 +219,7 @@ export function DishComposer({ item, onChange }: DishComposerProps) {
                           : "border border-[var(--border-subtle)] text-[var(--text-secondary)] hover:border-brand-soft"
                       }`}
                     >
-                      {opt}
+                      {translateOption(opt, locale)}
                     </button>
                   );
                 })}

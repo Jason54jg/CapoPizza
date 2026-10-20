@@ -2,14 +2,29 @@
 
 import { motion } from "framer-motion";
 import { CreditCard, ShoppingBag, Truck } from "lucide-react";
-import { BUSINESS, PAYMENT_NOTE, PIZZA_OFFERS } from "@/lib/business";
-
-const MODE_ICON = {
-  emporter: ShoppingBag,
-  livraison: Truck,
-} as const;
+import { BUSINESS } from "@/lib/business";
+import { useDict } from "./locale-provider";
 
 export function OffersSection() {
+  const dict = useDict();
+
+  const offers = [
+    {
+      id: "emporter" as const,
+      Icon: ShoppingBag,
+      mode: dict.offers.emporterMode,
+      title: dict.offers.emporterTitle,
+      detail: dict.offers.emporterDetail,
+    },
+    {
+      id: "livraison" as const,
+      Icon: Truck,
+      mode: dict.offers.livraisonMode,
+      title: dict.offers.livraisonTitle,
+      detail: dict.offers.livraisonDetail,
+    },
+  ];
+
   return (
     <section
       id="offres"
@@ -36,53 +51,50 @@ export function OffersSection() {
           transition={{ duration: 0.4 }}
           className="mb-10 text-center md:mb-12"
         >
-          <p className="eyebrow mb-3">Ouvert 7j/7 · Pizzas</p>
+          <p className="eyebrow mb-3">{dict.offers.eyebrow}</p>
           <h2 className="font-display text-4xl leading-tight text-[var(--text-primary)] md:text-5xl lg:text-[3.25rem]">
-            Nos offres du moment
+            {dict.offers.title}
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-base text-[var(--text-secondary)] md:text-lg">
-            À emporter ou en livraison — dites-le au{" "}
+            {dict.offers.leadBefore}{" "}
             <a
               href={BUSINESS.phoneTel}
               className="font-semibold text-brand hover:underline"
             >
               {BUSINESS.phone}
             </a>
-            .
+            {dict.offers.leadAfter}
           </p>
         </motion.div>
 
         <div className="grid gap-5 md:grid-cols-2 md:gap-6">
-          {PIZZA_OFFERS.map((offer, i) => {
-            const Icon = MODE_ICON[offer.id];
-            return (
-              <motion.article
-                key={offer.id}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.4, delay: 0.08 * i }}
-                className="group relative overflow-hidden rounded-[1.35rem] border-2 border-[color-mix(in_srgb,var(--brand-primary)_45%,var(--border-subtle))] bg-[var(--surface-elevated)] p-7 shadow-[var(--shadow-lift)] md:p-8"
-              >
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_100%_0%,color-mix(in_srgb,var(--brand-primary)_16%,transparent),transparent_55%)] transition-opacity group-hover:opacity-100"
-                />
-                <div className="relative">
-                  <p className="inline-flex items-center gap-2 rounded-full bg-brand-muted px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-brand">
-                    <Icon className="h-3.5 w-3.5" />
-                    {offer.mode} 7j/7
-                  </p>
-                  <h3 className="mt-5 font-display text-3xl leading-[1.15] text-[var(--text-primary)] md:text-[2.15rem]">
-                    {offer.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)] md:text-base">
-                    {offer.detail}
-                  </p>
-                </div>
-              </motion.article>
-            );
-          })}
+          {offers.map((offer, i) => (
+            <motion.article
+              key={offer.id}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.4, delay: 0.08 * i }}
+              className="group relative overflow-hidden rounded-[1.35rem] border-2 border-[color-mix(in_srgb,var(--brand-primary)_45%,var(--border-subtle))] bg-[var(--surface-elevated)] p-7 shadow-[var(--shadow-lift)] md:p-8"
+            >
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_100%_0%,color-mix(in_srgb,var(--brand-primary)_16%,transparent),transparent_55%)]"
+              />
+              <div className="relative">
+                <p className="inline-flex items-center gap-2 rounded-full bg-brand-muted px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-brand">
+                  <offer.Icon className="h-3.5 w-3.5" />
+                  {offer.mode}
+                </p>
+                <h3 className="mt-5 font-display text-3xl leading-[1.15] text-[var(--text-primary)] md:text-[2.15rem]">
+                  {offer.title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)] md:text-base">
+                  {offer.detail}
+                </p>
+              </div>
+            </motion.article>
+          ))}
         </div>
 
         <motion.p
@@ -93,7 +105,7 @@ export function OffersSection() {
           className="mt-8 flex items-center justify-center gap-2 text-sm font-medium text-[var(--text-secondary)]"
         >
           <CreditCard className="h-4 w-4 shrink-0 text-brand" />
-          {PAYMENT_NOTE}
+          {dict.offers.payment}
         </motion.p>
       </div>
     </section>
