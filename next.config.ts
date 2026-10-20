@@ -1,16 +1,23 @@
 import type { NextConfig } from "next";
 
+/** Dépôt GitHub Pages : https://jason54jg.github.io/CapoPizza/ */
+const GITHUB_PAGES = process.env.GITHUB_PAGES === "true";
+const REPO_NAME = "CapoPizza";
+const basePath = GITHUB_PAGES ? `/${REPO_NAME}` : "";
+
 const nextConfig: NextConfig = {
-  cacheComponents: true,
-  partialPrefetching: true,
+  output: "export",
+  basePath,
+  assetPrefix: GITHUB_PAGES ? `${basePath}/` : undefined,
+  trailingSlash: true,
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
         hostname: "images.unsplash.com",
       },
     ],
-    formats: ["image/avif", "image/webp"],
   },
   turbopack: {
     rules: {
