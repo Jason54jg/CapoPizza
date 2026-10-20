@@ -121,8 +121,7 @@ export function SiteHeader({
 
           <LanguageSwitcher className="hidden sm:inline-flex" />
 
-          <OpenStatusBadge mobile className="md:hidden" />
-          <OpenStatusBadge compact className="hidden md:inline-flex" />
+          <OpenStatusBadge />
 
           <button
             type="button"

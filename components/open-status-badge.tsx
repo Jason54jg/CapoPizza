@@ -5,8 +5,6 @@ import { getOpeningStatus } from "@/lib/opening-hours";
 import { useDict, useLocale } from "./locale-provider";
 
 type OpenStatusBadgeProps = {
-  compact?: boolean;
-  mobile?: boolean;
   className?: string;
 };
 
@@ -19,11 +17,7 @@ function StatusDot({ open }: { open: boolean }) {
   );
 }
 
-export function OpenStatusBadge({
-  compact = false,
-  mobile = false,
-  className = "",
-}: OpenStatusBadgeProps) {
+export function OpenStatusBadge({ className = "" }: OpenStatusBadgeProps) {
   const dict = useDict();
   const locale = useLocale();
   const [status, setStatus] = useState(() =>
@@ -41,23 +35,10 @@ export function OpenStatusBadge({
     ? `${status.label} · ${status.nextChangeLabel}`
     : `${dict.status.closed} · ${status.nextChangeLabel}`;
 
-  if (mobile) {
-    return (
-      <div
-        className={`inline-flex items-center gap-1.5 rounded-lg border border-[var(--border-subtle)] bg-[var(--surface-elevated)] px-2 py-1 text-[11px] font-semibold text-[var(--text-secondary)] ${className}`}
-        aria-live="polite"
-        title={fullLabel}
-      >
-        <StatusDot open={status.isOpen} />
-        <span>{status.isOpen ? dict.status.open : dict.status.closed}</span>
-      </div>
-    );
-  }
-
   return (
     <a
       href="#infos"
-      className={`inline-flex shrink-0 items-center gap-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--surface-elevated)] px-2.5 py-1.5 text-xs font-semibold text-[var(--text-secondary)] transition hover:border-[var(--border-strong)] hover:text-[var(--text-primary)] ${className}`}
+      className={`inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-[var(--border-subtle)] bg-[var(--surface-elevated)] px-2 py-1 text-[11px] font-semibold text-[var(--text-secondary)] transition hover:border-[var(--border-strong)] hover:text-[var(--text-primary)] md:gap-2 md:px-2.5 md:py-1.5 md:text-xs ${className}`}
       aria-live="polite"
       title={fullLabel}
     >
@@ -65,11 +46,9 @@ export function OpenStatusBadge({
       <span className="whitespace-nowrap">
         {status.isOpen ? dict.status.open : dict.status.closed}
       </span>
-      {!compact && (
-        <span className="hidden whitespace-nowrap text-[11px] font-medium text-[var(--text-muted)] lg:inline">
-          · {status.nextChangeLabel}
-        </span>
-      )}
+      <span className="hidden whitespace-nowrap text-[11px] font-medium text-[var(--text-muted)] lg:inline">
+        · {status.nextChangeLabel}
+      </span>
     </a>
   );
 }
