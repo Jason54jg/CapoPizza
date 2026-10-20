@@ -1,8 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Camera, ListChecks, Search } from "lucide-react";
-import Image from "next/image";
+import { ListChecks, Search } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSelection } from "@/hooks/use-selection";
 import { MENU_ITEMS, searchMenuItems } from "@/lib/menu";
@@ -13,7 +12,6 @@ import {
   type MenuCategoryId,
   type MenuItem,
 } from "@/lib/menu-types";
-import { BUSINESS } from "@/lib/business";
 import { PRICE_DISCLAIMER } from "@/lib/menu-prices";
 import { isInSelection } from "@/lib/selection-storage";
 import { DishCard } from "./dish-card";
@@ -106,32 +104,6 @@ export function MenuExplorer({
             aria-label="Recherche dans la carte"
           />
         </div>
-
-        <a
-          href={BUSINESS.social.instagram}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="card-surface mb-8 flex items-center gap-4 p-3 transition hover:border-brand-soft"
-        >
-          <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl">
-            <Image
-              src="/images/capo-store-hero.jpeg"
-              alt=""
-              fill
-              className="object-cover"
-              sizes="64px"
-            />
-          </div>
-          <div className="min-w-0 flex-1 text-left">
-            <p className="flex items-center gap-1.5 text-sm font-semibold text-[var(--text-primary)]">
-              <Camera className="h-4 w-4 text-brand" />
-              Instagram · photos des plats
-            </p>
-            <p className="text-xs text-[var(--text-muted)]">
-              {BUSINESS.social.handle} — visuels des plats et actualités du restaurant
-            </p>
-          </div>
-        </a>
 
         <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>

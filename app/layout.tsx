@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Source_Sans_3 } from "next/font/google";
 import { RestaurantJsonLd } from "@/components/json-ld";
+import { InitialLoadingScreen } from "@/components/initial-loading-screen";
 import { SeasonalAmbience } from "@/components/seasonal-ambience";
 import { ThemeProvider } from "@/components/theme-provider";
 import { BUSINESS } from "@/lib/business";
@@ -87,6 +88,7 @@ export default function RootLayout({
     >
       <body className="relative min-h-full antialiased">
         <ThemeProvider seasonal={seasonal}>
+          <InitialLoadingScreen />
           <SeasonalAmbience seasonal={seasonal} />
           <RestaurantJsonLd />
           <div className="relative z-[2]">{children}</div>
