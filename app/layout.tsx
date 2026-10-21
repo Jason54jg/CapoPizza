@@ -89,11 +89,12 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className={`${sourceSans.variable} ${displaySerif.variable} dark h-full`}
+      className={`${sourceSans.variable} ${displaySerif.variable} dark`}
+      data-scroll-behavior="smooth"
       data-seasonal-theme={seasonal}
       suppressHydrationWarning
     >
-      <body className="relative min-h-full antialiased">
+      <body className="relative min-h-dvh antialiased">
         <ThemeProvider seasonal={seasonal}>
           <SeasonalAmbience seasonal={seasonal} />
           <RestaurantJsonLd />

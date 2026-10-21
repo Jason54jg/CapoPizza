@@ -43,31 +43,25 @@ Sur le plan gratuit, **Pages publique** nécessite un dépôt **public** (ou un 
 
 ## Thèmes saisonniers (avant déploiement)
 
-Par défaut : **clair / sombre** uniquement (bouton lune/soleil).
+Source de vérité : **`site.theme.config.ts`** (`seasonal: "none" | "halloween" | "christmas"`).
 
-Pour activer **Halloween** ou **Noël** au build :
+- **`none` (thème de base)** : identité Capo (brique / four), clair & sombre, fond ambiance four à bois
+- **`halloween` / `christmas`** : palettes saisonnières
 
-1. **Fichier** `site.theme.config.ts` → `seasonal: "halloween"` ou `"christmas"` ou `"none"`
-2. **Ou variable** (prioritaire) : `NEXT_PUBLIC_SEASONAL_THEME=halloween|christmas|none`
-
-Exemples :
-
-```bash
-# Test local
-NEXT_PUBLIC_SEASONAL_THEME=halloween npm run dev
-NEXT_PUBLIC_SEASONAL_THEME=christmas npm run build:pages
-
-# Scripts prêts pour GitHub Pages
-npm run build:pages:halloween
-npm run build:pages:christmas
-```
-
-Dans GitHub Actions, ajoutez dans l’étape *Build* :
+Le bouton lune/soleil reste disponible dans tous les cas.  
+Le workflow GitHub Pages suit ce fichier (sans forcer Halloween). Pour forcer en CI :
 
 ```yaml
 env:
   GITHUB_PAGES: "true"
-  NEXT_PUBLIC_SEASONAL_THEME: christmas   # ou halloween / none
+  NEXT_PUBLIC_SEASONAL_THEME: christmas   # prioritaire sur le fichier
+```
+
+```bash
+# Test local
+NEXT_PUBLIC_SEASONAL_THEME=halloween npm run dev
+npm run build:pages:halloween
+npm run build:pages:christmas
 ```
 
 ---

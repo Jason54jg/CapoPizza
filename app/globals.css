@@ -23,8 +23,10 @@
   --brand-muted: rgba(184, 50, 31, 0.11);
   --brand-on-primary: #ffffff;
   --accent-secondary: #3d342f;
-  --season-glow: transparent;
-  --season-glow-2: transparent;
+  /* Ambiance four : braise douce + ombre pierre */
+  --season-glow: rgba(184, 50, 31, 0.09);
+  --season-glow-2: rgba(120, 72, 48, 0.06);
+  --season-glow-3: rgba(26, 21, 20, 0.04);
   --shadow-soft: 0 1px 2px rgba(26, 21, 20, 0.05), 0 10px 28px rgba(26, 21, 20, 0.06);
   --shadow-lift: 0 6px 24px rgba(26, 21, 20, 0.09);
   --radius-card: 1rem;
@@ -32,11 +34,11 @@
 }
 
 .dark {
-  /* Charbon neutre (sans violet) */
-  --surface-base: #121110;
-  --surface-elevated: #1b1917;
-  --surface-muted: #161412;
-  --surface-glass: rgba(18, 17, 16, 0.92);
+  /* Charbon / four à bois (sans violet) */
+  --surface-base: #100e0d;
+  --surface-elevated: #1a1715;
+  --surface-muted: #141210;
+  --surface-glass: rgba(16, 14, 13, 0.92);
   --text-primary: #f4efe9;
   --text-secondary: #b0a8a0;
   --text-muted: #857c74;
@@ -50,8 +52,9 @@
   --brand-muted: rgba(199, 90, 69, 0.15);
   --brand-on-primary: #ffffff;
   --accent-secondary: #c4b8ae;
-  --season-glow: color-mix(in srgb, var(--brand-primary) 9%, transparent);
-  --season-glow-2: transparent;
+  --season-glow: rgba(199, 90, 69, 0.18);
+  --season-glow-2: rgba(255, 160, 90, 0.06);
+  --season-glow-3: rgba(0, 0, 0, 0.45);
   --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.22), 0 14px 36px rgba(0, 0, 0, 0.28);
   --shadow-lift: 0 10px 32px rgba(0, 0, 0, 0.38);
 }
@@ -73,6 +76,7 @@
   --accent-secondary: #5b21b6;
   --season-glow: rgba(194, 65, 12, 0.14);
   --season-glow-2: rgba(91, 33, 182, 0.08);
+  --season-glow-3: rgba(28, 20, 16, 0.05);
   --shadow-soft: 0 1px 2px rgba(60, 30, 10, 0.06), 0 12px 28px rgba(91, 33, 182, 0.06);
 }
 
@@ -93,6 +97,7 @@
   --accent-secondary: #a78bfa;
   --season-glow: rgba(245, 158, 11, 0.16);
   --season-glow-2: rgba(124, 58, 237, 0.14);
+  --season-glow-3: rgba(0, 0, 0, 0.4);
   --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.3), 0 16px 40px rgba(40, 10, 60, 0.35);
   --shadow-lift: 0 12px 36px rgba(40, 10, 60, 0.4);
 }
@@ -114,6 +119,7 @@
   --accent-secondary: #1b4332;
   --season-glow: rgba(155, 34, 38, 0.1);
   --season-glow-2: rgba(27, 67, 50, 0.08);
+  --season-glow-3: rgba(26, 31, 28, 0.04);
   --shadow-soft: 0 1px 2px rgba(20, 40, 30, 0.05), 0 12px 28px rgba(27, 67, 50, 0.06);
 }
 
@@ -134,6 +140,7 @@
   --accent-secondary: #d4af37;
   --season-glow: rgba(224, 122, 122, 0.12);
   --season-glow-2: rgba(212, 175, 55, 0.1);
+  --season-glow-3: rgba(0, 0, 0, 0.4);
   --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.28), 0 16px 40px rgba(10, 30, 20, 0.35);
   --shadow-lift: 0 12px 36px rgba(10, 30, 20, 0.4);
 }
@@ -147,16 +154,49 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: clip;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--brand-primary) 55%, var(--text-muted))
+    color-mix(in srgb, var(--surface-muted) 80%, transparent);
+}
+
+html::-webkit-scrollbar {
+  width: 10px;
+}
+
+html::-webkit-scrollbar-track {
+  background: color-mix(in srgb, var(--surface-muted) 70%, transparent);
+}
+
+html::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--brand-primary) 45%, var(--text-muted));
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-primary);
+  border: 2px solid transparent;
+  background-clip: padding-box;
 }
 
 body {
   background-color: var(--background);
+  background-image: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--brand-primary) 4.5%, var(--surface-base)) 0%,
+    var(--surface-base) 32%,
+    color-mix(in srgb, var(--accent-secondary) 3%, var(--surface-base)) 100%
+  );
+  background-attachment: fixed;
   color: var(--foreground);
   font-family: var(--font-source), system-ui, sans-serif;
   font-feature-settings: "kern" 1, "liga" 1;
   -webkit-font-smoothing: antialiased;
-  overflow-x: clip;
+  /* Pas d’overflow ici : le scroll reste sur <html>, sinon la barre disparaît */
 }
 
 .font-display {
@@ -169,29 +209,49 @@ body {
   background: color-mix(in srgb, var(--brand-primary) 28%, transparent);
 }
 
-/* Ambiance : lueurs d’arrière-plan (base = four discret ; saisons = couches) */
+/* Ambiance four à bois : braises + vignette + grain */
 .season-backdrop {
   pointer-events: none;
   position: fixed;
   inset: 0;
   z-index: 1;
   background:
-    radial-gradient(90% 55% at 15% -10%, var(--season-glow), transparent 58%),
-    radial-gradient(70% 50% at 95% 110%, var(--season-glow-2), transparent 55%);
+    radial-gradient(ellipse 85% 55% at 8% -5%, var(--season-glow), transparent 58%),
+    radial-gradient(ellipse 70% 50% at 96% 108%, var(--season-glow-2), transparent 52%),
+    radial-gradient(ellipse 55% 40% at 70% 20%, var(--season-glow-2), transparent 60%),
+    radial-gradient(ellipse 120% 80% at 50% 50%, transparent 45%, var(--season-glow-3) 100%);
+}
+
+.season-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+  mix-blend-mode: overlay;
+}
+
+.dark .season-backdrop::after {
+  opacity: 0.07;
+  mix-blend-mode: soft-light;
 }
 
 .season-halloween .season-backdrop {
   background:
-    radial-gradient(100% 70% at 50% -15%, var(--season-glow), transparent 52%),
-    radial-gradient(80% 55% at 100% 30%, var(--season-glow-2), transparent 50%),
-    radial-gradient(60% 40% at 0% 80%, rgba(91, 33, 182, 0.1), transparent 45%);
+    radial-gradient(ellipse 100% 70% at 50% -15%, var(--season-glow), transparent 52%),
+    radial-gradient(ellipse 80% 55% at 100% 30%, var(--season-glow-2), transparent 50%),
+    radial-gradient(ellipse 60% 40% at 0% 80%, rgba(91, 33, 182, 0.1), transparent 45%),
+    radial-gradient(ellipse 120% 80% at 50% 50%, transparent 48%, var(--season-glow-3) 100%);
 }
 
 .season-christmas .season-backdrop {
   background:
-    radial-gradient(90% 60% at 20% -10%, var(--season-glow), transparent 50%),
-    radial-gradient(75% 55% at 90% 0%, var(--season-glow-2), transparent 48%),
-    radial-gradient(50% 40% at 70% 100%, rgba(27, 67, 50, 0.12), transparent 50%);
+    radial-gradient(ellipse 90% 60% at 20% -10%, var(--season-glow), transparent 50%),
+    radial-gradient(ellipse 75% 55% at 90% 0%, var(--season-glow-2), transparent 48%),
+    radial-gradient(ellipse 50% 40% at 70% 100%, rgba(27, 67, 50, 0.12), transparent 50%),
+    radial-gradient(ellipse 120% 80% at 50% 50%, transparent 48%, var(--season-glow-3) 100%);
 }
 
 /* Composants réutilisables */

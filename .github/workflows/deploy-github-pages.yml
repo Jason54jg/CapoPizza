@@ -54,8 +54,8 @@ jobs:
         env:
           # Site projet : https://<owner>.github.io/CapoPizza/
           GITHUB_PAGES: "true"
-          # Thème saisonnier : none | halloween | christmas (voir site.theme.config.ts)
-          NEXT_PUBLIC_SEASONAL_THEME: halloween
+          # Thème saisonnier : laisser site.theme.config.ts (none | halloween | christmas)
+          # Pour forcer en CI : NEXT_PUBLIC_SEASONAL_THEME: halloween
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
