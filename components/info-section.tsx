@@ -95,11 +95,11 @@ export function InfoSection() {
             </div>
           </div>
 
-          <div className="card-surface overflow-hidden p-0">
+          <div className="relative h-full min-h-[min(360px,55vh)] overflow-hidden rounded-[var(--radius-card)] border border-[var(--border-subtle)] shadow-[var(--shadow-soft)]">
             <iframe
               title={dict.info.mapsTitle}
               src={`https://maps.google.com/maps?q=${BUSINESS.mapsQuery}&t=&z=16&ie=UTF8&iwloc=&output=embed`}
-              className="h-[min(420px,60vh)] w-full grayscale-[20%] contrast-[1.02] dark:invert-[0.88] dark:hue-rotate-180"
+              className="absolute inset-0 h-full w-full border-0"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
