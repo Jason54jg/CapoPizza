@@ -24,8 +24,41 @@ function dedupeReviews(reviews) {
   return out;
 }
 
+/** Approx. âge en jours depuis le libellé Maps (« il y a 3 mois », « 2 weeks ago »…). */
+function relativeAgeDays(label) {
+  if (!label) return 9999;
+  const t = label.toLowerCase().replace(/\u00a0/g, " ");
+  const n = Number((t.match(/(\d+)/) || [])[1] || 1);
+  if (/jour|day|hora|heure|hour|minute|min/.test(t)) return n;
+  if (/semaine|week/.test(t)) return n * 7;
+  if (/mois|month/.test(t)) return n * 30;
+  if (/an|year|año/.test(t)) return n * 365;
+  return 9999;
+}
+
+/** Parmi les avis récents, garde les meilleurs (5★ puis 4★) avec texte, du plus récent au plus ancien. */
+function pickBestRecent(reviews, limit = 3) {
+  const withText = reviews.filter((r) => (r.text || "").trim().length >= 24);
+  const pool = (withText.length ? withText : reviews).slice();
+  pool.sort(
+    (a, b) =>
+      relativeAgeDays(a.relativeTime) - relativeAgeDays(b.relativeTime),
+  );
+  const picked = [];
+  const take = (pred) => {
+    for (const r of pool) {
+      if (picked.length >= limit) break;
+      if (pred(r) && !picked.includes(r)) picked.push(r);
+    }
+  };
+  take((r) => r.rating >= 5);
+  take((r) => r.rating >= 4);
+  take(() => true);
+  return picked.slice(0, limit);
+}
+
 /**
- * @param {number} limit
+ * @param {number} limit Nombre d’avis à conserver (meilleurs parmi les récents)
  * @returns {Promise<{
  *   rating: number,
  *   reviewCount: number,
@@ -35,7 +68,7 @@ function dedupeReviews(reviews) {
  *   source: string
  * }>}
  */
-export async function scrapeGoogleReviewsBrowser(limit = 6) {
+export async function scrapeGoogleReviewsBrowser(limit = 3) {
   const browser = await chromium.launch({
     headless: true,
     args: ["--disable-blink-features=AutomationControlled"],
@@ -153,22 +186,24 @@ export async function scrapeGoogleReviewsBrowser(limit = 6) {
       cards = page.locator(".jftiEf");
     }
 
+    // Charger un pool d’avis récents pour en extraire les meilleurs
+    const poolTarget = Math.max(limit * 8, 24);
     const scrollable = page.locator(".m6QErb.DxyBCb").first();
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 8; i++) {
       const count = await cards.count();
-      if (count >= limit * 2) break;
+      if (count >= poolTarget) break;
       if (await scrollable.isVisible().catch(() => false)) {
         await scrollable.evaluate((el) => el.scrollBy(0, 1000));
       } else {
         await page.mouse.wheel(0, 1000);
       }
-      await page.waitForTimeout(500);
+      await page.waitForTimeout(450);
     }
 
     const n = await cards.count();
     const reviews = [];
 
-    for (let i = 0; i < n && reviews.length < limit * 2; i++) {
+    for (let i = 0; i < n && reviews.length < poolTarget; i++) {
       const card = cards.nth(i);
 
       const more = card.locator('button[aria-label*="Voir plus"], button:has-text("Plus"), button:has-text("More")').first();
@@ -219,7 +254,7 @@ export async function scrapeGoogleReviewsBrowser(limit = 6) {
       });
     }
 
-    const unique = dedupeReviews(reviews).slice(0, limit);
+    const unique = pickBestRecent(dedupeReviews(reviews), limit);
 
     if (!unique.length) {
       throw new Error("Aucun avis trouvé dans le DOM Google Maps.");
@@ -249,7 +284,7 @@ export async function scrapeGoogleReviewsBrowser(limit = 6) {
 
 const isDirectRun = process.argv[1]?.includes("scrape-google-reviews-browser");
 if (isDirectRun) {
-  scrapeGoogleReviewsBrowser(6)
+  scrapeGoogleReviewsBrowser(3)
     .then((data) => console.log(JSON.stringify(data, null, 2)))
     .catch((err) => {
       console.error(err);

@@ -148,7 +148,7 @@ export function ReviewsSection() {
     dict.reviews.highlightValue,
   ];
 
-  const shownReviews = reviews.slice(0, 6);
+  const shownReviews = reviews.slice(0, 3);
 
   return (
     <section

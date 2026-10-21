@@ -106,7 +106,7 @@ async function main() {
   if (!skipBrowser) {
     try {
       console.log("[google-reviews] Scraping Google Maps (navigateur)…");
-      const scraped = await scrapeGoogleReviewsBrowser(6);
+      const scraped = await scrapeGoogleReviewsBrowser(3);
 
       // Maps = source de vérité pour le total. Rankeat est souvent en retard
       // (ex. 96 alors que Maps affiche 151) → ne l’utiliser qu’en secours.

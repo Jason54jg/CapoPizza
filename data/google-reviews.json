@@ -3,16 +3,9 @@
   "reviewCount": 151,
   "placeId": "ChIJQ6K6DjCz7EcR54iI-g5TfHA",
   "mapsUrl": "https://www.google.com/maps/search/?api=1&query_place_id=ChIJQ6K6DjCz7EcR54iI-g5TfHA&query=Capo+Pizza",
-  "updatedAt": "2026-10-21T16:29:47.733Z",
+  "updatedAt": "2026-10-21T16:31:36.336Z",
   "source": "google-maps-browser",
   "reviews": [
-    {
-      "author": "Theo Wolff",
-      "rating": 5,
-      "text": "Excellent moment dans cette pizzeria ! Le personnel est très accueillant, souriant et vraiment efficace. La pizza a été préparée en moins de 5 minutes, juste devant mes yeux, ce qui montre un vrai savoir-faire et une excellente organisation. J’ai pris une simple Margherita, et pourtant elle était parfaite : la pâte se tenait très bien, les ingrédients étaient de qualité et le goût était excellent. Beaucoup pensent qu’une Margherita est une pizza “basique”, mais justement, c’est souvent là qu’on voit si une pizzeria sait vraiment faire de bonnes pizzas… et ici, c’est clairement le cas. Rapide, efficace et surtout très bon, je recommande sans hésiter !",
-      "relativeTime": "il y a 4 mois",
-      "profilePhotoUrl": "https://lh3.googleusercontent.com/a-/ALV-UjWN2eiFUFqUlkg9dmUCCmLRTlFEUPJW_9DtYEbt2ftxMxxt6evQ=w36-h36-p-rp-mo-br100"
-    },
     {
       "author": "jok her here",
       "rating": 5,
@@ -21,25 +14,18 @@
       "profilePhotoUrl": "https://lh3.googleusercontent.com/a-/ALV-UjWz5bR6gR5G6l-GLenvQUtbQbqi-8J_RPuVLmicEEHqoKNGdmzS=w36-h36-p-rp-mo-br100"
     },
     {
+      "author": "Theo Wolff",
+      "rating": 5,
+      "text": "Excellent moment dans cette pizzeria ! Le personnel est très accueillant, souriant et vraiment efficace. La pizza a été préparée en moins de 5 minutes, juste devant mes yeux, ce qui montre un vrai savoir-faire et une excellente organisation. J’ai pris une simple Margherita, et pourtant elle était parfaite : la pâte se tenait très bien, les ingrédients étaient de qualité et le goût était excellent. Beaucoup pensent qu’une Margherita est une pizza “basique”, mais justement, c’est souvent là qu’on voit si une pizzeria sait vraiment faire de bonnes pizzas… et ici, c’est clairement le cas. Rapide, efficace et surtout très bon, je recommande sans hésiter !",
+      "relativeTime": "il y a 4 mois",
+      "profilePhotoUrl": "https://lh3.googleusercontent.com/a-/ALV-UjWN2eiFUFqUlkg9dmUCCmLRTlFEUPJW_9DtYEbt2ftxMxxt6evQ=w36-h36-p-rp-mo-br100"
+    },
+    {
       "author": "Hakan Erturan",
       "rating": 5,
       "text": "Très bon restaurant, pâtes a pizza et sandwich excellents. Tellement c'était bon j'ai oublié de prendre la photo avant de manger. Personnel très sympa",
       "relativeTime": "il y a 9 mois",
       "profilePhotoUrl": "https://lh3.googleusercontent.com/a-/ALV-UjUv8uLkOKpZHDsU3vddmXZwXAYU6NwyPp_Tk5lZQ7b4bUYW3y-q=w36-h36-p-rp-mo-br100"
-    },
-    {
-      "author": "Maudit CityRp",
-      "rating": 1,
-      "text": "Commande de 4 pizza et 1 tacos Pizza saumon sans goût saumon congeler surment obtenue lors des promos de noel Tacos sans sauce éxtrement sec Pizza chèvre miel plus de miel que autre chose sa dégouline de partout immangeable Pizza fruit de mers secs comme pas possible Seule la pizza tartiflette était bonne Je ne commanderai plus la bas",
-      "relativeTime": "il y a 9 mois",
-      "profilePhotoUrl": "https://lh3.googleusercontent.com/a-/ALV-UjUVgup8Lki8zsQBpP7glfbhpZAcbBd6Iz86CUmqbbNDXZYqtDzu=w36-h36-p-rp-mo-br100"
-    },
-    {
-      "author": "Cassandra Breton",
-      "rating": 1,
-      "text": "Pourri !! Manque article dans la commande et quelqu'un devais venir et personne n’est venu mr a gagner des sous et nous on a perdu ! Je compte pas revenir !!!",
-      "relativeTime": "il y a 2 mois",
-      "profilePhotoUrl": "https://lh3.googleusercontent.com/a/ACg8ocLKqCHK_-8m9-cunqa_6ELlTrU2ZWVxvbBIdJC1FI1gaZtcFA=w36-h36-p-rp-mo-br100"
     }
   ]
 }
