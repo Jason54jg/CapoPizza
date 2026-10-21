@@ -61,36 +61,40 @@ export async function GET() {
   const disk = readDiskSnapshot();
   const fallback = getGoogleReviews();
 
-  // Note fraîche depuis Rankeat (rapide, sans navigateur)
+  // Snapshot disque = Maps (source de vérité). Rankeat est souvent en retard
+  // et ne doit plus écraser le total.
   let rating = typeof disk.rating === "number" ? disk.rating : fallback.rating;
   let reviewCount =
     typeof disk.reviewCount === "number"
       ? disk.reviewCount
       : fallback.reviewCount;
 
-  try {
-    const res = await fetch(RANKEAT_CAPO_URL, {
-      headers: {
-        "User-Agent":
-          "Mozilla/5.0 (compatible; CapoPizzaSite/1.0; +https://github.com)",
-        Accept: "text/html,application/xhtml+xml",
-      },
-      cache: "no-store",
-    });
-    if (res.ok) {
-      const html = await res.text();
-      const parsed = parseGoogleRatingFromHtml(html);
-      if (parsed) {
-        rating = parsed.rating;
-        reviewCount = parsed.reviewCount;
-      }
-    }
-  } catch {
-    /* garder snapshot */
-  }
-
   if (isStale(disk.updatedAt) || !disk.reviews?.length) {
     kickoffBrowserScrape();
+  }
+
+  // Secours rapide uniquement si le snapshot n’a pas de total fiable
+  if (!reviewCount || reviewCount < 10) {
+    try {
+      const res = await fetch(RANKEAT_CAPO_URL, {
+        headers: {
+          "User-Agent":
+            "Mozilla/5.0 (compatible; CapoPizzaSite/1.0; +https://github.com)",
+          Accept: "text/html,application/xhtml+xml",
+        },
+        cache: "no-store",
+      });
+      if (res.ok) {
+        const html = await res.text();
+        const parsed = parseGoogleRatingFromHtml(html);
+        if (parsed) {
+          rating = parsed.rating || rating;
+          reviewCount = parsed.reviewCount || reviewCount;
+        }
+      }
+    } catch {
+      /* garder snapshot */
+    }
   }
 
   return NextResponse.json({

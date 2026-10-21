@@ -16,7 +16,7 @@ const RANKEAT_URL =
 
 const FALLBACK = {
   rating: 4.4,
-  reviewCount: 152,
+  reviewCount: 151,
   placeId: "ChIJQ6K6DjCz7EcR54iI-g5TfHA",
   mapsUrl:
     "https://www.google.com/maps/search/?api=1&query_place_id=ChIJQ6K6DjCz7EcR54iI-g5TfHA&query=Capo+Pizza",
@@ -108,17 +108,31 @@ async function main() {
       console.log("[google-reviews] Scraping Google Maps (navigateur)…");
       const scraped = await scrapeGoogleReviewsBrowser(6);
 
-      // Compléter la note / le total via Rankeat si le header Maps est incomplet
+      // Maps = source de vérité pour le total. Rankeat est souvent en retard
+      // (ex. 96 alors que Maps affiche 151) → ne l’utiliser qu’en secours.
       let rating = scraped.rating;
       let reviewCount = scraped.reviewCount;
-      if (!reviewCount || reviewCount <= scraped.reviews.length) {
+      const mapsCountOk =
+        Number.isFinite(reviewCount) &&
+        reviewCount > (scraped.reviews?.length ?? 0);
+
+      if (!mapsCountOk || !Number.isFinite(rating) || rating <= 0) {
         try {
           const rk = await fetchRankeatRating();
-          rating = rk.rating || rating;
-          reviewCount = rk.reviewCount || reviewCount;
+          if (!Number.isFinite(rating) || rating <= 0) {
+            rating = rk.rating || rating;
+          }
+          if (!mapsCountOk) {
+            reviewCount = rk.reviewCount || reviewCount;
+          }
         } catch {
           /* ignore */
         }
+      }
+
+      if (!Number.isFinite(reviewCount) || reviewCount <= 0) {
+        reviewCount =
+          existing?.reviewCount || FALLBACK.reviewCount;
       }
 
       writeSnapshot({

@@ -95,17 +95,58 @@ export async function scrapeGoogleReviewsBrowser(limit = 6) {
       }
     }
 
-    let rating = NaN;
-    let reviewCount = NaN;
+    // Note + total : aria-labels Maps (ex. "4,4 étoiles", "151 avis").
+    // On valide avec la somme de l’histogramme (« 5 étoiles, 118 avis » + …).
+    const headerStats = await page.evaluate(() => {
+      let rating = NaN;
+      let reviewCount = NaN;
+      let histSum = 0;
 
-    const headerRating = page.locator(".F7nice").first();
-    if (await headerRating.isVisible().catch(() => false)) {
-      const t = await headerRating.innerText().catch(() => "");
-      const rm = t.match(/(\d+[.,]\d+)/);
-      const cm = t.replace(/\s/g, " ").match(/([\d\s\u00a0]+)\s*avis/i);
-      if (rm) rating = Number(rm[1].replace(",", "."));
-      if (cm) reviewCount = Number(cm[1].replace(/[\s\u00a0]/g, ""));
-    }
+      for (const el of document.querySelectorAll("[aria-label]")) {
+        const al = (el.getAttribute("aria-label") || "")
+          .replace(/\u00a0/g, " ")
+          .trim();
+
+        const star = al.match(/^(\d+[.,]\d+)\s*étoiles?\s*$/i);
+        if (star) rating = Number(star[1].replace(",", "."));
+
+        // Exact « 151 avis » — pas « 5 étoiles, 118 avis » ni thèmes (« tacos… »)
+        const count = al.match(/^(\d+(?:\s\d{3})*)\s*avis\s*$/i);
+        if (count) {
+          const n = Number(count[1].replace(/\s/g, ""));
+          if (Number.isFinite(n) && n >= 10) reviewCount = n;
+        }
+
+        const hist = al.match(/^([1-5])\s*étoiles?,\s*(\d+)\s*avis$/i);
+        if (hist) histSum += Number(hist[2]);
+      }
+
+      if (histSum >= 10) {
+        // L’histogramme est la source la plus fiable du total
+        reviewCount = histSum;
+      }
+
+      if (!Number.isFinite(reviewCount) || reviewCount < 10) {
+        const body = (document.body?.innerText || "").replace(/\u00a0/g, " ");
+        const paren = body.match(/(\d+[.,]\d+)\s*\(\s*(\d+)\s*\)/);
+        if (paren) {
+          rating = Number(paren[1].replace(",", "."));
+          reviewCount = Number(paren[2]);
+        }
+      }
+
+      if (!Number.isFinite(rating) || rating <= 0) {
+        const nice = document.querySelector(".F7nice");
+        const t = (nice?.textContent || "").replace(/\u00a0/g, " ");
+        const rm = t.match(/(\d+[.,]\d+)/);
+        if (rm) rating = Number(rm[1].replace(",", "."));
+      }
+
+      return { rating, reviewCount, histSum };
+    });
+
+    let rating = headerStats.rating;
+    let reviewCount = headerStats.reviewCount;
 
     let cards = page.locator("div[data-review-id]");
     if ((await cards.count()) === 0) {

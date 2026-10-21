@@ -8,9 +8,10 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
-  # Rafraîchit note / nombre d’avis Google (page Rankeat, sans clé API) puis redéploie
+  # Rafraîchit note / nombre d’avis Google (Maps via Playwright) puis redéploie
   schedule:
     - cron: "0 6 * * *"
+    - cron: "0 18 * * *"
 
 permissions:
   contents: read
