@@ -18,7 +18,7 @@ export function HeroSection({ onDiscoverPizzas }: HeroSectionProps) {
   const dict = useDict();
 
   return (
-    <section className="relative border-b border-[var(--border-subtle)] pt-24 pb-16 md:pt-28 md:pb-20">
+    <section className="relative pt-24 pb-16 md:pt-28 md:pb-20">
       <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 md:grid-cols-2 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 16 }}

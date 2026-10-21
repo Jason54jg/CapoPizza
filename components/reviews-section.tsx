@@ -153,7 +153,7 @@ export function ReviewsSection() {
   return (
     <section
       id="avis"
-      className="scroll-mt-28 border-t border-[var(--border-subtle)] py-14 md:py-16"
+      className="scroll-mt-28 py-14 md:py-16"
     >
       <div className="mx-auto max-w-6xl px-4 md:px-6">
         <motion.div

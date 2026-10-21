@@ -28,15 +28,11 @@ export function OffersSection() {
   return (
     <section
       id="offres"
-      className="scroll-mt-24 relative overflow-hidden border-y border-[var(--border-subtle)]"
+      className="scroll-mt-24 relative overflow-hidden"
     >
       <div
         aria-hidden
-        className="absolute inset-0 bg-[linear-gradient(165deg,var(--surface-muted)_0%,var(--surface-base)_45%,color-mix(in_srgb,var(--brand-primary)_6%,var(--surface-base))_100%)]"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -left-24 top-0 h-64 w-64 rounded-full bg-[var(--brand-primary)] opacity-[0.07] blur-3xl"
+        className="pointer-events-none absolute -left-24 top-1/2 h-72 w-72 -translate-y-1/2 rounded-full bg-[var(--brand-primary)] opacity-[0.08] blur-3xl"
       />
       <div
         aria-hidden

@@ -10,7 +10,7 @@ export function SiteFooter() {
   return (
     <footer
       id="contact"
-      className="scroll-mt-28 border-t border-[var(--border-subtle)] py-12"
+      className="scroll-mt-28 py-12"
     >
       <div className="mx-auto max-w-6xl px-4 md:px-6">
         <div className="grid gap-10 md:grid-cols-3">
@@ -73,7 +73,7 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <p className="mt-10 border-t border-[var(--border-subtle)] pt-6 text-center text-xs text-[var(--text-muted)]">
+        <p className="mt-10 pt-6 text-center text-xs text-[var(--text-muted)]">
           Capo Pizza — Neufchâteau (88300)
         </p>
       </div>

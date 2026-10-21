@@ -10,7 +10,7 @@ export function InfoSection() {
   return (
     <section
       id="infos"
-      className="scroll-mt-28 border-t border-[var(--border-subtle)] bg-[var(--surface-muted)] py-16"
+      className="scroll-mt-28 py-16"
     >
       <div className="mx-auto max-w-6xl px-4 md:px-6">
         <div className="mb-10 md:max-w-xl">
