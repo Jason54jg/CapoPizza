@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { MenuCategoryId } from "@/lib/menu-types";
 import { FloatingCallButton } from "./floating-call-button";
 import { HeroSection } from "./hero-section";
@@ -14,6 +14,15 @@ import { SiteHeader } from "./site-header";
 export function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [menuCategory, setMenuCategory] = useState<MenuCategoryId>("pizzas-tomate");
+
+  // Toujours démarrer en tête de page (évite le restore / effets menu)
+  useEffect(() => {
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+    if (window.location.hash) return;
+    window.scrollTo(0, 0);
+  }, []);
 
   const scrollToMenu = useCallback(() => {
     document.getElementById("menu")?.scrollIntoView({ behavior: "smooth" });

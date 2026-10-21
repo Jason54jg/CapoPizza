@@ -10,7 +10,7 @@
  * Vérifier qu’aucune variable d’env ne force halloween en local.
  */
 export const SITE_THEME_CONFIG = {
-  seasonal: "halloween",
+  seasonal: "none",
 } as const satisfies {
   seasonal: "none" | "halloween" | "christmas";
 };

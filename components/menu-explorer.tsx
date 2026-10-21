@@ -52,7 +52,14 @@ export function MenuExplorer({
     [selection, locale],
   );
 
+  // Centrer l’onglet actif horizontalement — pas au 1er montage
+  // (sinon scrollIntoView descend la page dès l’arrivée sur le site).
+  const categoryScrollReady = useRef(false);
   useEffect(() => {
+    if (!categoryScrollReady.current) {
+      categoryScrollReady.current = true;
+      return;
+    }
     const tab = tabsRef.current?.querySelector<HTMLElement>(
       `[data-category="${activeCategory}"]`,
     );
