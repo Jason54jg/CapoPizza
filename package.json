@@ -10,6 +10,7 @@
     "build:pages": "GITHUB_PAGES=true next build",
     "build:pages:halloween": "GITHUB_PAGES=true NEXT_PUBLIC_SEASONAL_THEME=halloween next build",
     "build:pages:christmas": "GITHUB_PAGES=true NEXT_PUBLIC_SEASONAL_THEME=christmas next build",
+    "serve:pages": "node scripts/serve-pages.mjs",
     "start": "next start",
     "lint": "eslint"
   },

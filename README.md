@@ -85,8 +85,11 @@ Simuler le build GitHub Pages :
 
 ```bash
 npm run build:pages
-npx serve out
+npm run serve:pages
 ```
+
+Ouvrir [http://localhost:3000/CapoPizza/](http://localhost:3000/CapoPizza/).  
+`serve:pages` place le site sous `/CapoPizza/` (comme GitHub Pages) et ajoute `favicon.ico` / `apple-touch-icon.png` à la racine du serveur de test pour éviter les 404 des sondes du navigateur.
 
 ---
 
@@ -95,6 +98,7 @@ npx serve out
 | Commande | Description |
 |----------|-------------|
 | `npm run dev` | Développement (sans `/CapoPizza` dans l’URL) |
-| `npm run build` | Build statique local |
-| `npm run build:pages` | Même `basePath` que GitHub Pages |
+| `npm run build` | Build local |
+| `npm run build:pages` | Export statique avec le même `basePath` que GitHub Pages |
+| `npm run serve:pages` | Sert `out/` sous `/CapoPizza/` (après `build:pages`) |
 | `npm run lint` | ESLint |
