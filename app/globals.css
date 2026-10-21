@@ -255,49 +255,74 @@ body {
 }
 
 /* Composants réutilisables */
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  max-width: 100%;
-  border-radius: var(--radius-pill);
-  background-color: var(--brand-primary);
-  color: var(--brand-on-primary);
-  font-weight: 600;
-  transition:
-    background-color 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.15s ease;
-  box-shadow: var(--shadow-soft);
-}
+/* Dans @layer components : les utilitaires (hidden, md:inline-flex…) doivent pouvoir les surcharger */
+@layer components {
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    max-width: 100%;
+    border-radius: var(--radius-pill);
+    background-color: var(--brand-primary);
+    color: var(--brand-on-primary);
+    font-weight: 600;
+    transition:
+      background-color 0.2s ease,
+      box-shadow 0.2s ease,
+      transform 0.15s ease;
+    box-shadow: var(--shadow-soft);
+  }
 
-.btn-primary:hover {
-  background-color: var(--brand-primary-hover);
-}
+  .btn-primary:hover {
+    background-color: var(--brand-primary-hover);
+  }
 
-.btn-primary:active {
-  transform: translateY(1px);
-}
+  .btn-primary:active {
+    transform: translateY(1px);
+  }
 
-.btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  max-width: 100%;
-  border-radius: var(--radius-pill);
-  border: 1px solid var(--border-strong);
-  background-color: var(--surface-elevated);
-  color: var(--text-primary);
-  font-weight: 600;
-  transition:
-    border-color 0.2s ease,
-    background-color 0.2s ease;
-}
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    max-width: 100%;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border-strong);
+    background-color: var(--surface-elevated);
+    color: var(--text-primary);
+    font-weight: 600;
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease;
+  }
 
-.btn-secondary:hover {
-  border-color: color-mix(in srgb, var(--brand-primary) 35%, var(--border-subtle));
+  .btn-secondary:hover {
+    border-color: color-mix(in srgb, var(--brand-primary) 35%, var(--border-subtle));
+  }
+
+  /* Commande Uber Eats — couleurs de la marque (vert #06C167, texte noir) */
+  .btn-ubereats {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    max-width: 100%;
+    border-radius: var(--radius-pill);
+    background-color: #06c167;
+    color: #000;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+  }
+
+  .btn-ubereats:hover {
+    background-color: #05a95a;
+  }
+
+  .btn-ubereats:active {
+    transform: translateY(1px);
+  }
 }
 
 .text-brand {

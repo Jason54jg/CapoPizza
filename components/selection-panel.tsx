@@ -20,6 +20,7 @@ import {
   type SelectionEntry,
 } from "@/lib/selection-storage";
 import { useDict, useLocale } from "./locale-provider";
+import { UberEatsButton } from "./uber-eats-button";
 
 type SelectionPanelProps = {
   open: boolean;
@@ -200,6 +201,7 @@ export function SelectionPanel({
                 <Phone className="h-4 w-4" />
                 {dict.selection.call}
               </a>
+              <UberEatsButton className="w-full py-3 text-sm" />
               {selection.length > 0 && (
                 <button
                   type="button"

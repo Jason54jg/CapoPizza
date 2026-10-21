@@ -10,6 +10,7 @@ import { useDict, useLocale } from "./locale-provider";
 import { Logo } from "./logo";
 import { OpenStatusBadge } from "./open-status-badge";
 import { useTheme } from "./theme-provider";
+import { UberEatsButton } from "./uber-eats-button";
 
 type SiteHeaderProps = {
   searchQuery: string;
@@ -146,6 +147,11 @@ export function SiteHeader({
             {dict.nav.order}
           </a>
 
+          <UberEatsButton
+            short
+            className="hidden h-9 px-4 text-sm lg:inline-flex"
+          />
+
           <button
             type="button"
             className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[var(--border-subtle)] md:hidden"
@@ -197,6 +203,9 @@ export function SiteHeader({
                 <Phone className="h-4 w-4" />
                 {dict.nav.order} · {BUSINESS.phone}
               </a>
+            </li>
+            <li>
+              <UberEatsButton className="w-full py-3 text-sm" />
             </li>
           </ul>
         </nav>

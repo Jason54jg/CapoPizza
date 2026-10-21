@@ -25,8 +25,12 @@ const STORAGE_KEY = "capo-pizza-theme";
 
 function readInitialColorTheme(): ColorTheme {
   if (typeof window === "undefined") return "dark";
-  const stored = localStorage.getItem(STORAGE_KEY) as ColorTheme | null;
-  if (stored === "light" || stored === "dark") return stored;
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored === "light" || stored === "dark") return stored;
+  } catch {
+    /* stockage bloqué (navigation privée) */
+  }
   return window.matchMedia("(prefers-color-scheme: light)").matches
     ? "light"
     : "dark";
@@ -60,7 +64,11 @@ export function ThemeProvider({ children, seasonal }: ThemeProviderProps) {
   useEffect(() => {
     if (!mounted) return;
     applyDocumentClasses(theme, seasonal);
-    localStorage.setItem(STORAGE_KEY, theme);
+    try {
+      localStorage.setItem(STORAGE_KEY, theme);
+    } catch {
+      /* stockage bloqué : thème non mémorisé */
+    }
   }, [theme, mounted, seasonal]);
 
   const toggleTheme = useCallback(() => {

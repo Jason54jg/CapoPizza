@@ -59,7 +59,11 @@ export function readSelection(): SelectionEntry[] {
 
 export function writeSelection(entries: SelectionEntry[]) {
   if (typeof window === "undefined") return;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+  } catch {
+    /* stockage bloqué ou plein : sélection gardée en mémoire seulement */
+  }
 }
 
 export function addSelectionItem(

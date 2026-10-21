@@ -7,6 +7,7 @@ import { withBasePath } from "@/lib/base-path";
 import { BUSINESS } from "@/lib/business";
 import { useDict } from "./locale-provider";
 import { SeasonalHeroBadge } from "./seasonal-hero-badge";
+import { UberEatsButton } from "./uber-eats-button";
 
 const HERO_IMAGE = withBasePath("/images/capo-store-hero.jpeg");
 
@@ -33,7 +34,7 @@ export function HeroSection({ onDiscoverPizzas }: HeroSectionProps) {
           <p className="mt-3 text-lg text-[var(--text-secondary)] md:text-xl">
             {dict.hero.lead}
           </p>
-          <div className="mt-8 flex w-full max-w-full flex-col gap-3 sm:flex-row sm:items-center">
+          <div className="mt-8 flex w-full max-w-full flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <button
               type="button"
               onClick={onDiscoverPizzas}
@@ -48,6 +49,7 @@ export function HeroSection({ onDiscoverPizzas }: HeroSectionProps) {
               <Phone className="h-5 w-5 shrink-0 text-brand" />
               <span className="truncate">{BUSINESS.phone}</span>
             </a>
+            <UberEatsButton className="w-full px-6 py-3.5 text-base sm:w-auto" />
           </div>
         </motion.div>
 

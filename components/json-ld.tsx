@@ -1,6 +1,9 @@
 import { BUSINESS, OPENING_LABEL } from "@/lib/business";
 import { getGoogleReviews } from "@/lib/google-reviews";
 
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://jason54jg.github.io/CapoPizza";
+
 export function RestaurantJsonLd() {
   const google = getGoogleReviews();
   const schema = {
@@ -9,7 +12,7 @@ export function RestaurantJsonLd() {
     name: BUSINESS.name,
     description:
       "Pizzeria Capo Pizza à Neufchâteau : pizzas artisanales, burgers, tacos, pâtes. À emporter et livraison.",
-    image: "https://images.unsplash.com/photo-1604384847932-cff2a0b4cb64?auto=format&fit=crop&w=1200&q=80",
+    image: `${SITE_URL}/images/capo-store-hero.jpeg`,
     telephone: "+33355016739",
     address: {
       "@type": "PostalAddress",

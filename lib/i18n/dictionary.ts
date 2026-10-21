@@ -23,6 +23,8 @@ export type Dictionary = {
     lightMode: string;
     darkMode: string;
     menuButton: string;
+    uberEats: string;
+    uberEatsShort: string;
   };
   reviews: {
     eyebrow: string;
@@ -173,6 +175,8 @@ const fr: Dictionary = {
     lightMode: "Activer le mode clair",
     darkMode: "Activer le mode sombre",
     menuButton: "Menu",
+    uberEats: "Commander sur Uber Eats",
+    uberEatsShort: "Uber Eats",
   },
   reviews: {
     eyebrow: "Google",
@@ -350,6 +354,8 @@ const en: Dictionary = {
     lightMode: "Switch to light mode",
     darkMode: "Switch to dark mode",
     menuButton: "Menu",
+    uberEats: "Order on Uber Eats",
+    uberEatsShort: "Uber Eats",
   },
   reviews: {
     eyebrow: "Google",
