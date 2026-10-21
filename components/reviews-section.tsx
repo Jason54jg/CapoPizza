@@ -3,11 +3,11 @@
 import { motion } from "framer-motion";
 import { ExternalLink, Star } from "lucide-react";
 import { useEffect, useState } from "react";
+import { IS_STATIC_EXPORT } from "@/lib/base-path";
 import {
   getGoogleReviews,
   type GoogleReviewItem,
 } from "@/lib/google-reviews";
-import { fetchLiveGoogleRating } from "@/lib/parse-google-rating";
 import { useDict, useLocale } from "./locale-provider";
 
 const POLL_MS = 5 * 60 * 1000;
@@ -88,41 +88,38 @@ export function ReviewsSection() {
   const mapsUrl = initial.mapsUrl;
 
   useEffect(() => {
+    // Export statique : pas d’/api, on garde le snapshot du build
+    // (rafraîchi chaque jour par le workflow GitHub Pages).
+    if (IS_STATIC_EXPORT) return;
+
     let cancelled = false;
 
     async function refresh() {
       try {
         const res = await fetch("/api/google-reviews", { cache: "no-store" });
-        if (res.ok) {
-          const data = (await res.json()) as {
-            rating?: number;
-            reviewCount?: number;
-            updatedAt?: string | null;
-            reviews?: GoogleReviewItem[];
-          };
-          if (
-            !cancelled &&
-            typeof data.rating === "number" &&
-            typeof data.reviewCount === "number"
-          ) {
-            setRating(data.rating);
-            setCount(data.reviewCount);
-            setUpdatedAt(data.updatedAt ?? new Date().toISOString());
-            if (Array.isArray(data.reviews) && data.reviews.length) {
-              setReviews(data.reviews);
-            }
-            return;
-          }
+        if (!res.ok) return;
+        const data = (await res.json()) as {
+          rating?: number;
+          reviewCount?: number;
+          updatedAt?: string | null;
+          reviews?: GoogleReviewItem[];
+        };
+        if (
+          cancelled ||
+          typeof data.rating !== "number" ||
+          typeof data.reviewCount !== "number"
+        ) {
+          return;
+        }
+        setRating(data.rating);
+        setCount(data.reviewCount);
+        setUpdatedAt(data.updatedAt ?? new Date().toISOString());
+        if (Array.isArray(data.reviews) && data.reviews.length) {
+          setReviews(data.reviews);
         }
       } catch {
-        /* export statique */
+        /* serveur indisponible : garder le snapshot */
       }
-
-      const live = await fetchLiveGoogleRating();
-      if (cancelled || !live) return;
-      setRating(live.rating);
-      setCount(live.reviewCount);
-      setUpdatedAt(new Date().toISOString());
     }
 
     void refresh();

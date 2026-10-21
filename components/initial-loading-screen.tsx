@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useDict } from "./locale-provider";
 import { PizzaLoader } from "./pizza-loader";
 
 const MIN_VISIBLE_MS = 700;
 const MAX_WAIT_MS = 4500;
 
 export function InitialLoadingScreen() {
+  const dict = useDict();
   const [visible, setVisible] = useState(true);
   const [fadeOut, setFadeOut] = useState(false);
 
@@ -44,7 +46,7 @@ export function InitialLoadingScreen() {
       }`}
       aria-hidden={fadeOut}
     >
-      <PizzaLoader label="Préparation de la carte…" fullscreen />
+      <PizzaLoader label={dict.loader.preparing} fullscreen />
     </div>
   );
 }

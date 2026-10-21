@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Source_Sans_3 } from "next/font/google";
 import { RestaurantJsonLd } from "@/components/json-ld";
-import { InitialLoadingScreen } from "@/components/initial-loading-screen";
 import { SeasonalAmbience } from "@/components/seasonal-ambience";
 import { ThemeProvider } from "@/components/theme-provider";
+import { withBasePath } from "@/lib/base-path";
 import { BUSINESS } from "@/lib/business";
 import { getActiveSeasonalTheme } from "@/lib/site-theme";
 import "./globals.css";
@@ -44,8 +44,10 @@ export const metadata: Metadata = {
     "livraison pizza Neufchâteau",
   ],
   icons: {
-    icon: [{ url: "/images/capo-logo.png", type: "image/png" }],
-    apple: [{ url: "/images/capo-logo-192.png", type: "image/png" }],
+    icon: [{ url: withBasePath("/images/capo-logo.png"), type: "image/png" }],
+    apple: [
+      { url: withBasePath("/images/capo-logo-192.png"), type: "image/png" },
+    ],
   },
   openGraph: {
     type: "website",
@@ -93,7 +95,6 @@ export default function RootLayout({
     >
       <body className="relative min-h-full antialiased">
         <ThemeProvider seasonal={seasonal}>
-          <InitialLoadingScreen />
           <SeasonalAmbience seasonal={seasonal} />
           <RestaurantJsonLd />
           <div className="relative z-[2]">{children}</div>

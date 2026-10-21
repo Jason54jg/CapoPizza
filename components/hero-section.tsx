@@ -3,11 +3,12 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Phone } from "lucide-react";
+import { withBasePath } from "@/lib/base-path";
 import { BUSINESS } from "@/lib/business";
 import { useDict } from "./locale-provider";
 import { SeasonalHeroBadge } from "./seasonal-hero-badge";
 
-const HERO_IMAGE = "/images/capo-store-hero.jpeg";
+const HERO_IMAGE = withBasePath("/images/capo-store-hero.jpeg");
 
 type HeroSectionProps = {
   onDiscoverPizzas: () => void;

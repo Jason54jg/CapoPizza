@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { withBasePath } from "@/lib/base-path";
 
 type LogoProps = {
   className?: string;
@@ -26,7 +27,7 @@ export function Logo({
   return (
     <div className={`flex min-w-0 items-center gap-2.5 ${className}`}>
       <Image
-        src="/images/capo-logo.png?v=5"
+        src={withBasePath("/images/capo-logo.png?v=5")}
         alt="Capo Pizza"
         width={px}
         height={px}

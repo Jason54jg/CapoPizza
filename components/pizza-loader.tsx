@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { withBasePath } from "@/lib/base-path";
 
 type PizzaLoaderProps = {
   label?: string;
@@ -22,7 +23,7 @@ export function PizzaLoader({
     >
       <div className="pizza-loader relative" aria-hidden>
         <Image
-          src="/images/capo-logo.png"
+          src={withBasePath("/images/capo-logo.png")}
           alt=""
           width={112}
           height={112}

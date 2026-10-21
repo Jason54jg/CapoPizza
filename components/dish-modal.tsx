@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { Heart, Phone, Plus, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BUSINESS } from "@/lib/business";
 import type { CompositionChoices } from "@/lib/composition";
 import { PriceTag } from "@/lib/format-price-display";
@@ -31,12 +31,8 @@ export function DishModal({
   const dict = useDict();
   const locale = useLocale();
   const [choices, setChoices] = useState<CompositionChoices>({});
+  // Réinitialisé par DishComposer (key={item.id}) qui renvoie ses choix au montage
   const [valid, setValid] = useState(false);
-
-  useEffect(() => {
-    setChoices({});
-    setValid(false);
-  }, [item?.id]);
 
   const categoryLabel = item
     ? localizeCategories(locale).find((c) => c.id === item.category)?.label

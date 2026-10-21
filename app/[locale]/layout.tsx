@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { InitialLoadingScreen } from "@/components/initial-loading-screen";
 import { LocaleProvider } from "@/components/locale-provider";
 import { BUSINESS } from "@/lib/business";
 import { DEFAULT_LOCALE, isLocale, LOCALES, type Locale } from "@/lib/i18n/config";
@@ -21,7 +22,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: {
-      default: dict.meta.title,
+      // absolute : sinon le template du layout racine s’ajoute une 2ᵉ fois
+      absolute: dict.meta.title,
       template: dict.meta.titleTemplate,
     },
     description: dict.meta.description,
@@ -58,5 +60,10 @@ export default async function LocaleLayout({ children, params }: Props) {
   const { locale: raw } = await params;
   if (!isLocale(raw)) notFound();
 
-  return <LocaleProvider locale={raw}>{children}</LocaleProvider>;
+  return (
+    <LocaleProvider locale={raw}>
+      <InitialLoadingScreen />
+      {children}
+    </LocaleProvider>
+  );
 }

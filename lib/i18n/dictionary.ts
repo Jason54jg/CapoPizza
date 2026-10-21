@@ -144,6 +144,9 @@ export type Dictionary = {
     fr: string;
     en: string;
   };
+  loader: {
+    preparing: string;
+  };
 };
 
 const fr: Dictionary = {
@@ -318,6 +321,9 @@ const fr: Dictionary = {
     fr: "FR",
     en: "EN",
   },
+  loader: {
+    preparing: "Préparation de la carte…",
+  },
 };
 
 const en: Dictionary = {
@@ -491,6 +497,9 @@ const en: Dictionary = {
     switchTo: "Langue",
     fr: "FR",
     en: "EN",
+  },
+  loader: {
+    preparing: "Preparing the menu…",
   },
 };
 

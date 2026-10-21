@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
   // permet /api/google-reviews (rafraîchissement sans redémarrer).
   ...(GITHUB_PAGES ? { output: "export" as const } : {}),
   ...(basePath ? { basePath } : {}),
+  // Exposé au client pour préfixer les assets de public/ (voir lib/base-path.ts)
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
+    NEXT_PUBLIC_STATIC_EXPORT: GITHUB_PAGES ? "true" : "false",
+  },
   trailingSlash: true,
   images: {
     unoptimized: true,

@@ -16,6 +16,7 @@ export function useSelection() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- hydrate once on mount (localStorage)
     setSelection(readSelection());
     setReady(true);
   }, []);

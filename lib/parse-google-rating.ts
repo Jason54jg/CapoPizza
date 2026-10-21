@@ -84,29 +84,3 @@ export function parseGoogleRatingFromHtml(html: string): ParsedGoogleRating | nu
 
   return null;
 }
-
-/**
- * Récupère la note en live depuis le navigateur (sans clé API).
- * Passe par des proxies CORS publics car Rankeat n’autorise pas le fetch direct.
- */
-export async function fetchLiveGoogleRating(
-  pageUrl: string = RANKEAT_CAPO_URL,
-): Promise<ParsedGoogleRating | null> {
-  const proxies = [
-    `https://api.allorigins.win/raw?url=${encodeURIComponent(pageUrl)}`,
-    `https://corsproxy.io/?${encodeURIComponent(pageUrl)}`,
-  ];
-
-  for (const url of proxies) {
-    try {
-      const res = await fetch(url, { cache: "no-store" });
-      if (!res.ok) continue;
-      const html = await res.text();
-      const parsed = parseGoogleRatingFromHtml(html);
-      if (parsed) return parsed;
-    } catch {
-      /* essayer le proxy suivant */
-    }
-  }
-  return null;
-}
