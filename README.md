@@ -87,6 +87,22 @@ Ouvrir [http://localhost:3000/CapoPizza/](http://localhost:3000/CapoPizza/).
 
 ---
 
+## Docker (VPS)
+
+Serveur Next.js autonome (`output: "standalone"`) avec `/api/google-reviews` : les avis Google se rafraîchissent en direct (scrape Chromium toutes les 6 h au plus), contrairement à l’export GitHub Pages.
+
+```bash
+docker compose up -d --build
+```
+
+→ [http://localhost:3000](http://localhost:3000)
+
+- Image ~750 Mo (Node + Chromium headless shell), conteneur limité à 768 Mo de RAM.
+- Le snapshot des avis est conservé dans le volume `reviews-data`.
+- Après un build sur un petit disque : `docker builder prune -f` pour libérer le cache.
+
+---
+
 ## Scripts
 
 | Commande | Description |

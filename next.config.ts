@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 /** Dépôt GitHub Pages : https://jason54jg.github.io/CapoPizza/ */
 const GITHUB_PAGES = process.env.GITHUB_PAGES === "true";
+const DOCKER = process.env.DOCKER === "true";
 const REPO_NAME = "CapoPizza";
 const basePath = GITHUB_PAGES ? `/${REPO_NAME}` : "";
 
@@ -9,6 +10,8 @@ const nextConfig: NextConfig = {
   // Export statique uniquement pour GitHub Pages ; en local, le serveur Next
   // permet /api/google-reviews (rafraîchissement sans redémarrer).
   ...(GITHUB_PAGES ? { output: "export" as const } : {}),
+  // Image Docker légère : serveur Node autonome, sans node_modules complet
+  ...(DOCKER ? { output: "standalone" as const } : {}),
   ...(basePath ? { basePath } : {}),
   // Exposé au client pour préfixer les assets de public/ (voir lib/base-path.ts)
   env: {

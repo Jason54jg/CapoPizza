@@ -116,6 +116,8 @@ export type Dictionary = {
     blurb: string;
     contact: string;
     networks: string;
+    madeBy: string;
+    rights: string;
   };
   status: {
     open: string;
@@ -274,6 +276,8 @@ const fr: Dictionary = {
     blurb: "Pizza au feu de bois — Neufchâteau (88300). Ouvert 7j/7.",
     contact: "Contact",
     networks: "Réseaux",
+    madeBy: "Site réalisé par",
+    rights: "Tous droits réservés.",
   },
   status: {
     open: "Ouvert",
@@ -453,6 +457,8 @@ const en: Dictionary = {
     blurb: "Wood-fired pizza — Neufchâteau (88300). Open 7 days.",
     contact: "Contact",
     networks: "Social",
+    madeBy: "Website by",
+    rights: "All rights reserved.",
   },
   status: {
     open: "Open",

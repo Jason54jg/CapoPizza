@@ -78,7 +78,19 @@ export function SiteFooter() {
         </div>
 
         <p className="mt-10 pt-6 text-center text-xs text-[var(--text-muted)]">
-          Capo Pizza — Neufchâteau (88300)
+          © {new Date().getFullYear()} Capo Pizza — Neufchâteau (88300).{" "}
+          {dict.footer.rights}
+        </p>
+        <p className="mt-2 text-center text-xs text-[var(--text-muted)]">
+          {dict.footer.madeBy}{" "}
+          <a
+            href="https://github.com/Jason54jg"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-[var(--text-secondary)] hover:text-brand"
+          >
+            Jason
+          </a>
         </p>
       </div>
     </footer>
