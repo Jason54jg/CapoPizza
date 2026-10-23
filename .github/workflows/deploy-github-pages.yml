@@ -54,7 +54,7 @@ jobs:
         env:
           # Site projet : https://<owner>.github.io/CapoPizza/
           GITHUB_PAGES: "true"
-          NEXT_PUBLIC_ANALYTICS_URL: https://analytics.example.fr
+          NEXT_PUBLIC_ANALYTICS_URL: https://webdashbord-one.vercel.app
           # Thème saisonnier : laisser site.theme.config.ts (none | halloween | christmas)
           # Pour forcer en CI : NEXT_PUBLIC_SEASONAL_THEME: halloween
 
