@@ -10,7 +10,11 @@ export function FloatingCallButton() {
 
   return (
     <div className="fixed bottom-4 left-4 right-4 z-[60] grid grid-cols-2 gap-2 md:hidden">
-      <a href={BUSINESS.phoneTel} className="btn-primary py-3.5 text-sm">
+      <a
+        href={BUSINESS.phoneTel}
+        className="btn-primary py-3.5 text-sm"
+        data-track="call"
+      >
         <Phone className="h-4 w-4 shrink-0" />
         <span className="truncate">{dict.selection.call}</span>
       </a>

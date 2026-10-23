@@ -251,6 +251,7 @@ export function ReviewsSection() {
             <div className="flex w-full flex-col gap-3">
               <a
                 href={mapsUrl}
+                data-track="google-reviews"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary w-full px-5 py-3 text-sm"
@@ -260,6 +261,7 @@ export function ReviewsSection() {
               </a>
               <a
                 href={mapsUrl}
+                data-track="google-reviews"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-secondary w-full px-5 py-3 text-sm"

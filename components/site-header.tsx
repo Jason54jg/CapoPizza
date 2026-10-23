@@ -141,6 +141,7 @@ export function SiteHeader({
 
           <a
             href={BUSINESS.phoneTel}
+            data-track="call"
             className="btn-primary hidden h-9 items-center gap-2 px-4 text-sm font-semibold md:inline-flex"
           >
             <Phone className="h-4 w-4" />
@@ -198,6 +199,7 @@ export function SiteHeader({
             <li className="pt-2">
               <a
                 href={BUSINESS.phoneTel}
+                data-track="call"
                 className="btn-primary w-full py-3 text-sm font-semibold"
               >
                 <Phone className="h-4 w-4" />

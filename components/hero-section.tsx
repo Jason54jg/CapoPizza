@@ -44,6 +44,7 @@ export function HeroSection({ onDiscoverPizzas }: HeroSectionProps) {
             </button>
             <a
               href={BUSINESS.phoneTel}
+              data-track="call"
               className="btn-secondary w-full px-6 py-3.5 text-base sm:w-auto"
             >
               <Phone className="h-5 w-5 shrink-0 text-brand" />

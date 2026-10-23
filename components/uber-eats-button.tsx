@@ -19,6 +19,7 @@ export function UberEatsButton({
   return (
     <a
       href={BUSINESS.uberEatsUrl}
+      data-track="uber-eats"
       target="_blank"
       rel="noopener noreferrer"
       className={`btn-ubereats ${className}`}

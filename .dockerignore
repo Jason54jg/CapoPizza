@@ -1,0 +1,10 @@
+node_modules
+.next
+out
+.serve-pages
+.tmp-serve-test
+.git
+.github
+.env*
+*.tsbuildinfo
+npm-debug.log*

@@ -123,6 +123,7 @@ export function DishCard({ item, selectedCount, onOpen }: DishCardProps) {
               : "border border-[var(--border-subtle)] text-[var(--text-secondary)] hover:border-brand-soft"
           }`}
           aria-pressed={selected}
+          data-track={selected ? undefined : `add-pizza:${item.id}`}
         >
           {selected ? (
             <>

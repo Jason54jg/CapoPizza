@@ -55,6 +55,7 @@ export function OffersSection() {
             {dict.offers.leadBefore}{" "}
             <a
               href={BUSINESS.phoneTel}
+              data-track="call"
               className="font-semibold text-brand hover:underline"
             >
               {BUSINESS.phone}

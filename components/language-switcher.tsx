@@ -39,6 +39,7 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
             }`}
             hrefLang={code}
             aria-current={active ? "true" : undefined}
+            data-track={active ? undefined : `lang-switch:${code}`}
           >
             {code === "fr" ? dict.lang.fr : dict.lang.en}
           </Link>

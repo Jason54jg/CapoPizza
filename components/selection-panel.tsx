@@ -195,6 +195,7 @@ export function SelectionPanel({
               </button>
               <a
                 href={BUSINESS.phoneTel}
+                data-track="call"
                 className="btn-primary w-full py-3 text-sm disabled:opacity-40"
                 aria-disabled={!selection.length}
               >

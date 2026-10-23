@@ -50,6 +50,7 @@ export function InfoSection() {
                   </p>
                   <a
                     href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(BUSINESS.address)}`}
+                    data-track="directions"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-2 inline-block text-sm font-semibold text-brand hover:underline"
@@ -69,6 +70,7 @@ export function InfoSection() {
                   </h3>
                   <a
                     href={BUSINESS.phoneTel}
+                    data-track="call"
                     className="mt-1 block text-lg font-semibold text-[var(--text-primary)] hover:text-brand"
                   >
                     {BUSINESS.phone}

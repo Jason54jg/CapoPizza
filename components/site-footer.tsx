@@ -28,6 +28,7 @@ export function SiteFooter() {
               <li>
                 <a
                   href={BUSINESS.phoneTel}
+                  data-track="call"
                   className="font-semibold text-[var(--text-primary)] hover:text-brand"
                 >
                   {BUSINESS.phone}
@@ -42,6 +43,7 @@ export function SiteFooter() {
               <li>
                 <a
                   href={BUSINESS.social.facebook}
+                  data-track="facebook"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[var(--text-secondary)] hover:text-brand"
@@ -52,6 +54,7 @@ export function SiteFooter() {
               <li>
                 <a
                   href={BUSINESS.social.instagram}
+                  data-track="instagram"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[var(--text-secondary)] hover:text-brand"
@@ -62,6 +65,7 @@ export function SiteFooter() {
               <li>
                 <a
                   href={BUSINESS.social.snapchat}
+                  data-track="snapchat"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[var(--text-secondary)] hover:text-brand"

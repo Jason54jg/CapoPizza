@@ -160,6 +160,7 @@ export function DishModal({
                 <button
                   type="button"
                   disabled={!valid}
+                  data-track={`add-pizza:${item.id}`}
                   onClick={() => {
                     onAdd(choices);
                     onClose();
@@ -171,6 +172,7 @@ export function DishModal({
                 </button>
                 <a
                   href={BUSINESS.phoneTel}
+                  data-track="call"
                   className="btn-secondary flex-1 px-4 py-3 text-sm"
                 >
                   <Phone className="h-4 w-4" />
