@@ -99,6 +99,23 @@ async function fetchRankeatRating() {
   return parsed;
 }
 
+// Maps time-out de temps en temps depuis les runners GitHub → on réessaie
+// avant de se replier sur Rankeat.
+async function scrapeWithRetry(attempts = 3) {
+  for (let i = 1; ; i++) {
+    try {
+      return await scrapeGoogleReviewsBrowser(3);
+    } catch (err) {
+      if (i >= attempts) throw err;
+      console.warn(
+        `[google-reviews] Tentative ${i}/${attempts} échouée:`,
+        err.message || err,
+      );
+      await new Promise((r) => setTimeout(r, 5000 * i));
+    }
+  }
+}
+
 async function main() {
   const existing = readExisting();
   const skipBrowser = process.env.SKIP_BROWSER_REVIEWS === "1";
@@ -106,7 +123,7 @@ async function main() {
   if (!skipBrowser) {
     try {
       console.log("[google-reviews] Scraping Google Maps (navigateur)…");
-      const scraped = await scrapeGoogleReviewsBrowser(3);
+      const scraped = await scrapeWithRetry();
 
       // Maps = source de vérité pour le total. Rankeat est souvent en retard
       // (ex. 96 alors que Maps affiche 151) → ne l’utiliser qu’en secours.
@@ -155,9 +172,12 @@ async function main() {
 
   try {
     const parsed = await fetchRankeatRating();
+    // Rankeat est en retard sur Maps : ne jamais faire baisser le total connu
+    const keepExisting =
+      Number(existing?.reviewCount) > parsed.reviewCount;
     writeSnapshot({
-      rating: parsed.rating,
-      reviewCount: parsed.reviewCount,
+      rating: keepExisting ? existing.rating : parsed.rating,
+      reviewCount: keepExisting ? existing.reviewCount : parsed.reviewCount,
       placeId: existing?.placeId ?? FALLBACK.placeId,
       mapsUrl: existing?.mapsUrl || FALLBACK.mapsUrl,
       updatedAt: new Date().toISOString(),
