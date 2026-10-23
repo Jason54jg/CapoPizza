@@ -1,0 +1,12 @@
+.git
+.github
+.next
+out
+node_modules
+.serve-pages
+.tmp-serve-test
+.env*
+*.md
+Dockerfile
+docker-compose.yml
+.dockerignore

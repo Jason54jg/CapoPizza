@@ -1,0 +1,25 @@
+services:
+  capo-pizza:
+    build: .
+    image: capo-pizza
+    container_name: capo-pizza
+    restart: unless-stopped
+    # PID 1 qui récolte les process Chromium lancés par le scrape des avis
+    init: true
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_OPTIONS: --max-old-space-size=256
+    volumes:
+      # Snapshot des avis conservé entre les redémarrages
+      - reviews-data:/app/data
+    # VPS 2 Go : Next (~150 Mo) + Chromium pendant le scrape (~300 Mo)
+    mem_limit: 768m
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+
+volumes:
+  reviews-data:
