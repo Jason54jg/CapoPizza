@@ -20,6 +20,7 @@ import {
   type SelectionEntry,
 } from "@/lib/selection-storage";
 import { useDict, useLocale } from "./locale-provider";
+import { AccessibleDialog } from "./accessible-dialog";
 import { UberEatsButton } from "./uber-eats-button";
 
 type SelectionPanelProps = {
@@ -60,7 +61,9 @@ export function SelectionPanel({
   return (
     <AnimatePresence>
       {open && (
-        <motion.div
+        <AccessibleDialog
+          onClose={onClose}
+          aria-labelledby="selection-panel-title"
           className="fixed inset-0 z-[65] flex justify-end"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -69,6 +72,7 @@ export function SelectionPanel({
           <button
             type="button"
             className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            tabIndex={-1}
             onClick={onClose}
             aria-label={dict.composer.close}
           />
@@ -81,7 +85,7 @@ export function SelectionPanel({
           >
             <div className="flex items-center justify-between border-b border-[var(--border-subtle)] p-4">
               <div>
-                <h2 className="font-display text-lg font-bold">
+                <h2 id="selection-panel-title" className="font-display text-lg font-bold">
                   {dict.selection.title}
                 </h2>
                 <p className="text-sm text-[var(--text-muted)]">
@@ -90,7 +94,7 @@ export function SelectionPanel({
                     : `${selection.length} ${dict.selection.articles}${selection.length > 1 ? (locale === "en" ? "s" : "s") : ""}`}
                 </p>
               </div>
-              <button type="button" onClick={onClose} className="rounded-full p-2">
+              <button type="button" onClick={onClose} aria-label={dict.composer.close} className="rounded-full p-2">
                 <X className="h-5 w-5" />
               </button>
             </div>
@@ -215,7 +219,7 @@ export function SelectionPanel({
               )}
             </div>
           </motion.aside>
-        </motion.div>
+        </AccessibleDialog>
       )}
     </AnimatePresence>
   );

@@ -12,6 +12,7 @@ import {
   localizeDietFilters,
 } from "@/lib/i18n/localize";
 import type { MenuItem } from "@/lib/menu-types";
+import { AccessibleDialog } from "./accessible-dialog";
 import { DishComposer } from "./dish-composer";
 import { useDict, useLocale } from "./locale-provider";
 
@@ -42,18 +43,18 @@ export function DishModal({
   return (
     <AnimatePresence>
       {item && (
-        <motion.div
+        <AccessibleDialog
+          onClose={onClose}
           className="fixed inset-0 z-[70] flex items-end justify-center p-0 sm:items-center sm:p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          role="dialog"
-          aria-modal="true"
           aria-labelledby="dish-modal-title"
         >
           <button
             type="button"
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            tabIndex={-1}
             onClick={onClose}
             aria-label={dict.composer.close}
           />
@@ -76,6 +77,7 @@ export function DishModal({
                 <button
                   type="button"
                   onClick={onClose}
+                  aria-label={dict.composer.close}
                   className="absolute right-3 top-3 rounded-full bg-black/50 p-2 text-white backdrop-blur-sm"
                 >
                   <X className="h-5 w-5" />
@@ -181,7 +183,7 @@ export function DishModal({
               </div>
             </div>
           </motion.div>
-        </motion.div>
+        </AccessibleDialog>
       )}
     </AnimatePresence>
   );
