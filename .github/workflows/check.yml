@@ -1,0 +1,30 @@
+name: Vérifications
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - name: Tests de régression
+        run: |
+          if [ -d tests ]; then
+            node --experimental-vm-modules --test tests/*.test.mjs
+          fi
+      - name: Export Pages sans récupération externe des avis
+        run: npm run build:pages
+        env:
+          SKIP_REVIEWS_REFRESH: "1"

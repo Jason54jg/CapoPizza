@@ -112,3 +112,16 @@ docker compose up -d --build
 | `npm run build:pages` | Export statique avec le même `basePath` que GitHub Pages |
 | `npm run serve:pages` | Sert `out/` sous `/CapoPizza/` (après `build:pages`) |
 | `npm run lint` | ESLint |
+
+## Vérifier un export Pages sans réseau pour les avis
+
+```bash
+SKIP_REVIEWS_REFRESH=1 npm run build:pages
+npm run serve:pages
+```
+
+Le build local et GitHub Actions utilisent le même script. Les pages et layouts
+exportables sont en `.tsx` ; les routes serveur en `.ts` restent dans les sources,
+mais sont exclues de cet export. En mode Node/Docker, elles restent disponibles.
+Le script accepte aussi `halloween`, `christmas` ou `none` en argument et fonctionne
+sur Windows, macOS et Linux. Les scripts `build:pages:*` appliquent ces thèmes.
