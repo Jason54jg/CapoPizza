@@ -7,6 +7,9 @@ const REPO_NAME = "CapoPizza";
 const basePath = GITHUB_PAGES ? `/${REPO_NAME}` : "";
 
 const nextConfig: NextConfig = {
+  // Les pages/layouts sont en .tsx ; la route serveur route.ts reste disponible
+  // en mode Node mais est exclue de l’export statique, sans supprimer de source.
+  ...(GITHUB_PAGES ? { pageExtensions: ["tsx"] } : {}),
   // Export statique uniquement pour GitHub Pages ; en local, le serveur Next
   // permet /api/google-reviews (rafraîchissement sans redémarrer).
   ...(GITHUB_PAGES ? { output: "export" as const } : {}),
