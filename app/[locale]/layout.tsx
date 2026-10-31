@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Analytics } from "@/components/analytics";
-import { InitialLoadingScreen } from "@/components/initial-loading-screen";
 import { LocaleProvider } from "@/components/locale-provider";
 import { BUSINESS } from "@/lib/business";
 import { DEFAULT_LOCALE, isLocale, LOCALES, type Locale } from "@/lib/i18n/config";
@@ -64,7 +63,6 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <LocaleProvider locale={raw}>
       <Analytics />
-      <InitialLoadingScreen />
       {children}
     </LocaleProvider>
   );
