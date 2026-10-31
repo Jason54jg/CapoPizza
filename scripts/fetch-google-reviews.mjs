@@ -6,6 +6,7 @@
 import { writeFileSync, readFileSync, existsSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { shouldKeepMapsAggregate } from "./review-aggregate.mjs";
 import { scrapeGoogleReviewsBrowser } from "./scrape-google-reviews-browser.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -174,9 +175,8 @@ async function main() {
 
   try {
     const parsed = await fetchRankeatRating();
-    // Rankeat est en retard sur Maps : ne jamais faire baisser le total connu
-    const keepExisting =
-      Number(existing?.reviewCount) > parsed.reviewCount;
+    // Maps reste prioritaire. Entre snapshots Rankeat, accepter aussi une baisse.
+    const keepExisting = shouldKeepMapsAggregate(existing);
     writeSnapshot({
       rating: keepExisting ? existing.rating : parsed.rating,
       reviewCount: keepExisting ? existing.reviewCount : parsed.reviewCount,
