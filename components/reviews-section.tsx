@@ -113,7 +113,7 @@ export function ReviewsSection() {
         }
         setRating(data.rating);
         setCount(data.reviewCount);
-        setUpdatedAt(data.updatedAt ?? new Date().toISOString());
+        setUpdatedAt(data.updatedAt ?? null);
         if (Array.isArray(data.reviews) && data.reviews.length) {
           setReviews(data.reviews);
         }

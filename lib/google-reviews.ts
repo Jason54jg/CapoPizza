@@ -15,6 +15,8 @@ export type GoogleReviewsSnapshot = {
   placeId: string | null;
   mapsUrl: string;
   updatedAt: string | null;
+  reviewsUpdatedAt?: string | null;
+  lastAttemptAt?: string | null;
   source: string;
   reviews: GoogleReviewItem[];
 };
@@ -68,6 +70,8 @@ export function getGoogleReviews(): GoogleReviewsSnapshot {
     placeId: data.placeId ?? FALLBACK.placeId,
     mapsUrl: data.mapsUrl || FALLBACK.mapsUrl,
     updatedAt: data.updatedAt ?? null,
+    reviewsUpdatedAt: data.reviewsUpdatedAt ?? data.updatedAt ?? null,
+    lastAttemptAt: data.lastAttemptAt ?? null,
     source: data.source || FALLBACK.source,
     reviews: normalizeReviews(data.reviews),
   };
