@@ -66,31 +66,19 @@ export function writeSelection(entries: SelectionEntry[]) {
   }
 }
 
-export function addSelectionItem(
+/** Crée une ligne sans dépendre de la disponibilité du stockage navigateur. */
+export function createSelectionEntry(
   item: MenuItem,
   composition: CompositionChoices = {},
-): SelectionEntry[] {
-  const current = readSelection();
-  const next: SelectionEntry[] = [
-    ...current,
-    {
-      uid: newUid(),
-      id: item.id,
-      name: item.name,
-      category: item.category,
-      addedAt: Date.now(),
-      composition,
-    },
-  ];
-  writeSelection(next);
-  return next;
-}
-
-export function removeSelectionByUid(uid: string): SelectionEntry[] {
-  const current = readSelection();
-  const next = current.filter((e) => e.uid !== uid);
-  writeSelection(next);
-  return next;
+): SelectionEntry {
+  return {
+    uid: newUid(),
+    id: item.id,
+    name: item.name,
+    category: item.category,
+    addedAt: Date.now(),
+    composition,
+  };
 }
 
 export function isInSelection(id: string, entries: SelectionEntry[]) {
