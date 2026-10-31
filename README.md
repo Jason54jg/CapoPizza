@@ -87,6 +87,22 @@ Ouvrir [http://localhost:3000/CapoPizza/](http://localhost:3000/CapoPizza/).
 
 ---
 
+## Analytics Docker (facultatif)
+
+Sans configuration, aucune mesure d’audience n’est envoyée. Pour l’activer,
+créer un fichier `.env` à côté de `docker-compose.yml` :
+
+```dotenv
+NEXT_PUBLIC_ANALYTICS_URL=https://analytics.example.com
+```
+
+Utiliser une URL HTTPS accessible depuis le navigateur des visiteurs.
+Puis reconstruire l’image avec `docker compose up -d --build` : cette URL est
+intégrée au JavaScript pendant la compilation. `localhost` désigne l’appareil
+du visiteur et ne convient pas à un déploiement public.
+
+---
+
 ## Docker (VPS)
 
 Serveur Next.js autonome (`output: "standalone"`) avec `/api/google-reviews` : les avis Google se rafraîchissent en direct (scrape Chromium toutes les 6 h au plus), contrairement à l’export GitHub Pages.
