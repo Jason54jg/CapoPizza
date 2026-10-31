@@ -4,9 +4,8 @@ import { useCallback, useEffect, useState } from "react";
 import type { CompositionChoices } from "@/lib/composition";
 import type { MenuItem } from "@/lib/menu-types";
 import {
-  addSelectionItem,
+  createSelectionEntry,
   readSelection,
-  removeSelectionByUid,
   writeSelection,
   type SelectionEntry,
 } from "@/lib/selection-storage";
@@ -21,24 +20,24 @@ export function useSelection() {
     setReady(true);
   }, []);
 
+  useEffect(() => {
+    if (ready) writeSelection(selection);
+  }, [selection, ready]);
+
   const add = useCallback(
     (item: MenuItem, composition: CompositionChoices = {}) => {
-      const next = addSelectionItem(item, composition);
-      setSelection(next);
-      return next;
+      const entry = createSelectionEntry(item, composition);
+      setSelection((current) => [...current, entry]);
     },
     [],
   );
 
   const remove = useCallback((uid: string) => {
-    const next = removeSelectionByUid(uid);
-    setSelection(next);
-    return next;
+    setSelection((current) => current.filter((entry) => entry.uid !== uid));
   }, []);
 
   const clear = useCallback(() => {
     setSelection([]);
-    writeSelection([]);
   }, []);
 
   return { selection, add, remove, clear, ready };
