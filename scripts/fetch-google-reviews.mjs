@@ -78,6 +78,7 @@ function parseGoogleRatingFromHtml(html) {
 }
 
 function writeSnapshot(data) {
+  data = { ...data, lastAttemptAt: new Date().toISOString() };
   writeFileSync(OUT, `${JSON.stringify(data, null, 2)}\n`, "utf8");
   console.log(
     `[google-reviews] OK — ${data.rating}/5 · ${data.reviewCount} avis · ${data.reviews?.length ?? 0} extraits (${data.source})`,
@@ -158,6 +159,7 @@ async function main() {
         placeId: scraped.placeId,
         mapsUrl: scraped.mapsUrl,
         updatedAt: new Date().toISOString(),
+        reviewsUpdatedAt: new Date().toISOString(),
         source: scraped.source,
         reviews: scraped.reviews,
       });
@@ -180,15 +182,18 @@ async function main() {
       reviewCount: keepExisting ? existing.reviewCount : parsed.reviewCount,
       placeId: existing?.placeId ?? FALLBACK.placeId,
       mapsUrl: existing?.mapsUrl || FALLBACK.mapsUrl,
-      updatedAt: new Date().toISOString(),
-      source: "rankeat-page",
+      // Une tentative ne rend pas plus récentes les données conservées.
+      updatedAt: keepExisting ? existing.updatedAt ?? null : new Date().toISOString(),
+      source: keepExisting ? existing.source : "rankeat-page",
+      reviewsUpdatedAt: existing?.reviewsUpdatedAt ?? existing?.updatedAt ?? null,
       reviews: existing?.reviews ?? [],
     });
   } catch (err) {
     console.error("[google-reviews] Échec Rankeat:", err.message || err);
     if (existing) {
       console.warn("[google-reviews] Conservation du snapshot précédent.");
-      process.exit(0);
+      writeSnapshot(existing);
+      return;
     }
     writeSnapshot(FALLBACK);
   }

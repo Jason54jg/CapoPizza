@@ -69,7 +69,8 @@ export async function GET() {
       ? disk.reviewCount
       : fallback.reviewCount;
 
-  if (isStale(disk.updatedAt) || !disk.reviews?.length) {
+  const refreshDue = isStale(disk.lastAttemptAt ?? disk.updatedAt);
+  if (refreshDue) {
     kickoffBrowserScrape();
   }
 
@@ -102,9 +103,11 @@ export async function GET() {
     reviewCount,
     placeId: disk.placeId ?? fallback.placeId,
     mapsUrl: disk.mapsUrl || fallback.mapsUrl,
-    updatedAt: disk.updatedAt ?? new Date().toISOString(),
+    updatedAt: disk.updatedAt ?? null,
+    reviewsUpdatedAt: disk.reviewsUpdatedAt ?? disk.updatedAt ?? null,
+    lastAttemptAt: disk.lastAttemptAt ?? null,
     source: disk.source || fallback.source,
     reviews: Array.isArray(disk.reviews) ? disk.reviews : fallback.reviews,
-    scrapeQueued: scrapeRunning || isStale(disk.updatedAt),
+    scrapeQueued: scrapeRunning,
   });
 }
